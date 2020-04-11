@@ -92,14 +92,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h6 id="if-sysctl-swappiness-0-gt-ne-pas-utiliser-la-Swap-tant-qu’il-reste-de-la-RAM-de-libre"><a href="#if-sysctl-swappiness-0-gt-ne-pas-utiliser-la-Swap-tant-qu’il-reste-de-la-RAM-de-libre" class="headerlink" title="if sysctl swappiness == 0 =&gt; ne pas utiliser la Swap tant qu’il reste de la RAM de libre."></a>if sysctl swappiness == 0 =&gt; ne pas utiliser la Swap tant qu’il reste de la RAM de libre.</h6><h3 id="Afficher-les-processus-consommateurs-de-SWAP"><a href="#Afficher-les-processus-consommateurs-de-SWAP" class="headerlink" title="Afficher les processus consommateurs de SWAP"></a>Afficher les processus consommateurs de SWAP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
+        <h3 id="Afficher-les-processus-consommateurs-de-SWAP"><a href="#Afficher-les-processus-consommateurs-de-SWAP" class="headerlink" title="Afficher les processus consommateurs de SWAP"></a>Afficher les processus consommateurs de SWAP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
 <h3 id="Basculer-le-contenu-du-SWAP-en-RAM-si-il-y-a-suffisamment-de-RAM-dispo"><a href="#Basculer-le-contenu-du-SWAP-en-RAM-si-il-y-a-suffisamment-de-RAM-dispo" class="headerlink" title="Basculer le contenu du SWAP en RAM (si il y a suffisamment de RAM dispo!)"></a>Basculer le contenu du SWAP en RAM (si il y a suffisamment de RAM dispo!)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapoff <span class="_">-a</span> &amp;&amp; swapon <span class="_">-a</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://sourceforge.net/images/icon_linux.gif" alt="Big up &#39;Bro" title="Big up &#39;Bro"></p>
+<p>il est judiceux de check via un sysctl -a si le vm.swappiness = 0 cela signifie que l’instance ne doit pas swap tant qu’il reste de le RAM de libre !</p>
+<p>Sinon y a toujours la bonne vielle methode du swapfile… <a href="https://linuxize.com/post/create-a-linux-swap-file/" target="_blank" rel="noopener">par exemple</a></p>
+<p><img src="https://sourceforge.net/images/icon_linux.gif" alt="I&#39;m watching you!" title="I&#39;m watching you!"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8w60bci000euoiy4dckq7u5" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8w6cm0o000ebliyl4w7dl8f" class="article-share-link">Partager</a>
       
       
       
@@ -147,7 +149,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck8w60bbq0001uoiyicriihne" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck8w6clzx0001bliydvf1k3xm" class="article-share-link">Partager</a>
       
       
       
@@ -192,7 +194,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck8w60bay0000uoiyeleypfjr" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck8w6clza0000bliyuhxks47m" class="article-share-link">Partager</a>
       
       
       
@@ -240,7 +242,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck8w60bce000auoiyuqof1cg7" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck8w6cm0k000abliyeiv98qyz" class="article-share-link">Partager</a>
       
       
       
@@ -288,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck8w60bc90006uoiy0fqh8lhc" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck8w6cm0e0006bliyvmc4onck" class="article-share-link">Partager</a>
       
       
       
@@ -354,7 +356,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8w60bc50005uoiybnlgwdu8" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8w6cm0b0005bliyl6c6t4xl" class="article-share-link">Partager</a>
       
       
       
@@ -399,7 +401,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck8w60bcc0009uoiywweztmd6" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck8w6cm0h0009bliycgtmzqyq" class="article-share-link">Partager</a>
       
       
       
@@ -447,7 +449,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck8w60bbz0004uoiydquxexei" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck8w6cm050004bliyehvs4cpm" class="article-share-link">Partager</a>
       
       
       
