@@ -66,9 +66,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-2020-already" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-swap" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/04/11/2020-already/" class="article-date">
+    <a href="/2020/04/11/swap/" class="article-date">
   <time datetime="2020-04-11T00:14:00.000Z" itemprop="datePublished">2020-04-11</time>
 </a>
     
@@ -84,7 +84,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/11/2020-already/">2020 already</a>
+      <a class="article-title" href="/2020/04/11/swap/">Afficher les porcessus les plus gourmands</a>
     </h1>
   
 
@@ -92,15 +92,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>if sysctl swappiness == 0 =&gt; ne pas utiliser la Swap tant qu’il reste de la RAM de libre.</p>
-<h3 id="Afficher-les-processus-consommateurs-de-SWAP"><a href="#Afficher-les-processus-consommateurs-de-SWAP" class="headerlink" title="Afficher les processus consommateurs de SWAP"></a>Afficher les processus consommateurs de SWAP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
+        <h6 id="if-sysctl-swappiness-0-gt-ne-pas-utiliser-la-Swap-tant-qu’il-reste-de-la-RAM-de-libre"><a href="#if-sysctl-swappiness-0-gt-ne-pas-utiliser-la-Swap-tant-qu’il-reste-de-la-RAM-de-libre" class="headerlink" title="if sysctl swappiness == 0 =&gt; ne pas utiliser la Swap tant qu’il reste de la RAM de libre."></a>if sysctl swappiness == 0 =&gt; ne pas utiliser la Swap tant qu’il reste de la RAM de libre.</h6><h3 id="Afficher-les-processus-consommateurs-de-SWAP"><a href="#Afficher-les-processus-consommateurs-de-SWAP" class="headerlink" title="Afficher les processus consommateurs de SWAP"></a>Afficher les processus consommateurs de SWAP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
 <h3 id="Basculer-le-contenu-du-SWAP-en-RAM-si-il-y-a-suffisamment-de-RAM-dispo"><a href="#Basculer-le-contenu-du-SWAP-en-RAM-si-il-y-a-suffisamment-de-RAM-dispo" class="headerlink" title="Basculer le contenu du SWAP en RAM (si il y a suffisamment de RAM dispo!)"></a>Basculer le contenu du SWAP en RAM (si il y a suffisamment de RAM dispo!)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapoff <span class="_">-a</span> &amp;&amp; swapon <span class="_">-a</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://sourceforge.net/images/icon_linux.gif" alt="Big up &#39;Bro" title="Big up &#39;Bro"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/2020-already/" data-id="ck8w5sqy70001aziy02lv8bp3" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8w60bci000euoiy4dckq7u5" class="article-share-link">Partager</a>
       
       
       
@@ -148,7 +147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck8w5sqye0004aziyskgjch2a" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck8w60bbq0001uoiyicriihne" class="article-share-link">Partager</a>
       
       
       
@@ -193,7 +192,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck8w5sqxn0000aziy0yuw2y1d" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck8w60bay0000uoiyeleypfjr" class="article-share-link">Partager</a>
       
       
       
@@ -241,7 +240,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck8w5sqz2000eaziymm22fjgy" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck8w60bce000auoiyuqof1cg7" class="article-share-link">Partager</a>
       
       
       
@@ -289,7 +288,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck8w5sqyl0006aziyysulq069" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck8w60bc90006uoiy0fqh8lhc" class="article-share-link">Partager</a>
       
       
       
@@ -355,7 +354,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8w5sqyo0009aziybk51an18" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8w60bc50005uoiybnlgwdu8" class="article-share-link">Partager</a>
       
       
       
@@ -400,7 +399,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck8w5sqyr000aaziygkb4er3b" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck8w60bcc0009uoiywweztmd6" class="article-share-link">Partager</a>
       
       
       
@@ -448,7 +447,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck8w5sqyg0005aziyf7iz1x6m" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck8w60bbz0004uoiydquxexei" class="article-share-link">Partager</a>
       
       
       
@@ -514,7 +513,7 @@
       <ul>
         
           <li>
-            <a href="/2020/04/11/2020-already/">2020 already</a>
+            <a href="/2020/04/11/swap/">Afficher les porcessus les plus gourmands</a>
           </li>
         
           <li>
