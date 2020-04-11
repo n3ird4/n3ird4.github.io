@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Comment fonctionne ce site avec hexo:  j’ai tout d’abord hexo init ~/hexo (dans ma home pour pas m’embeter)  dans ~/hexo =&amp;gt; npm install + tunning du config.yml qui va bien pour deployer via git par">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-04-11T20:50:34.539Z">
+<meta property="og:updated_time" content="2020-04-11T21:19:14.816Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo how to">
 <meta name="twitter:description" content="Comment fonctionne ce site avec hexo:  j’ai tout d’abord hexo init ~/hexo (dans ma home pour pas m’embeter)  dans ~/hexo =&amp;gt; npm install + tunning du config.yml qui va bien pour deployer via git par">
@@ -117,13 +117,11 @@
 <p><strong>Comment je deploie:</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">( <span class="built_in">cd</span> ~/n3ird4.github.io ; git pull ; git push live master )</span><br></pre></td></tr></table></figure>
 <p>Et voila via un appel au script de deploiement le taf se fait dans le repertoire ~/hexo et la synchro du /var/www/hexo est donc automatiquent effectuée via le push qui va venir remplir le contenu du docroot via le hook !</p>
-<blockquote><p>Testing quote from Twitter</p>
-<footer><strong>@hexojs</strong><cite><a href="https://twitter.com/hexojs/status/1241410617510158337" target="_blank" rel="noopener">twitter.com/hexojs/status/1241410617510158337</a></cite></footer></blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8w3y7ma00065piym8eqizoi" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8w4ieiu000623iyktuyxtrf" class="article-share-link">Partager</a>
       
       
       
@@ -164,7 +162,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Covid-19/">Covid-19</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
     </div>
   </div>
 
@@ -174,7 +172,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2020/">2020</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/42/">42</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Univers/">Univers</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/42/">42</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Univers/">Univers</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swap/">swap</a></li></ul>
     </div>
   </div>
 
@@ -184,7 +182,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/2020/" style="font-size: 10px;">2020</a> <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a>
+      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a>
     </div>
   </div>
 
