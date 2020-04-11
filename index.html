@@ -93,16 +93,15 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="Afficher-les-processus-consommateurs-de-SWAP"><a href="#Afficher-les-processus-consommateurs-de-SWAP" class="headerlink" title="Afficher les processus consommateurs de SWAP"></a>Afficher les processus consommateurs de SWAP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><figcaption><span>[afficher les process les plus consommateurs] [] [line_number]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
 <h3 id="Basculer-le-contenu-du-SWAP-en-RAM-si-il-y-a-suffisamment-de-RAM-dispo"><a href="#Basculer-le-contenu-du-SWAP-en-RAM-si-il-y-a-suffisamment-de-RAM-dispo" class="headerlink" title="Basculer le contenu du SWAP en RAM (si il y a suffisamment de RAM dispo!)"></a>Basculer le contenu du SWAP en RAM (si il y a suffisamment de RAM dispo!)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapoff <span class="_">-a</span> &amp;&amp; swapon <span class="_">-a</span></span><br></pre></td></tr></table></figure>
 <p>check via un sysctl -a si le vm.swappiness = 0 cela signifie que l’instance ne doit pas swap tant qu’il reste de le RAM de libre !</p>
-<p>Sinon y a toujours la bonne vielle methode du swapfile… <a href="https://linuxize.com/post/create-a-linux-swap-file/" target="_blank" rel="noopener">par exemple</a></p>
+<p>Sinon y a toujours la bonne vielle methode du swapfile… <a href="https://linuxize.com/post/create-a-linux-swap-file/" target="_blank" rel="noopener">voici des exemples</a></p>
 <p><img src="https://sourceforge.net/images/icon_linux.gif" alt="I&#39;m watching you!" title="I&#39;m watching you!"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8w6kn6t000eiwiy135dxfrc" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8w6o4l7000eofiyhjjx7yg9" class="article-share-link">Partager</a>
       
       
       
@@ -150,7 +149,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck8w6kn620001iwiyz5nrxxzo" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck8w6o4kc0001ofiy1qwkd7iu" class="article-share-link">Partager</a>
       
       
       
@@ -195,7 +194,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck8w6kn5d0000iwiyjgj2fe72" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck8w6o4jm0000ofiylk2clh9z" class="article-share-link">Partager</a>
       
       
       
@@ -243,7 +242,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck8w6kn6p000aiwiyp07t2mfa" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck8w6o4l0000aofiyzvdm9f9o" class="article-share-link">Partager</a>
       
       
       
@@ -291,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck8w6kn6k0006iwiynuyymlgo" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck8w6o4ky0009ofiyihkqtszp" class="article-share-link">Partager</a>
       
       
       
@@ -357,7 +356,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8w6kn6g0005iwiyozr894c7" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8w6o4kr0005ofiyv18zyppv" class="article-share-link">Partager</a>
       
       
       
@@ -402,7 +401,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck8w6kn6n0009iwiyyso1vdcx" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck8w6o4kv0006ofiyayhg3snb" class="article-share-link">Partager</a>
       
       
       
@@ -450,7 +449,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck8w6kn6a0004iwiyb7ktn814" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck8w6o4kl0004ofiyjtt49v9y" class="article-share-link">Partager</a>
       
       
       

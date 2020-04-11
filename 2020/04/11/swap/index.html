@@ -7,19 +7,19 @@
   
   <title>Afficher les porcessus les plus gourmands | n3ird4</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Afficher les processus consommateurs de SWAP1for file in /proc/*/status ; do awk &apos;/VmSwap|Name/&amp;#123;printf $2 &quot; &quot; $3&amp;#125;END&amp;#123; print &quot;&quot;&amp;#125;&apos; $file; done | sort -k 2 -n -r | head -10 [afficher">
+  <meta name="description" content="Afficher les processus consommateurs de SWAP1for file in /proc/*/status ; do awk &apos;/VmSwap|Name/&amp;#123;printf $2 &quot; &quot; $3&amp;#125;END&amp;#123; print &quot;&quot;&amp;#125;&apos; $file; done | sort -k 2 -n -r | head -10 Basculer l">
 <meta name="keywords" content="swap">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Afficher les porcessus les plus gourmands">
 <meta property="og:url" content="http://91.208.181.214/2020/04/11/swap/index.html">
 <meta property="og:site_name" content="n3ird4">
-<meta property="og:description" content="Afficher les processus consommateurs de SWAP1for file in /proc/*/status ; do awk &apos;/VmSwap|Name/&amp;#123;printf $2 &quot; &quot; $3&amp;#125;END&amp;#123; print &quot;&quot;&amp;#125;&apos; $file; done | sort -k 2 -n -r | head -10 [afficher">
+<meta property="og:description" content="Afficher les processus consommateurs de SWAP1for file in /proc/*/status ; do awk &apos;/VmSwap|Name/&amp;#123;printf $2 &quot; &quot; $3&amp;#125;END&amp;#123; print &quot;&quot;&amp;#125;&apos; $file; done | sort -k 2 -n -r | head -10 Basculer l">
 <meta property="og:locale" content="fr">
 <meta property="og:image" content="https://sourceforge.net/images/icon_linux.gif">
-<meta property="og:updated_time" content="2020-04-11T22:18:11.848Z">
+<meta property="og:updated_time" content="2020-04-11T22:20:55.186Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Afficher les porcessus les plus gourmands">
-<meta name="twitter:description" content="Afficher les processus consommateurs de SWAP1for file in /proc/*/status ; do awk &apos;/VmSwap|Name/&amp;#123;printf $2 &quot; &quot; $3&amp;#125;END&amp;#123; print &quot;&quot;&amp;#125;&apos; $file; done | sort -k 2 -n -r | head -10 [afficher">
+<meta name="twitter:description" content="Afficher les processus consommateurs de SWAP1for file in /proc/*/status ; do awk &apos;/VmSwap|Name/&amp;#123;printf $2 &quot; &quot; $3&amp;#125;END&amp;#123; print &quot;&quot;&amp;#125;&apos; $file; done | sort -k 2 -n -r | head -10 Basculer l">
 <meta name="twitter:image" content="https://sourceforge.net/images/icon_linux.gif">
   
     <link rel="alternate" href="/atom.xml" title="n3ird4" type="application/atom+xml">
@@ -98,16 +98,15 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="Afficher-les-processus-consommateurs-de-SWAP"><a href="#Afficher-les-processus-consommateurs-de-SWAP" class="headerlink" title="Afficher les processus consommateurs de SWAP"></a>Afficher les processus consommateurs de SWAP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><figcaption><span>[afficher les process les plus consommateurs] [] [line_number]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
 <h3 id="Basculer-le-contenu-du-SWAP-en-RAM-si-il-y-a-suffisamment-de-RAM-dispo"><a href="#Basculer-le-contenu-du-SWAP-en-RAM-si-il-y-a-suffisamment-de-RAM-dispo" class="headerlink" title="Basculer le contenu du SWAP en RAM (si il y a suffisamment de RAM dispo!)"></a>Basculer le contenu du SWAP en RAM (si il y a suffisamment de RAM dispo!)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapoff <span class="_">-a</span> &amp;&amp; swapon <span class="_">-a</span></span><br></pre></td></tr></table></figure>
 <p>check via un sysctl -a si le vm.swappiness = 0 cela signifie que l’instance ne doit pas swap tant qu’il reste de le RAM de libre !</p>
-<p>Sinon y a toujours la bonne vielle methode du swapfile… <a href="https://linuxize.com/post/create-a-linux-swap-file/" target="_blank" rel="noopener">par exemple</a></p>
+<p>Sinon y a toujours la bonne vielle methode du swapfile… <a href="https://linuxize.com/post/create-a-linux-swap-file/" target="_blank" rel="noopener">voici des exemples</a></p>
 <p><img src="https://sourceforge.net/images/icon_linux.gif" alt="I&#39;m watching you!" title="I&#39;m watching you!"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8w6kn6t000eiwiy135dxfrc" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8w6o4l7000eofiyhjjx7yg9" class="article-share-link">Partager</a>
       
       
       
