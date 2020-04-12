@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Cet article n’est pas de moi, je lui rend simplement hommage source  J’apprecie sons bon sens de l’hummour ainsi que sa logique dans la façon de procéder à l’analyse. voici donc son contenu:  Rien à p">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-04-12T16:57:13.504Z">
+<meta property="og:updated_time" content="2020-04-12T17:02:42.137Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IoWait ma Tuer">
 <meta name="twitter:description" content="Cet article n’est pas de moi, je lui rend simplement hommage source  J’apprecie sons bon sens de l’hummour ainsi que sa logique dans la façon de procéder à l’analyse. voici donc son contenu:  Rien à p">
@@ -118,20 +118,14 @@
 <p>L’aventure commence, comme d’hab, avec « /proc » :</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat /proc/stat</span></span><br><span class="line"></span><br><span class="line">cpu   14471379  41901343  7624436  1631039241  4181730  8954  254946  0  0  </span><br><span class="line">cpu0  2230907   8693273   1693928  409959262   1653894  1704  69221   0  0  </span><br><span class="line">cpu1  2183699   8699859   1554726  411272346   1392114  3277  69635   0  0  </span><br><span class="line">cpu2  4914950   12282210  2201785  405373432   646329   2223  62046   0  0  </span><br><span class="line">cpu3  5141820   12226000  2173996  404434200   489391   1749  54042   0  0  </span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
 <p>En fonction du noyau utilisé, le nombre de colonnes varie, « man 5 proc » est votre ami :</p>
-<pre><code>/proc/stat
-
-kernel/system statistics. Varies with architecture. Common entries include:
-
-cpu  3357 0 4313 1362393
-
-The amount of time, measured in units of USER_HZ (1/100ths of a second on most architectures, use sysconf(_SC_CLK_TCK) to obtain the right value), that the system spent in user mode, user mode with low priority (nice), system mode, and the idle task, respectively. The last value should be USER_HZ times the second entry in the uptime pseudo-file.
-
-In Linux 2.6 this line includes three additional columns: iowait – time waiting for I/O to complete (since 2.5.41); irq – time servicing interrupts (since 2.6.0-test4); softirq – time servicing softirqs (since 2.6.0-test4).
-
-Since Linux 2.6.11, there is an eighth column, steal – stolen time, which is the time spent in other operating systems when running in a virtualized environment
-
-Since Linux 2.6.24, there is a ninth column, guest, which is the time spent running a virtual CPU for guest operating systems under the control of the Linux kernel.
-</code></pre><p>La nobox tournant avec une Debian Squeeze, la version du noyau est 2.6.32-41, le nombre de colonnes est donc égal à 9. Et si on veut savoir à quoi correspondent ces fameuses colonnes, suffit d’appeler Luke à la rescousse :</p>
+<p>**/proc/stat</p>
+<p>kernel/system statistics. Varies with architecture. Common entries include:</p>
+<p>cpu  3357 0 4313 1362393</p>
+<p>The amount of time, measured in units of USERi HZ (1/100ths of a second on most architectures, use sysconf(_SC_CLK_TCK) to obtain the right value), that the system spent in user mode, user mode with low priority (nice), system mode, and the idle task, respectively. The last value should be USER_HZ times the second entry in the uptime pseudo-file.</p>
+<p>In Linux 2.6 this line includes three additional columns: iowait – time waiting for I/O to complete (since 2.5.41); irq – time servicing interrupts (since 2.6.0-test4); softirq – time servicing softirqs (since 2.6.0-test4).</p>
+<p>Since Linux 2.6.11, there is an eighth column, steal – stolen time, which is the time spent in other operating systems when running in a virtualized environment</p>
+<p>Since Linux 2.6.24, there is a ninth column, guest, which is the time spent running a virtual CPU for guest operating systems under the control of the Linux kernel.<br>**</p>
+<p>La nobox tournant avec une Debian Squeeze, la version du noyau est 2.6.32-41, le nombre de colonnes est donc égal à 9. Et si on veut savoir à quoi correspondent ces fameuses colonnes, suffit d’appeler Luke à la rescousse :</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 'kernel_stat.h' contains the definitions needed for doing</span></span><br><span class="line"><span class="comment"> * some kernel statistics (CPU usage, context switches ...),</span></span><br><span class="line"><span class="comment"> * used by rstatd/perfmeter</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> cpu_usage_stat &#123;  </span><br><span class="line">  <span class="keyword">cputime64_t</span> user;</span><br><span class="line">  <span class="keyword">cputime64_t</span> nice;</span><br><span class="line">  <span class="keyword">cputime64_t</span> system;</span><br><span class="line">  <span class="keyword">cputime64_t</span> softirq;</span><br><span class="line">  <span class="keyword">cputime64_t</span> irq;</span><br><span class="line">  <span class="keyword">cputime64_t</span> idle;</span><br><span class="line">  <span class="keyword">cputime64_t</span> iowait;</span><br><span class="line">  <span class="keyword">cputime64_t</span> steal;</span><br><span class="line">  <span class="keyword">cputime64_t</span> guest;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>Bon, ok, vu du noyau, z’avions les différents « états » de chaque processeur.<br>Maintenant, ce qui nous intéresse, c’est de savoir comment iowait est incrémenté.</p>
 <p>Et là, même punition, Luke s’y colle à nouveau:</p>
@@ -174,7 +168,7 @@ Since Linux 2.6.24, there is a ninth column, guest, which is the time spent runn
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ck8xakp96001i9biyykfxsqak" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ck8xaqwbi001hh7iy755ebaj1" class="article-share-link">Partager</a>
       
       
       
