@@ -5,15 +5,20 @@
   
 
   
-  <title>n3ird4</title>
+  <title>IoWait ma Tuer | n3ird4</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="n3ird4">
-<meta property="og:url" content="http://91.208.181.214/index.html">
+  <meta name="description" content="Cet article n’est pas de moi, je lui rend simplement hommage source  J’apprecie sons bon sens de l’hummour ainsi que sa logique dans la façon de procéder à l’analyse. voici donc son contenu:  Rien à p">
+<meta name="keywords" content="iowait,vmstat,iotop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IoWait ma Tuer">
+<meta property="og:url" content="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/index.html">
 <meta property="og:site_name" content="n3ird4">
+<meta property="og:description" content="Cet article n’est pas de moi, je lui rend simplement hommage source  J’apprecie sons bon sens de l’hummour ainsi que sa logique dans la façon de procéder à l’analyse. voici donc son contenu:  Rien à p">
 <meta property="og:locale" content="fr">
+<meta property="og:updated_time" content="2020-04-12T15:21:52.499Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="n3ird4">
+<meta name="twitter:title" content="IoWait ma Tuer">
+<meta name="twitter:description" content="Cet article n’est pas de moi, je lui rend simplement hommage source  J’apprecie sons bon sens de l’hummour ainsi que sa logique dans la façon de procéder à l’analyse. voici donc son contenu:  Rien à p">
   
     <link rel="alternate" href="/atom.xml" title="n3ird4" type="application/atom+xml">
   
@@ -64,9 +69,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-IoWait-Ma-Tuer" class="article article-type-post" itemscope="" itemprop="blogPost">
+        <section id="main"><article id="post-IoWait-Ma-Tuer" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/04/12/IoWait-Ma-Tuer/" class="article-date">
   <time datetime="2020-04-12T15:05:00.000Z" itemprop="datePublished">2020-04-12</time>
@@ -83,8 +86,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/12/IoWait-Ma-Tuer/">IoWait ma Tuer</a>
+    <h1 class="article-title" itemprop="name">
+      IoWait ma Tuer
     </h1>
   
 
@@ -163,411 +166,19 @@ Since Linux 2.6.24, there is a ninth column, guest, which is the time spent runn
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-swap" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/04/11/swap/" class="article-date">
-  <time datetime="2020-04-11T00:14:00.000Z" itemprop="datePublished">2020-04-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a>►<a class="article-category-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/11/swap/">Swap &amp; CO</a>
-    </h1>
+    <a href="/2020/04/11/swap/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Swap &amp; CO</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Afficher-les-processus-consommateurs-de-SWAP"><a href="#Afficher-les-processus-consommateurs-de-SWAP" class="headerlink" title="Afficher les processus consommateurs de SWAP"></a>Afficher les processus consommateurs de SWAP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
-<h3 id="Clean-swap-area-after-using-a-memory-hogging-application"><a href="#Clean-swap-area-after-using-a-memory-hogging-application" class="headerlink" title="Clean swap area after using a memory hogging application"></a>Clean swap area after using a memory hogging application</h3><p><em>When you run a memory intensive application (large java application, etc) swap area is used as soon as memory becomes insufficient. After you close the program, the data in swap is not put back on memory and that decreases the responsiveness. Swapoff disables the swap area and forces system to put swap data be placed in memory. Since running without a swap area might be detrimental, swapon should be used to activate swap again. Both swapoff and swapon require root privileges.</em></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapoff <span class="_">-a</span> &amp;&amp; swapon <span class="_">-a</span></span><br></pre></td></tr></table></figure>
-<h3 id="Change-your-swappiness-Ratio-under-linux"><a href="#Change-your-swappiness-Ratio-under-linux" class="headerlink" title="Change your swappiness Ratio under linux"></a>Change your swappiness Ratio under linux</h3><p><em>This command allow you to set the swappiness var at XX (default is 60). The value interval must be set between 0 and 100. If swappiness is high=Sw+ap usage is high, if swappiness is low=Ram usage is high.</em></p>
-<p>check via un sysctl -a si le vm.swappiness = 0 cela signifie que l’instance ne doit pas swap tant qu’il reste de le RAM de libre !</p>
-<p>Sinon y a toujours la bonne vielle methode du swapfile ^^</p>
-<p><a href="https://www.commandlinefu.com/commands/matching/swap/c3dhcA==/sort-by-votes" target="_blank" rel="noopener">Sources</a></p>
-<p><img src="https://sourceforge.net/images/icon_linux.gif" alt="I&#39;m watching you!" title="I&#39;m watching you!"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8x753rn000eb1iyq2dokq95" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swap/">swap</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
-    <article id="post-October-2019-inspiration" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/10/20/October-2019-inspiration/" class="article-date">
-  <time datetime="2019-10-20T20:12:00.000Z" itemprop="datePublished">2019-10-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/20/October-2019-inspiration/">October 2019 inspiration</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>One day I will work on this website….</p>
-<p><strong>Back in the game xD</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sleep(42);</span><br></pre></td></tr></table></figure>
-<p>Sleeping is not a crime.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck8x753qw0001b1iy6f56zg83" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Test/">Test</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-2019-post" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/10/19/2019-post/" class="article-date">
-  <time datetime="2019-10-19T20:42:42.000Z" itemprop="datePublished">2019-10-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/others/">others</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/19/2019-post/">2019_post</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Oh-Yeah"><a href="#Oh-Yeah" class="headerlink" title="Oh Yeah !!!"></a>Oh Yeah !!!</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">21*2 = 42 !</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck8x753q60000b1iyol225sab" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/42/">42</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Univers/">Univers</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-sort-ip-address" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/16/sort-ip-address/" class="article-date">
-  <time datetime="2018-12-16T13:32:00.000Z" itemprop="datePublished">2018-12-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/16/sort-ip-address/">How to sort Apache / Nginx Ip adresses with grep and Co</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Here we are guys, just feel free to adapte $1 to your data</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">'2018-12-16:14:'</span> access.log | awk <span class="string">'&#123;print $1&#125;'</span> | sort -n | uniq -c | sort -g | tail -n 10</span><br></pre></td></tr></table></figure>
-<p>It will provide you the top 10 IPs Hits regarding what $1 is obviously.</p>
-<p>\m/</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck8x753rj000ab1iyayrlwwwr" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grep/">grep</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sort/">sort</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-post" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/16/post/" class="article-date">
-  <time datetime="2018-12-16T12:55:00.000Z" itemprop="datePublished">2018-12-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/16/post/">2018 first commit</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Wow ! This hexo blog is still up and working I can’t believe it.<br>So here is my first commit of 2018 :D \o/</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo go to sleep now ^^</span><br></pre></td></tr></table></figure>
-<p>Let’s keep working on this repo and see you later folks !</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">samedi 19 octobre 2019, 22:01:42 =&gt; and here we are &lt;=</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck8x753rd0006b1iyyuqtr0w2" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Test/">Test</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hexo-how-to" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/04/10/hexo-how-to/" class="article-date">
-  <time datetime="2017-04-10T20:42:00.000Z" itemprop="datePublished">2017-04-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/hexo-how-to/">hexo how to</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Comment fonctionne ce site avec hexo:</strong></p>
-<ul>
-<li><p>j’ai tout d’abord hexo init ~/hexo (dans ma home pour pas m’embeter)</p>
-</li>
-<li><p>dans ~/hexo =&gt; npm install + tunning du config.yml qui va bien pour deployer via git par la suite.</p>
-</li>
-</ul>
-<p><strong>Comment je créer un article:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new my-super-article</span><br><span class="line">hexo publish my-super-article</span><br></pre></td></tr></table></figure></p>
-<p><strong>Comment Nginx fait le boulot:</strong></p>
-<ul>
-<li>Je crée un docroot vide =&gt; /var/www/hexo :)</li>
-</ul>
-<p><strong>Comment la magie opère:</strong></p>
-<ul>
-<li>git init –bare ~/hexo_bare (toujours à la racine pour pas m’embêter)</li>
-<li>création d’un hook post-receive =&gt; git –work-tree=/var/www/hexo –git-dir=/home/$USER/hexo_bare checkout -f</li>
-<li>Puis git clone <a href="https://github.com/n3ird4/n3ird4.github.io.git" target="_blank" rel="noopener">https://github.com/n3ird4/n3ird4.github.io.git</a> &amp;&amp; cd ~/n3ird4.github.io</li>
-<li>git remote add live ~/hexo_bare </li>
-</ul>
-<p><strong>Comment je deploie:</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">( <span class="built_in">cd</span> ~/n3ird4.github.io ; git pull ; git push live master )</span><br></pre></td></tr></table></figure>
-<p>Et voila via un appel au script de deploiement le taf se fait dans le repertoire ~/hexo et la synchro du /var/www/hexo est donc automatiquent effectuée via le push qui va venir remplir le contenu du docroot via le hook !</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8x753ra0005b1iyo8g6v4xe" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-second-post" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/27/second-post/" class="article-date">
-  <time datetime="2017-03-27T20:00:00.000Z" itemprop="datePublished">2017-03-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/27/second-post/">second-post</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Bon ba c’est cool hexo mec</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck8x753rg0009b1iy85mfvh13" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Test/">Test</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-first-post" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/05/first-post/" class="article-date">
-  <time datetime="2017-03-05T22:17:21.000Z" itemprop="datePublished">2017-03-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/05/first-post/">first-post in order to test Hexo</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Voila le tout premier post d’une longue série</strong>…<strong>ou pas !</strong></p>
-<p><strong>Hey hey here is the first post of a long serie</strong>…<strong>or may be not !</strong></p>
-<p>:-) </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">To be continued !</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck8x753r40004b1iyxinfase0" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Test/">Test</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
 </section>
