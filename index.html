@@ -84,7 +84,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/11/swap/">Afficher les porcessus les plus gourmands</a>
+      <a class="article-title" href="/2020/04/11/swap/">Swap &amp; CO</a>
     </h1>
   
 
@@ -93,15 +93,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="Afficher-les-processus-consommateurs-de-SWAP"><a href="#Afficher-les-processus-consommateurs-de-SWAP" class="headerlink" title="Afficher les processus consommateurs de SWAP"></a>Afficher les processus consommateurs de SWAP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
-<h3 id="Basculer-le-contenu-du-SWAP-en-RAM-si-il-y-a-suffisamment-de-RAM-dispo"><a href="#Basculer-le-contenu-du-SWAP-en-RAM-si-il-y-a-suffisamment-de-RAM-dispo" class="headerlink" title="Basculer le contenu du SWAP en RAM (si il y a suffisamment de RAM dispo!)"></a>Basculer le contenu du SWAP en RAM (si il y a suffisamment de RAM dispo!)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapoff <span class="_">-a</span> &amp;&amp; swapon <span class="_">-a</span></span><br></pre></td></tr></table></figure>
+<h3 id="Clean-swap-area-after-using-a-memory-hogging-application"><a href="#Clean-swap-area-after-using-a-memory-hogging-application" class="headerlink" title="Clean swap area after using a memory hogging application"></a>Clean swap area after using a memory hogging application</h3><p><em>When you run a memory intensive application (large java application, etc) swap area is used as soon as memory becomes insufficient. After you close the program, the data in swap is not put back on memory and that decreases the responsiveness. Swapoff disables the swap area and forces system to put swap data be placed in memory. Since running without a swap area might be detrimental, swapon should be used to activate swap again. Both swapoff and swapon require root privileges.</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapoff <span class="_">-a</span> &amp;&amp; swapon <span class="_">-a</span></span><br></pre></td></tr></table></figure>
+<h3 id="Change-your-swappiness-Ratio-under-linux"><a href="#Change-your-swappiness-Ratio-under-linux" class="headerlink" title="Change your swappiness Ratio under linux"></a>Change your swappiness Ratio under linux</h3><p><em>This command allow you to set the swappiness var at XX (default is 60). The value interval must be set between 0 and 100. If swappiness is high=Sw+ap usage is high, if swappiness is low=Ram usage is high.</em></p>
 <p>check via un sysctl -a si le vm.swappiness = 0 cela signifie que l’instance ne doit pas swap tant qu’il reste de le RAM de libre !</p>
-<p>Sinon y a toujours la bonne vielle methode du swapfile… <a href="https://linuxize.com/post/create-a-linux-swap-file/" target="_blank" rel="noopener">voici des exemples</a></p>
+<p>Sinon y a toujours la bonne vielle methode du swapfile ^^</p>
+<p><a href="https://www.commandlinefu.com/commands/matching/swap/c3dhcA==/sort-by-votes" target="_blank" rel="noopener">Sources</a></p>
 <p><img src="https://sourceforge.net/images/icon_linux.gif" alt="I&#39;m watching you!" title="I&#39;m watching you!"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8w6o4l7000eofiyhjjx7yg9" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8x4ck6h000mn6iygnxpmgh1" class="article-share-link">Partager</a>
       
       
       
@@ -149,7 +152,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck8w6o4kc0001ofiy1qwkd7iu" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck8x4ck500000n6iy74hluxi9" class="article-share-link">Partager</a>
       
       
       
@@ -194,7 +197,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck8w6o4jm0000ofiylk2clh9z" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck8x4ck7k0013n6iywofn9lx0" class="article-share-link">Partager</a>
       
       
       
@@ -242,7 +245,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck8w6o4l0000aofiyzvdm9f9o" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck8x4ck6k000on6iymdnei3od" class="article-share-link">Partager</a>
       
       
       
@@ -290,7 +293,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck8w6o4ky0009ofiyihkqtszp" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck8x4ck6d000jn6iy390fo35d" class="article-share-link">Partager</a>
       
       
       
@@ -356,7 +359,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8w6o4kr0005ofiyv18zyppv" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8x4ck5v0004n6iyyhmu8bq5" class="article-share-link">Partager</a>
       
       
       
@@ -401,7 +404,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck8w6o4kv0006ofiyayhg3snb" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck8x4ck6f000kn6iygrakwnlr" class="article-share-link">Partager</a>
       
       
       
@@ -449,7 +452,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck8w6o4kl0004ofiyjtt49v9y" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck8x4ck5k0001n6iy7ig4cq08" class="article-share-link">Partager</a>
       
       
       
@@ -515,7 +518,7 @@
       <ul>
         
           <li>
-            <a href="/2020/04/11/swap/">Afficher les porcessus les plus gourmands</a>
+            <a href="/2020/04/11/swap/">Swap &amp; CO</a>
           </li>
         
           <li>
