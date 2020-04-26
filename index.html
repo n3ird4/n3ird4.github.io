@@ -66,6 +66,64 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Elastic-Stack-Essentials" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/16/Elastic-Stack-Essentials/" class="article-date">
+  <time datetime="2020-04-16T10:21:42.000Z" itemprop="datePublished">2020-04-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ElasticSearch-Aggregating-and-Analyzing-Data-with-Elastic-Stack-Modules/">ElasticSearch - Aggregating and Analyzing Data with Elastic Stack Modules</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/16/Elastic-Stack-Essentials/">Elastic-Stack-Essentials</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Lab effectué sur <a href="https://linuxacademy.com/" target="_blank" rel="noopener">Linuxacademy</a>.<br>Le cours <em>Elastic Stack Essentials (Legacy)</em> est une intrudction sympa à la stack Elastic qui propose après une présentation succinte<br>de Kibana, Logstash, Beats, X-pack etc…de monter un petit cluster de 3 noeuds afin de mettre en pratique et tester ces différents outils.</p>
+<p>Voici donc la mise en pratique de ce Lab qui va se découper de la manière suivante: </p>
+<ul>
+<li>Installer ES sur chaque noeuds</li>
+<li>Configurer le cluster (Master / data-node)</li>
+<li>Génerer et deployer un certificat sur chaque noeuds</li>
+<li>Génerer un mot de passe avec elasticsearch-setup-passwords</li>
+<li>Installer Kibana sur le Master node et le connecter à ES</li>
+<li>Deployer et configurer metricbeat sur chaque noeuds</li>
+<li>Deployer et configurer filebeat sur chaque noeuds</li>
+<li>Utiliser Kibana pour visualiser nos dashboards</li>
+</ul>
+<p>[Work in progress…]</p>
+<p><img src="https://sourceforge.net/images/icon_linux.gif" alt="Weshhh!" title="I&#39;m watching you t&#39;as vu!"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://91.208.181.214/2020/04/16/Elastic-Stack-Essentials/" data-id="ck9gxgeou0000ayiylgu5fa9o" class="article-share-link">Partager</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-IoWait-Ma-Tuer" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/04/12/IoWait-Ma-Tuer/" class="article-date">
@@ -116,10 +174,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat /proc/stat</span></span><br><span class="line"></span><br><span class="line">cpu   14471379  41901343  7624436  1631039241  4181730  8954  254946  0  0  </span><br><span class="line">cpu0  2230907   8693273   1693928  409959262   1653894  1704  69221   0  0  </span><br><span class="line">cpu1  2183699   8699859   1554726  411272346   1392114  3277  69635   0  0  </span><br><span class="line">cpu2  4914950   12282210  2201785  405373432   646329   2223  62046   0  0  </span><br><span class="line">cpu3  5141820   12226000  2173996  404434200   489391   1749  54042   0  0  </span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
 <p>En fonction du noyau utilisé, le nombre de colonnes varie, « man 5 proc » est votre ami :</p>
 <p><em>/proc/stat<br>kernel/system statistics. Varies with architecture. Common entries include:<br>cpu  3357 0 4313 1362393</em></p>
-<p>The amount of time, measured in units of USERi HZ (1/100ths of a second on most architectures, use sysconf(_SC_CLK_TCK) to obtain the right value), that the system spent in user mode, user mode with low priority (nice), system mode, and the idle task, respectively. The last value should be USER_HZ times the second entry in the uptime pseudo-file</p>
-<p>In Linux 2.6 this line includes three additional columns: iowait – time waiting for I/O to complete (since 2.5.41); irq – time servicing interrupts (since 2.6.0-test4); softirq – time servicing softirqs (since 2.6.0-test4).</p>
-<p>Since Linux 2.6.11, there is an eighth column, steal – stolen time, which is the time spent in other operating systems when running in a virtualized environment</p>
-<p>Since Linux 2.6.24, there is a ninth column, guest, which is the time spent running a virtual CPU for guest operating systems under the control of the Linux kernel.</p>
+<p>_The amount of time, measured in units of USERi HZ (1/100ths of a second on most architectures, use sysconf(_SC__CLK__TCK_) to obtain the right value), that the system spent in user mode, user mode with low priority (nice), system mode, and the idle task, respectively. The last value should be USER_HZ_ times the second entry in the uptime pseudo-file_</p>
+<p><em>In Linux 2.6 this line includes three additional columns: iowait – time waiting for I/O to complete (since 2.5.41); irq – time servicing interrupts (since 2.6.0-test4); softirq – time servicing softirqs (since 2.6.0-test4).</em></p>
+<p><em>Since Linux 2.6.11, there is an eighth column, steal – stolen time, which is the time spent in other operating systems when running in a virtualized environment</em></p>
+<p><em>Since Linux 2.6.24, there is a ninth column, guest, which is the time spent running a virtual CPU for guest operating systems under the control of the Linux kernel.</em></p>
 <p>La nobox tournant avec une Debian Squeeze, la version du noyau est 2.6.32-41, le nombre de colonnes est donc égal à 9. Et si on veut savoir à quoi correspondent ces fameuses colonnes, suffit d’appeler Luke à la rescousse :</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 'kernel_stat.h' contains the definitions needed for doing</span></span><br><span class="line"><span class="comment"> * some kernel statistics (CPU usage, context switches ...),</span></span><br><span class="line"><span class="comment"> * used by rstatd/perfmeter</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> cpu_usage_stat &#123;  </span><br><span class="line">  <span class="keyword">cputime64_t</span> user;</span><br><span class="line">  <span class="keyword">cputime64_t</span> nice;</span><br><span class="line">  <span class="keyword">cputime64_t</span> system;</span><br><span class="line">  <span class="keyword">cputime64_t</span> softirq;</span><br><span class="line">  <span class="keyword">cputime64_t</span> irq;</span><br><span class="line">  <span class="keyword">cputime64_t</span> idle;</span><br><span class="line">  <span class="keyword">cputime64_t</span> iowait;</span><br><span class="line">  <span class="keyword">cputime64_t</span> steal;</span><br><span class="line">  <span class="keyword">cputime64_t</span> guest;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>Bon, ok, vu du noyau, z’avions les différents « états » de chaque processeur.<br>Maintenant, ce qui nous intéresse, c’est de savoir comment iowait est incrémenté.</p>
@@ -163,7 +221,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ck8xbj96q001gdjiyrdc06bcs" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ck9gxget8001iayiymc05gj5o" class="article-share-link">Partager</a>
       
       
       
@@ -215,7 +273,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck8xbj95y001adjiyxfaudv8b" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ck9gxgerf000wayiytbt9jcsv" class="article-share-link">Partager</a>
       
       
       
@@ -263,7 +321,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck8xbj93w0001djiy5h50bj6c" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ck9gxgepv0001ayiyxw8gyr32" class="article-share-link">Partager</a>
       
       
       
@@ -308,7 +366,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck8xbj93c0000djiys2dhoqag" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ck9gxgerd000vayiysq8nxgna" class="article-share-link">Partager</a>
       
       
       
@@ -356,7 +414,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck8xbj94i000adjiye11r2wvg" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ck9gxgeru0018ayiyt98ycjae" class="article-share-link">Partager</a>
       
       
       
@@ -404,7 +462,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck8xbj94c0006djiy4kkvtij1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ck9gxges7001eayiyo2y1ngd2" class="article-share-link">Partager</a>
       
       
       
@@ -470,7 +528,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck8xbj94a0005djiy9ujywbdj" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ck9gxgeqn0005ayiylkatwgns" class="article-share-link">Partager</a>
       
       
       
@@ -515,7 +573,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck8xbj94f0009djiyvie54wn3" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="ck9gxgeqp0006ayiya45tqzks" class="article-share-link">Partager</a>
       
       
       
@@ -563,7 +621,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck8xbj9450004djiy5qup6kgu" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="ck9gxgeq60004ayiyn2pcn18t" class="article-share-link">Partager</a>
       
       
       
@@ -587,7 +645,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/iowait/">iowait</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch-Aggregating-and-Analyzing-Data-with-Elastic-Stack-Modules/">ElasticSearch - Aggregating and Analyzing Data with Elastic Stack Modules</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/iowait/">iowait</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
     </div>
   </div>
 
@@ -597,7 +655,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/42/">42</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Univers/">Univers</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iotop/">iotop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iowait/">iowait</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swap/">swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmstat/">vmstat</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/42/">42</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Univers/">Univers</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iotop/">iotop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iowait/">iowait</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swap/">swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmstat/">vmstat</a></li></ul>
     </div>
   </div>
 
@@ -607,7 +665,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iotop/" style="font-size: 10px;">iotop</a> <a href="/tags/iowait/" style="font-size: 10px;">iowait</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a> <a href="/tags/vmstat/" style="font-size: 10px;">vmstat</a>
+      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iotop/" style="font-size: 10px;">iotop</a> <a href="/tags/iowait/" style="font-size: 10px;">iowait</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a> <a href="/tags/vmstat/" style="font-size: 10px;">vmstat</a>
     </div>
   </div>
 
@@ -629,6 +687,10 @@
       <ul>
         
           <li>
+            <a href="/2020/04/16/Elastic-Stack-Essentials/">Elastic-Stack-Essentials</a>
+          </li>
+        
+          <li>
             <a href="/2020/04/12/IoWait-Ma-Tuer/">IoWait ma Tuer</a>
           </li>
         
@@ -642,10 +704,6 @@
         
           <li>
             <a href="/2019/10/19/2019-post/">2019_post</a>
-          </li>
-        
-          <li>
-            <a href="/2018/12/16/sort-ip-address/">How to sort Apache / Nginx Ip adresses with grep and Co</a>
           </li>
         
       </ul>
