@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>replication-master-master | n3ird4</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK et que BDD-01B est KO. Actions a effectuer sur le serveur BDD-01B (le mauvais)123# instal">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="replication-master-master">
+<meta property="og:url" content="http://91.208.181.214/2020/05/27/replication-master-master/index.html">
+<meta property="og:site_name" content="n3ird4">
+<meta property="og:description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK et que BDD-01B est KO. Actions a effectuer sur le serveur BDD-01B (le mauvais)123# instal">
+<meta property="og:locale" content="fr">
+<meta property="og:updated_time" content="2020-05-26T23:30:48.075Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="replication-master-master">
+<meta name="twitter:description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK et que BDD-01B est KO. Actions a effectuer sur le serveur BDD-01B (le mauvais)123# instal">
+  
+    <link rel="alternate" href="/atom.xml" title="n3ird4" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">n3ird4</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Just a blog about SysOps H4c|&lt; and Petanque</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://91.208.181.214"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-replication-master-master" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/05/27/replication-master-master/" class="article-date">
+  <time datetime="2020-05-26T22:01:29.000Z" itemprop="datePublished">2020-05-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MySQL/">MySQL</a>►<a class="article-category-link" href="/categories/MySQL/Reparation-de-replication-master-master-sans-lock/">Réparation de réplication master/master (sans lock)</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      replication-master-master
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Reparation-de-replication-master-master-sans-lock"><a href="#Reparation-de-replication-master-master-sans-lock" class="headerlink" title="Réparation de réplication master/master sans lock"></a>Réparation de réplication master/master sans lock</h1><p><strong>Objectif</strong></p>
+<p>On part du principe que notre serveur BDD-01A est OK et que BDD-01B est KO.</p>
+<h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01B-le-mauvais"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01B-le-mauvais" class="headerlink" title="Actions a effectuer sur le serveur BDD-01B (le mauvais)"></a>Actions a effectuer sur le serveur BDD-01B (le mauvais)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># installation des outils nécessaires</span></span><br><span class="line">apt-get update</span><br><span class="line">apt-get install percona-xtrabackup-24 pigz</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On coupe la répli et on vide les données plus à jour</span></span><br><span class="line">mysql &gt; stop slave;</span><br><span class="line">mysql &gt; reset slave;</span><br><span class="line">service mysql stop</span><br><span class="line">rm -rf /space/mysql</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Préparation a la réception des données fraiches</span></span><br><span class="line">mkdir /space/mysql</span><br><span class="line"><span class="built_in">cd</span> /space/mysql</span><br><span class="line"><span class="built_in">ulimit</span> -n 65535</span><br><span class="line">nc <span class="_">-l</span> -p 60000 | gunzip | tar ixvf -</span><br></pre></td></tr></table></figure>
+<p>Ulimit pour augmenter le nombre de fichiers max dans le dossier<br>nc pour avoir un pipe réseau a travers duquel transitera les données<br>gunzip et tar pour extraire ce que nous allons compresser de l’autre coté du pipe</p>
+<h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01A-le-bon"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01A-le-bon" class="headerlink" title="Actions a effectuer sur le serveur BDD-01A (le bon)"></a>Actions a effectuer sur le serveur BDD-01A (le bon)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Installation des outils nécessaires</span></span><br><span class="line">apt-get update</span><br><span class="line">apt-get install percona-xtrabackup-24 pigz</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On coupe la réplication</span></span><br><span class="line">mysql &gt; reset master;</span><br><span class="line">mysql &gt; stop slave;</span><br><span class="line">mysql &gt; reset slave;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On effectue le backup</span></span><br><span class="line">innobackupex --defaults-file=/etc/mysql/conf.d/super_custom.cnf --user=root --password=<span class="string">'ChangeMe!!!'</span> --stream=tar ./ |  pigz | nc -q 0 bdd-replica 60000</span><br><span class="line"><span class="comment"># Adaptez le super_custom.cnf a votre conf</span></span><br><span class="line"><span class="comment"># bdd-replica doit exister dans votre /etc/hosts</span></span><br><span class="line"><span class="comment"># Pensez à mettre à jour cet alias avec le host de la BDD-01B ;-)</span></span><br></pre></td></tr></table></figure>
+<h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01B-le-mauvais-1"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01B-le-mauvais-1" class="headerlink" title="Actions a effectuer sur le serveur BDD-01B (le mauvais)"></a>Actions a effectuer sur le serveur BDD-01B (le mauvais)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Application des logs</span></span><br><span class="line">innobackupex --apply-log --use-memory=1G /var/mysql/</span><br><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Restart mysql</span></span><br><span class="line">chown -R mysql: /space/mysql</span><br><span class="line">service mysql start</span><br></pre></td></tr></table></figure>
+<p>:warning: Si et seulement si on a une erreur de connection du user debian-sys-maint lors du mysql start :warning:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Fix debian-sys-maint</span></span><br><span class="line">cat /etc/mysql/debian.cnf</span><br><span class="line">SET PASSWORD FOR <span class="string">'debian-sys-maint'</span>@<span class="string">'localhost'</span> = PASSWORD(<span class="string">'ChangeMe!!!'</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On affiche les informations de la réplication pour la relancer</span></span><br><span class="line">cat /var/mysql/xtrabackup_binlog_info</span><br><span class="line">master-log-bin.000001   36470842</span><br></pre></td></tr></table></figure>
+<p>On prends les infos de ce cat et on les reporte dans la commande qui suit :</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Remise en place de la réplication</span></span><br><span class="line">mysql &gt; change master to master_host=<span class="string">'bdd-replica'</span>, master_port=3306, master_user=<span class="string">'repl_user'</span>, master_password=<span class="string">'ChangeMe!!!'</span>, master_log_file=<span class="string">'master-log-bin.000001'</span>, master_log_pos=36470842;</span><br><span class="line">mysql &gt; start slave;</span><br><span class="line">watch <span class="string">'mysql -e "show slave status\G"'</span></span><br></pre></td></tr></table></figure>
+<p>On attends que la répli rattrape son retard, quand c’est ok on peut faire la suite</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Remise en place de la répli master</span></span><br><span class="line">mysql &gt; reset master;</span><br><span class="line">mysql &gt; show master status;</span><br><span class="line">    master-log-bin.000001   42</span><br></pre></td></tr></table></figure>
+<h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01A-le-bon-1"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01A-le-bon-1" class="headerlink" title="Actions a effectuer sur le serveur BDD-01A (le bon)"></a>Actions a effectuer sur le serveur BDD-01A (le bon)</h3><p>On prends les infos du show master status du serveur 01b comme fait précédemment et on les reporte dans la commande qui suit :</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Remise en place de la répli</span></span><br><span class="line">mysql &gt; change master to master_host=<span class="string">'bdd-replica'</span>, master_port=3306, master_user=<span class="string">'repl_user'</span>, master_password=<span class="string">'ChangeMe!!!'</span>, master_log_file=<span class="string">'master-log-bin.000001'</span>, master_log_pos=42;</span><br><span class="line">mysql &gt; start slave;</span><br><span class="line">mysql &gt; show slave status\G</span><br></pre></td></tr></table></figure>
+<p>Enjoy :tada:</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckaok0hsw000bnmiyslwcz1mm" class="article-share-link">Partager</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/21/Ansible-quick-start/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Ansible-quick-start</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Catégories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/Quick-Starts/">Quick Starts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/">ElasticSearch</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/Playing-with-Elastic-Stack-Modules/">Playing with Elastic Stack Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/How-to/">How to</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/Reparation-de-replication-master-master-sans-lock/">Réparation de réplication master/master (sans lock)</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/iowait/">iowait</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/42/">42</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Univers/">Univers</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/githooks/">githooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iotop/">iotop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iowait/">iowait</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swap/">swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmstat/">vmstat</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/Ansible/" style="font-size: 10px;">Ansible</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/githooks/" style="font-size: 10px;">githooks</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iotop/" style="font-size: 10px;">iotop</a> <a href="/tags/iowait/" style="font-size: 10px;">iowait</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a> <a href="/tags/vmstat/" style="font-size: 10px;">vmstat</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mai 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">avril 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">octobre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">décembre 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">avril 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">mars 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/05/27/replication-master-master/">replication-master-master</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/Ansible-quick-start/">Ansible-quick-start</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/26/Elastic-Stack-Essentials/">Elastic-Stack-Essentials</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/12/IoWait-Ma-Tuer/">IoWait ma Tuer</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/11/swap/">Swap &amp; CO</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 n3ird4<br>
+      Propulsé par <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
