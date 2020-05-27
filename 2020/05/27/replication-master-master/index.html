@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK mais que BDD-01B est KO. Actions à effectuer sur le serveur BDD-01B (le KO)1234# installa">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-05-27T23:18:33.979Z">
+<meta property="og:updated_time" content="2020-05-27T23:21:07.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="replication-master-master">
 <meta name="twitter:description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK mais que BDD-01B est KO. Actions à effectuer sur le serveur BDD-01B (le KO)1234# installa">
@@ -120,12 +120,12 @@
 <h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01A-le-OK-1"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01A-le-OK-1" class="headerlink" title="Actions à effectuer sur le serveur BDD-01A (le OK)"></a>Actions à effectuer sur le serveur BDD-01A (le OK)</h3><p>On prends les infos du show master status du serveur 01b comme fait précédemment et on les reporte dans la commande qui suit :</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Remise en place de la répli</span></span><br><span class="line">mysql &gt; change master to master_host=<span class="string">'bdd-replica'</span>, master_port=3306, master_user=<span class="string">'repl_user'</span>, master_password=<span class="string">'ChangeMe'</span>, master_log_file=<span class="string">'master-log-bin.000001'</span>, master_log_pos=42;</span><br><span class="line">mysql &gt; start slave;</span><br><span class="line">mysql &gt; show slave status\G</span><br></pre></td></tr></table></figure>
 <p>Enjoy \o/ </p>
-<p>(Source:)[<a href="https://www.percona.com/doc/percona-xtrabackup/2.3/innobackupex/streaming_backups_innobackupex.html]" target="_blank" rel="noopener">https://www.percona.com/doc/percona-xtrabackup/2.3/innobackupex/streaming_backups_innobackupex.html]</a></p>
+<p><a href="https://www.percona.com/doc/percona-xtrabackup/2.3/innobackupex/streaming_backups_innobackupex.html" target="_blank" rel="noopener">Source:</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckapyzfhg000eopiydtncx8v1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckapz2pnc000ev5iyek8qnk1k" class="article-share-link">Partager</a>
       
       
       
