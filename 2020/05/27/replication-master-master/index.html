@@ -7,18 +7,18 @@
   
   <title>replication-master-master | n3ird4</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK et que BDD-01B est KO. Actions à effectuer sur le serveur BDD-01B (le KO)1234# installati">
+  <meta name="description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK mais que BDD-01B est KO. Actions à effectuer sur le serveur BDD-01B (le KO)1234# installa">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="replication-master-master">
 <meta property="og:url" content="http://91.208.181.214/2020/05/27/replication-master-master/index.html">
 <meta property="og:site_name" content="n3ird4">
-<meta property="og:description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK et que BDD-01B est KO. Actions à effectuer sur le serveur BDD-01B (le KO)1234# installati">
+<meta property="og:description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK mais que BDD-01B est KO. Actions à effectuer sur le serveur BDD-01B (le KO)1234# installa">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-05-27T22:46:00.349Z">
+<meta property="og:updated_time" content="2020-05-27T23:00:08.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="replication-master-master">
-<meta name="twitter:description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK et que BDD-01B est KO. Actions à effectuer sur le serveur BDD-01B (le KO)1234# installati">
+<meta name="twitter:description" content="Réparation de réplication master/master sans lockObjectif On part du principe que notre serveur BDD-01A est OK mais que BDD-01B est KO. Actions à effectuer sur le serveur BDD-01B (le KO)1234# installa">
   
     <link rel="alternate" href="/atom.xml" title="n3ird4" type="application/atom+xml">
   
@@ -96,7 +96,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="Reparation-de-replication-master-master-sans-lock"><a href="#Reparation-de-replication-master-master-sans-lock" class="headerlink" title="Réparation de réplication master/master sans lock"></a>Réparation de réplication master/master sans lock</h3><p><strong>Objectif</strong></p>
-<p>On part du principe que notre serveur BDD-01A est OK et que BDD-01B est KO.</p>
+<p>On part du principe que notre serveur BDD-01A est OK mais que BDD-01B est <em>KO</em>.</p>
 <h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01B-le-KO"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01B-le-KO" class="headerlink" title="Actions à effectuer sur le serveur BDD-01B (le KO)"></a>Actions à effectuer sur le serveur BDD-01B (le KO)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># installation des outils nécessaires</span></span><br><span class="line"></span><br><span class="line">apt-get update</span><br><span class="line">apt-get install percona-xtrabackup-24 pigz</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On coupe la répli et on supprime les données car elles ne sont plus consistantes.  </span></span><br><span class="line"></span><br><span class="line">mysql &gt; stop slave;</span><br><span class="line">mysql &gt; reset slave;</span><br><span class="line">service mysql stop</span><br><span class="line">rm -rf /var/lib/mysql/*</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Puis on se prépare à la réception des données à jour.</span></span><br><span class="line">mkdir /var/lib/mysql</span><br><span class="line"><span class="built_in">cd</span> /var/lib/mysql</span><br><span class="line"><span class="built_in">ulimit</span> -n 65535</span><br><span class="line">nc <span class="_">-l</span> -p 4242 | gunzip | tar ixvf -</span><br></pre></td></tr></table></figure>
@@ -107,7 +107,7 @@
 </ul>
 <h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01A-le-OK"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01A-le-OK" class="headerlink" title="Actions à effectuer sur le serveur BDD-01A (le OK)"></a>Actions à effectuer sur le serveur BDD-01A (le OK)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Installation des outils nécessaires</span></span><br><span class="line">apt-get update</span><br><span class="line">apt-get install percona-xtrabackup-24 pigz</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On coupe la réplication</span></span><br><span class="line">mysql &gt; reset master;</span><br><span class="line">mysql &gt; stop slave;</span><br><span class="line">mysql &gt; reset slave;</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On effectue le backup</span></span><br><span class="line">innobackupex --defaults-file=/etc/mysql/conf.d/super_custom.cnf --user=root --password=<span class="string">'ChangeMe!!!'</span> --stream=tar ./ |  pigz | nc -q 0 bdd-replica 4242</span><br><span class="line"><span class="comment"># Adaptez le super_custom.cnf a votre conf</span></span><br><span class="line"><span class="comment"># bdd-replica doit exister dans votre /etc/hosts</span></span><br><span class="line"><span class="comment"># Pensez à mettre à jour cet alias avec le host de la BDD-01B ;-)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On effectue le backup</span></span><br><span class="line">innobackupex --defaults-file=/etc/mysql/conf.d/super_custom.cnf --user=root --password=<span class="string">'ChangeMe!!!'</span> --stream=tar ./ |  pigz | nc -q 0 bdd-replica 4242</span><br><span class="line"><span class="comment"># Adaptez le super_custom.cnf a votre conf</span></span><br><span class="line"><span class="comment"># bdd-replica doit exister dans vos /etc/hosts </span></span><br><span class="line"><span class="comment"># sur BDD-01A bdd-replica sera un alias de BDD-01B et vice versa</span></span><br><span class="line"><span class="comment"># Pensez à créer ces alias ;-)</span></span><br></pre></td></tr></table></figure>
 <h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01B-le-KO-1"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01B-le-KO-1" class="headerlink" title="Actions à effectuer sur le serveur BDD-01B (le KO)"></a>Actions à effectuer sur le serveur BDD-01B (le KO)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Application des logs</span></span><br><span class="line">innobackupex --use-memory=1G --apply-log /var/lib/mysql/</span><br><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Restart mysql</span></span><br><span class="line">chown -R mysql: /var/lib/mysql</span><br><span class="line">service mysql start</span><br></pre></td></tr></table></figure>
 <p>/!\ Si et seulement si on a une erreur de connection du user debian-sys-maint lors du mysql start /!\</p>
@@ -124,7 +124,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckapxuxon000esbiy9syudpuf" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckapybr7b000e61iy3ffzp2z2" class="article-share-link">Partager</a>
       
       
       
