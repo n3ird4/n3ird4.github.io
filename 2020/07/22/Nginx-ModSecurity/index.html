@@ -5,20 +5,20 @@
   
 
   
-  <title>2019_post | n3ird4</title>
+  <title>Nginx-ModSecurity | n3ird4</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Oh Yeah !!!121*2 = 42 !">
-<meta name="keywords" content="42,Univers">
+  <meta name="description" content="NginxModeSecurityThis is a work in progress…highly inspired by Linuxacademy.                                                                                                             1) installer le">
+<meta name="keywords" content="nginx,ModSecurity">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2019_post">
-<meta property="og:url" content="http://91.208.181.214/2019/10/19/2019-post/index.html">
+<meta property="og:title" content="Nginx-ModSecurity">
+<meta property="og:url" content="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/index.html">
 <meta property="og:site_name" content="n3ird4">
-<meta property="og:description" content="Oh Yeah !!!121*2 = 42 !">
+<meta property="og:description" content="NginxModeSecurityThis is a work in progress…highly inspired by Linuxacademy.                                                                                                             1) installer le">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2019-10-19T20:48:02.008Z">
+<meta property="og:updated_time" content="2020-07-22T22:06:02.037Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2019_post">
-<meta name="twitter:description" content="Oh Yeah !!!121*2 = 42 !">
+<meta name="twitter:title" content="Nginx-ModSecurity">
+<meta name="twitter:description" content="NginxModeSecurityThis is a work in progress…highly inspired by Linuxacademy.                                                                                                             1) installer le">
   
     <link rel="alternate" href="/atom.xml" title="n3ird4" type="application/atom+xml">
   
@@ -69,14 +69,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-2019-post" class="article article-type-post" itemscope="" itemprop="blogPost">
+        <section id="main"><article id="post-Nginx-ModSecurity" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/10/19/2019-post/" class="article-date">
-  <time datetime="2019-10-19T20:42:42.000Z" itemprop="datePublished">2019-10-19</time>
+    <a href="/2020/07/22/Nginx-ModSecurity/" class="article-date">
+  <time datetime="2020-07-22T21:21:42.000Z" itemprop="datePublished">2020-07-22</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/others/">others</a>
+    <a class="article-category-link" href="/categories/Nginx/">Nginx</a>►<a class="article-category-link" href="/categories/Nginx/Adding-functionality-to-Nginx-with-Dynamic-Modules/">Adding functionality to Nginx with Dynamic Modules</a>
   </div>
 
   </div>
@@ -87,7 +87,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      2019_post
+      Nginx-ModSecurity
     </h1>
   
 
@@ -95,16 +95,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Oh-Yeah"><a href="#Oh-Yeah" class="headerlink" title="Oh Yeah !!!"></a>Oh Yeah !!!</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">21*2 = 42 !</span><br></pre></td></tr></table></figure>
+        <h3 id="NginxModeSecurity"><a href="#NginxModeSecurity" class="headerlink" title="NginxModeSecurity"></a>NginxModeSecurity</h3><p>This is a work in progress…highly inspired by <a href="https://linuxacademy.com/" target="_blank" rel="noopener">Linuxacademy</a>.                                                                                                            </p>
+<p>1) installer les dépendances:</p>
+<p>apt-get install git build-essential libpcre3 libpcre3-dev libssl-dev libtool autoconf apache2-dev libxml2-dev libcurl4-openssl-dev automake pkgconf zlib1g zlib1g-dev</p>
+<p>2) clone / compile / Install core library for ModeSecurity</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt</span><br><span class="line">git <span class="built_in">clone</span> --depth 1 -b v3/master https://github.com/SpiderLabs/ModSecurity</span><br><span class="line"><span class="built_in">cd</span> ModSecurity</span><br><span class="line">git submodule init</span><br><span class="line">git submodule update</span><br><span class="line">./build.sh</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>/!\ compilation is quite long on my Ubuntu 20.04 (2CPUs and 2G RAM) /!\</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">time make install</span><br><span class="line">real    14m16.427s &lt;==&gt; :( </span><br><span class="line">user    12m54.898s</span><br><span class="line">sys     0m42.830s</span><br></pre></td></tr></table></figure>
+<p>3) Donwload Nginx source code / Build a dynamic module using ModeSecurity-nginx</p>
+<p><em>Downloading ModeSecurity-nginx</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt</span><br><span class="line">git <span class="built_in">clone</span> --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git</span><br></pre></td></tr></table></figure></p>
+<p><em>verify Nginx version and download Sources</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nginx -v</span><br><span class="line">nginx version: nginx/1.18.0</span><br><span class="line">NGINX_VERSION=1.18.0</span><br><span class="line">wget http://nginx.org/download/nginx-<span class="variable">$NGINX_VERSION</span>.tar.gz</span><br><span class="line">tar zxvf nginx-<span class="variable">$NGINX_VERSION</span>.tar.gz</span><br><span class="line"><span class="built_in">cd</span> nginx-1.18.0</span><br><span class="line">./configure --with-compat --add-dynamic-module=../ModSecurity-nginx</span><br><span class="line">make modules</span><br><span class="line">cp objs/ngx_http_modsecurity_module.so /etc/nginx/modules/</span><br></pre></td></tr></table></figure></p>
+<p><em>Load ModSecurity dynamic module</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load ModSecurity dynamic module outside events or htpp context</span></span><br><span class="line">load_module /etc/nginx/modules/ngx_http_modsecurity_module.so;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mkdir /etc/nginx/modsecurity</span><br><span class="line">cp /opt/ModSecurity/modsecurity.conf-recommended /etc/nginx/modsecurity/modsecurity.conf</span><br><span class="line">cp /opt/ModSecurity/unicode.mapping /etc/nginx/modsecurity/unicode.mapping</span><br><span class="line"></span><br><span class="line">vim /etc/nginx/modsecurity/modsecurity.conf +230</span><br><span class="line">and change the SecAuditLog path <span class="keyword">for</span> something like /var/<span class="built_in">log</span>/nginx/modsec_audit.log</span><br><span class="line">and add those two lines inside your vhost:</span><br><span class="line"></span><br><span class="line">modsecurity on;</span><br><span class="line">modsecurity_rules_file /etc/nginx/modsecurity/modsecurity.conf;</span><br><span class="line"></span><br><span class="line">nginx -t</span><br><span class="line">systemctl reload nginx</span><br></pre></td></tr></table></figure>
+<p>Work in progress…see you later sk8ter !</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckcxx2i5b000wrtiynva5hdn1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckcxx2i3n0004rtiy1887qvyt" class="article-share-link">Partager</a>
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/42/">42</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Univers/">Univers</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ModSecurity/">ModSecurity</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
 
     </footer>
   </div>
@@ -112,19 +124,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/10/20/October-2019-inspiration/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
-      <div class="article-nav-title">
-        
-          October 2019 inspiration
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/12/16/sort-ip-address/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/05/27/replication-master-master/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Ancien</strong>
-      <div class="article-nav-title">How to sort Apache / Nginx Ip adresses with grep and Co</div>
+      <div class="article-nav-title">replication-master-master</div>
     </a>
   
 </nav>
