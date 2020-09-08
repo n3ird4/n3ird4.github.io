@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Yo this is my taking notes so far, work in progress Lecture: AWS - 10,000-Foot Overview A region is a physical location in the world which consists of two or more AZ. An AZ is one or more discret data">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-09-08T19:49:36.059Z">
+<meta property="og:updated_time" content="2020-09-08T19:58:14.272Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AWS-SAAC-02">
 <meta name="twitter:description" content="Yo this is my taking notes so far, work in progress Lecture: AWS - 10,000-Foot Overview A region is a physical location in the world which consists of two or more AZ. An AZ is one or more discret data">
@@ -96,7 +96,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Yo this is my taking notes so far, work in progress</p>
-<h1 id="Lecture-AWS-10-000-Foot-Overview"><a href="#Lecture-AWS-10-000-Foot-Overview" class="headerlink" title="Lecture: AWS - 10,000-Foot Overview"></a>Lecture: AWS - 10,000-Foot Overview</h1><ul>
+<h3 id="Lecture-AWS-10-000-Foot-Overview"><a href="#Lecture-AWS-10-000-Foot-Overview" class="headerlink" title="Lecture: AWS - 10,000-Foot Overview"></a>Lecture: AWS - 10,000-Foot Overview</h3><ul>
 <li>A region is a physical location in the world which consists of two or more AZ.</li>
 <li>An AZ is one or more discret data centers, each with redundant power, networking and connectivity, oused in separate facilities.</li>
 <li>Edge Location are endpoints  for AWS which are used for caching content. Typically this consists of CloudFront, Amazon’s Content Delivery Network (CDN)</li>
@@ -306,15 +306,11 @@
 <p>S3 Standard<br>S3 - IA<br>S3 Intelligent Tiering<br>S3 One Zone - IA<br>S3 Glacier<br>S3 Glacier Deep archive</p>
 <p>Encryption in transit is achieved by:</p>
 <ul>
-<li>SSL/TLS</li>
-</ul>
-<p>Encryption at REST (server side) is achieved by:</p>
-<ul>
+<li>SSL/TLS<br>Encryption at REST (server side) is achieved by:</li>
 <li>S3 Managed Keys - SSE-S3</li>
 <li>AWS Key Management Service, Managed Keys - SSE-KMS</li>
-<li>Server Side Encryption With Customer Provided Keys - SSE-C</li>
+<li>Server Side Encryption With Customer Provided Keys - SSE-C<br>Client Side Encryption</li>
 </ul>
-<p>Client Side Encryption</p>
 <p>Some Best Practices with AWS Organizations:</p>
 <ul>
 <li>Always setup Multifactor Authentication on root account.</li>
@@ -322,7 +318,7 @@
 <li>Paying account should be used for billing purpose only. Do not deploy resources into the paying account.</li>
 <li>Enable / Disable AWS services using Service Control Policies (SCP) either on OU or on individual account.</li>
 </ul>
-<p>3 diiferent ways to share S2 Buckets accross accounts:</p>
+<p>3 different ways to share S2 Buckets accross accounts:</p>
 <ul>
 <li>Using Bucket Policies &amp; IAM (applies across the entire bucket). Programmatic Acces only.</li>
 <li>Using bucket ACLs &amp; IAM (individual objects). Programmatic access Only</li>
@@ -488,12 +484,12 @@
 <li>You can create CloudWatch alarms which trigger notifications.</li>
 <li>CloudWatch is all about performance. CloudTrail is all about auditing.</li>
 </ul>
-<p><a href="https://linuxacademy.com/" target="_blank" rel="noopener">Source</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">Source</a></p>
+<p><a href="https://linuxacademy.com/" target="_blank" rel="noopener">Source: LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">Source: AWS Faq</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckeudcbpz001wrhiy4ns6ufsx" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckeudmp9k002g1liytks0rlmi" class="article-share-link">Partager</a>
       
       
       

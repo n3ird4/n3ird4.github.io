@@ -93,7 +93,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Yo this is my taking notes so far, work in progress</p>
-<h1 id="Lecture-AWS-10-000-Foot-Overview"><a href="#Lecture-AWS-10-000-Foot-Overview" class="headerlink" title="Lecture: AWS - 10,000-Foot Overview"></a>Lecture: AWS - 10,000-Foot Overview</h1><ul>
+<h3 id="Lecture-AWS-10-000-Foot-Overview"><a href="#Lecture-AWS-10-000-Foot-Overview" class="headerlink" title="Lecture: AWS - 10,000-Foot Overview"></a>Lecture: AWS - 10,000-Foot Overview</h3><ul>
 <li>A region is a physical location in the world which consists of two or more AZ.</li>
 <li>An AZ is one or more discret data centers, each with redundant power, networking and connectivity, oused in separate facilities.</li>
 <li>Edge Location are endpoints  for AWS which are used for caching content. Typically this consists of CloudFront, Amazon’s Content Delivery Network (CDN)</li>
@@ -303,15 +303,11 @@
 <p>S3 Standard<br>S3 - IA<br>S3 Intelligent Tiering<br>S3 One Zone - IA<br>S3 Glacier<br>S3 Glacier Deep archive</p>
 <p>Encryption in transit is achieved by:</p>
 <ul>
-<li>SSL/TLS</li>
-</ul>
-<p>Encryption at REST (server side) is achieved by:</p>
-<ul>
+<li>SSL/TLS<br>Encryption at REST (server side) is achieved by:</li>
 <li>S3 Managed Keys - SSE-S3</li>
 <li>AWS Key Management Service, Managed Keys - SSE-KMS</li>
-<li>Server Side Encryption With Customer Provided Keys - SSE-C</li>
+<li>Server Side Encryption With Customer Provided Keys - SSE-C<br>Client Side Encryption</li>
 </ul>
-<p>Client Side Encryption</p>
 <p>Some Best Practices with AWS Organizations:</p>
 <ul>
 <li>Always setup Multifactor Authentication on root account.</li>
@@ -319,7 +315,7 @@
 <li>Paying account should be used for billing purpose only. Do not deploy resources into the paying account.</li>
 <li>Enable / Disable AWS services using Service Control Policies (SCP) either on OU or on individual account.</li>
 </ul>
-<p>3 diiferent ways to share S2 Buckets accross accounts:</p>
+<p>3 different ways to share S2 Buckets accross accounts:</p>
 <ul>
 <li>Using Bucket Policies &amp; IAM (applies across the entire bucket). Programmatic Acces only.</li>
 <li>Using bucket ACLs &amp; IAM (individual objects). Programmatic access Only</li>
@@ -485,12 +481,12 @@
 <li>You can create CloudWatch alarms which trigger notifications.</li>
 <li>CloudWatch is all about performance. CloudTrail is all about auditing.</li>
 </ul>
-<p><a href="https://linuxacademy.com/" target="_blank" rel="noopener">Source</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">Source</a></p>
+<p><a href="https://linuxacademy.com/" target="_blank" rel="noopener">Source: LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">Source: AWS Faq</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckeudcbpz001wrhiy4ns6ufsx" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckeudmp9k002g1liytks0rlmi" class="article-share-link">Partager</a>
       
       
       
@@ -546,7 +542,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckeudcbne0001rhiyj1d7etp4" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckeudmp7d00051liye4ksqd6b" class="article-share-link">Partager</a>
       
       
       
@@ -616,7 +612,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckeudcbqv002prhiyy6oea57v" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckeudmp7t000g1liyvcdgh8dq" class="article-share-link">Partager</a>
       
       
       
@@ -662,7 +658,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckeudcbq40020rhiyfxxc5mwx" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckeudmp6z00011liy9b7ybg8u" class="article-share-link">Partager</a>
       
       
       
@@ -749,7 +745,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckeudcbmt0000rhiyyz64vj7o" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckeudmp7a00041liy9uzrcalx" class="article-share-link">Partager</a>
       
       
       
@@ -860,7 +856,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckeudcbq2001yrhiy6nkxzeix" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckeudmp9m002h1liylzfu4fjj" class="article-share-link">Partager</a>
       
       
       
@@ -912,7 +908,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckeudcbpx001vrhiyjkts2nxj" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckeudmp82000p1liy2cokkrzq" class="article-share-link">Partager</a>
       
       
       
@@ -960,7 +956,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckeudcbno0004rhiytj5dg4dm" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckeudmp7h00061liyzeumr8m5" class="article-share-link">Partager</a>
       
       
       
@@ -1005,7 +1001,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckeudcbo0000erhiy9j1shmj0" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckeudmp6800001liybdtipcu0" class="article-share-link">Partager</a>
       
       
       
@@ -1053,7 +1049,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ckeudcbov001orhiywit1r9py" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ckeudmp80000m1liy59w179sl" class="article-share-link">Partager</a>
       
       
       
