@@ -66,6 +66,444 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-AWS-SAAC-02" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/08/AWS-SAAC-02/" class="article-date">
+  <time datetime="2020-09-08T19:21:42.000Z" itemprop="datePublished">2020-09-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/AWS/">AWS</a>►<a class="article-category-link" href="/categories/AWS/AWS-Certified-Solutions-Architect-Associate-SAA-C02/">AWS Certified Solutions Architect Associate SAA-C02</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/08/AWS-SAAC-02/">AWS-SAAC-02</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Yo this is my taking notes so far, work in progress</p>
+<h1 id="Lecture-AWS-10-000-Foot-Overview"><a href="#Lecture-AWS-10-000-Foot-Overview" class="headerlink" title="Lecture: AWS - 10,000-Foot Overview"></a>Lecture: AWS - 10,000-Foot Overview</h1><ul>
+<li>A region is a physical location in the world which consists of two or more AZ.</li>
+<li>An AZ is one or more discret data centers, each with redundant power, networking and connectivity, oused in separate facilities.</li>
+<li>Edge Location are endpoints  for AWS which are used for caching content. Typically this consists of CloudFront, Amazon’s Content Delivery Network (CDN)</li>
+</ul>
+<h1 id="S3"><a href="#S3" class="headerlink" title="S3"></a>S3</h1><ul>
+<li>Buckets are universal name space and can’t share the same name.</li>
+<li>Upload an objects to S3 receive a HTTP 200 code.</li>
+<li>S3, S3-IA, S3-IA (One Zone), Glacier</li>
+<li>Control access to buckets using either a bucket ACL or using Bucket Policies</li>
+</ul>
+<ul>
+<li>6 different Tiers:</li>
+</ul>
+<p>S3 Standard<br>S3 Infrequent Access<br>S3 Intelligent - Tiering =&gt; exactement le meme prix mise à part pour le infrequent Acess là ça devient plus avantageux<br>S3 One Zone - Infrequent Access<br>S3 Glacier<br>S3 Glacier Deep Archive</p>
+<p>Bucket Policies =&gt; Bucket Level<br>Access Control Policy =&gt; Individual objects</p>
+<p>S3 Can be configured to create access logs.</p>
+<p><strong><em>Encryption in Transit is achieved by</em></strong></p>
+<ul>
+<li>SSL / TLS<br><strong><em>Encryption At Rest (Server Side) is achieved by</em></strong></li>
+<li>Service Side: (were aws help you)<ul>
+<li>SSE-S3  S3 Managed-Keys (ServerSideEncryption)</li>
+<li>SSE-KMS AWS Key Management Service, Managed Keys  </li>
+<li>SSE-C   Server Side Encryption with Customer provided key</li>
+</ul>
+</li>
+<li>Client Side:</li>
+</ul>
+<p><strong>Versioning</strong></p>
+<ul>
+<li>stores all versions of an object (including all writes and even if you delete an object)</li>
+<li>Great backup tool</li>
+<li>Once enabled, Versioning cannot be disabled, only suspended</li>
+<li>Integrate with lifecycle rules</li>
+<li>Versioning’s MFA delete capability (can be used to provide an additional layer of security)</li>
+</ul>
+<p><strong>LifeCycle Management with s3</strong></p>
+<ul>
+<li>Automates moving your objects between the different storage Tiers.</li>
+<li>Can be used in conjunction with Versioning.</li>
+<li>Can be applied to current versions and previous versions.</li>
+</ul>
+<p><strong>S3 Object Lock and Glacier Vault Lock</strong></p>
+<ul>
+<li>Use S3 ObjectLock to store objects using a write once read many (WORM) model.</li>
+<li>Object Locks can be on Individual objects or applied across the bucket as a whole.</li>
+<li>Object locks come in two modes:<ul>
+<li>gouvernance mode : users can’t overwrite or delete an object version or alter its lock settings unless they have a special permissions.</li>
+<li>compliance mode : a protected can’t be overwritten or deleted by any user, including the root user in your AWS account.</li>
+</ul>
+</li>
+<li>S3 Glacier Vault Lock  :</li>
+</ul>
+<p><strong>S3 Performance</strong></p>
+<ul>
+<li>S3 Prefix : /folder1/folder</li>
+<li>S3 performance (3500 PUT) (5500GET) per second per prefix</li>
+<li>KMS Request Rates</li>
+<li>S3 Multipart Uploads:<ul>
+<li>Recommended for files over 100MB</li>
+<li>Required for files over 5GB</li>
+<li>Parallelize uploads (increase efficiency)</li>
+</ul>
+</li>
+<li>S3 Byte-Range-Fetches:<ul>
+<li>Parallelize downloads by specifying byte ranges.</li>
+<li>If there’s a failure in the download, it’s only for a specific byte range.</li>
+</ul>
+</li>
+</ul>
+<p><strong>S3 Select and Glacier Select</strong></p>
+<ul>
+<li>is used to retrieve only a subset of data from an object by using simple SQL expressions.</li>
+<li>Get data by rows or columns using simple SQL expressions.</li>
+<li>Save money on data transfer and increase speed.<br>+400% de perf</li>
+</ul>
+<p><strong>AWS Organizations and Consolidated Billing</strong></p>
+<ul>
+<li>revoir vite fait</li>
+<li>One bill per AWS account.</li>
+<li>Very easy to track charges and allocate costs.</li>
+<li>Volume pricing discount</li>
+</ul>
+<p><strong>Sharing S3 Buckets Across Accounts - Lab</strong></p>
+<ul>
+<li>3 different ways to share S3 Buckets across accounts<ul>
+<li>Using bucket Policies &amp; IAM (applies across the entire bucket) Programmatic Access Only.</li>
+<li>Using bucket ACL’s &amp; IAM (individual objects). Programmatic Access only.</li>
+<li>Cross-account IAM Roles. Programmatic AND Console access.</li>
+</ul>
+</li>
+<li>A revoir la fin vite fait</li>
+</ul>
+<p><strong>Cross-Region Replication Lab</strong></p>
+<ul>
+<li>Versioning must be enabled on both the source and destination buckets.</li>
+<li>Files in an existing bucket are not replicated automatically.</li>
+<li>All subsequent updated files will be replicated automatically.</li>
+<li>Delete markers are not replicated.</li>
+<li>Deleting individual versions or delete markers will not be replicated.</li>
+<li>Understand what Cross Region Replication is at a high level.</li>
+</ul>
+<p><em>Cross-region replication is an S3 feature where source and destination buckets are in different regions. Replication happens to objects uploaded/modified after the configuration is enabled. CRR allows for modification of the storage class or permissions on the destination object and can support objects encrypted with SSE-S3 by default or SSE-KMS with additional configuration.</em></p>
+<p><strong>S3 Transfer Acceleration</strong></p>
+<p><em>S3 Transfer Acceleration enables fast, easy, and secure transfers of files over long distances between your client and an S3 bucket using Amazon CloudFront’s globally distributed edge locations</em></p>
+<ul>
+<li><a href="http://s3-accelerate-speedtest.s3-accelerate.amazonaws.com/en/accelerate-speed-comparsion.html" target="_blank" rel="noopener">http://s3-accelerate-speedtest.s3-accelerate.amazonaws.com/en/accelerate-speed-comparsion.html</a></li>
+</ul>
+<p><strong>AWS DataSync</strong></p>
+<ul>
+<li>Use to move large amounts of data from on-premise to AWS.</li>
+<li>Used with NFS and SMB compatible systems.</li>
+<li>Replication can be done hourly, daily or weekly</li>
+<li>Install the Datasync agent to start the replication.</li>
+<li>Can be used to replicate EFS to EFS</li>
+</ul>
+<p><strong>CloudFront</strong></p>
+<ul>
+<li>CDN</li>
+<li>Edge locations - This is the location where content will be cached. This is separate to an AWS Region/AZ.</li>
+<li>Origin - This is the origin of all the files that the CDN will distribute. This can be an S3 Bucket, an EC2 Instance, an ELB or Route53.</li>
+<li>Distribution - This is the name given to the CDN which consists of a collection of Edge Locations.</li>
+<li>Web Distribution - Typically used for Websites.</li>
+<li>RTMP - Used for Media Streaming.</li>
+<li>Edge Location are not just READ only - you can write to them too. (ie put an object on to them.)</li>
+<li>Objects are cached for the life of the TTL.</li>
+<li>You can clear cached  objects, but you will be charged.</li>
+</ul>
+<p><strong>Create a CloudFront Distribution</strong></p>
+<ul>
+<li>Edge Location - This is the location where content will be cached. This is separate to an AWS Region/AZ</li>
+<li>Origin - This is the origin of all the files that the CDN will distribute. This can be an S3 Bucket, an EC2 Instance, an ELB or Route53.</li>
+<li>Distribution - This is the name given to the CDN which consists of a collection of Edge Locations.</li>
+<li>Web Distribution - Typically used for Websites.</li>
+<li>RTMP - Used for Media Streaming.</li>
+<li>Edge Location are not just READ only - you can write to them too. (ie put an object on to them.)</li>
+<li>Objects are cached for the life of the TTL.</li>
+<li>You can clear cached  objects, but you will be charged.</li>
+</ul>
+<p><strong>CloudFront Signed URLs and Cookies</strong></p>
+<ul>
+<li>Use Signed URLs/Cookies when you want to secure content so that only the people you authorize are able to access it.</li>
+<li>A Signed URL is for individual files. 1 file = 1 URL</li>
+<li>A Signed Cookie is for Multiple files. 1 cookie = mutliple files</li>
+<li>If your ORIGIN is EC2, then use CloudFront.</li>
+<li>If your ORIGIN is s3, and single file then use S3 Signed url instead of a cloudfront signed url.</li>
+</ul>
+<p><strong>Snowball</strong></p>
+<ul>
+<li>Snowball can import to S3</li>
+<li>Snowball can export from S3</li>
+</ul>
+<p><strong>Snowball Lab</strong></p>
+<ul>
+<li>Video cool à revoir mais pas utile pour l’exam.</li>
+</ul>
+<p><strong>Storage Gateway</strong></p>
+<ul>
+<li>File gateway<ul>
+<li>File Gateway - For flat files, stored directly on S3</li>
+</ul>
+</li>
+<li>Volume Gateway<ul>
+<li>Stored Volumes - Entire Dataset is stored on site and is asynchronously backed up to S3.</li>
+<li>Cached Volumes - Entire Dataset is stored on S3 and the most frequently accessed data is cached on site.</li>
+</ul>
+</li>
+<li>Gateway Virtual Tape library</li>
+</ul>
+<p>File / Volume / Tape</p>
+<p><strong>Athena vs. Macie [SAA-C02]</strong></p>
+<p><strong>S3 and IAM Summary</strong></p>
+<ul>
+<li>IAM consists of tje following:<ul>
+<li>Users/Group/Roles/Policies</li>
+</ul>
+</li>
+<li>IAM is universal. It does not apply to regions at this time.</li>
+<li>the “root account” is simply the account created when first setup your AWS account. It has complete Admin access.</li>
+<li>New Users have NO permissions when first created.</li>
+<li>New Users are assigned Access Key ID &amp; Secret Access Keys when created.</li>
+<li>These are not the same as a password. You cannot use the Access key ID &amp; Secret Access  Key to login in to the console.<br>You can use this to access AWS via the APIs and Command Line, however.</li>
+<li>You only get to view these once. if you loose them you have to regenerate them. So, save them in a secure location.</li>
+</ul>
+<p>=&gt; Always setup Multifactor Authentication on your root account.<br>=&gt; You can create and customise your own password rotation policies.</p>
+<ul>
+<li>Remember that S3 is OBJECT-BASED: i.e allows youto upload files.</li>
+<li>Files can be from 0 Bytes to 5TB.</li>
+<li>There is unlimited storage.</li>
+<li>Files are stored in Buckets.</li>
+<li><p>S3 is a universal namespace. That is, names must be unique globally.</p>
+</li>
+<li><p>Not suitable to install an operating system on.</p>
+</li>
+<li>Successful upload will generate a HTTP 200 status code.</li>
+<li>By default all newly created buckets are PRIVATE. you can setup access control to your buckets using:<ul>
+<li>Bucket Policies (bucket wide)</li>
+<li>ACL (down to individual files or object)</li>
+</ul>
+</li>
+</ul>
+<p>The Key Fundamentals of S3 Are:</p>
+<p>=&gt; Key (this is simply the name of the object)<br>=&gt; Value (This is simply data and is made up of a sequence of bytes)<br>=&gt; Version ID (important for versioning)<br>=&gt; Metadata (Data about data you are storing)<br>=&gt; Subresources (ACL, TOrrent)</p>
+<ul>
+<li>Read after Write consistency for PUTS of new objects.</li>
+<li>Eventual consistency for overwrite PUTS and DELETES (can take some time to propagate)</li>
+</ul>
+<p>S3 Standard<br>S3 - IA<br>S3 Intelligent Tiering<br>S3 One Zone - IA<br>S3 Glacier<br>S3 Glacier Deep archive</p>
+<p>Encryption in transit is achieved by:</p>
+<ul>
+<li>SSL/TLS</li>
+</ul>
+<p>Encryption at REST (server side) is achieved by:</p>
+<ul>
+<li>S3 Managed Keys - SSE-S3</li>
+<li>AWS Key Management Service, Managed Keys - SSE-KMS</li>
+<li>Server Side Encryption With Customer Provided Keys - SSE-C</li>
+</ul>
+<p>Client Side Encryption</p>
+<p>Some Best Practices with AWS Organizations:</p>
+<ul>
+<li>Always setup Multifactor Authentication on root account.</li>
+<li>Always use a strong and complex password on root account.</li>
+<li>Paying account should be used for billing purpose only. Do not deploy resources into the paying account.</li>
+<li>Enable / Disable AWS services using Service Control Policies (SCP) either on OU or on individual account.</li>
+</ul>
+<p>3 diiferent ways to share S2 Buckets accross accounts:</p>
+<ul>
+<li>Using Bucket Policies &amp; IAM (applies across the entire bucket). Programmatic Acces only.</li>
+<li>Using bucket ACLs &amp; IAM (individual objects). Programmatic access Only</li>
+<li>Cross-account IAM Roles. Programmatic AND Console access.</li>
+</ul>
+<p>Cross Region Replication</p>
+<ul>
+<li>Versioning must be enabled on both the source and destination buckets.</li>
+<li>Files in an existing bucket are not replicated automatically</li>
+<li>All subsequent updated files will be replicated automatically.</li>
+<li>Delete markers are not replicated.</li>
+<li>Deleting individual versions or delete markers will not be replicated.</li>
+<li>Understand what Cross Region Replication is at high level.</li>
+</ul>
+<p>LyceCycle policies</p>
+<ul>
+<li>Automates moving your objects between the different storage tiers.</li>
+<li>Can be used in conjunction with versioning.</li>
+<li>Can be applied to current versions and previons versions.</li>
+</ul>
+<p>S3 Transfert Acceleration</p>
+<p>CloudFront</p>
+<ul>
+<li>Edge locations - This is the location where content will be cached. This is separate to an AWS Region/AZ.</li>
+<li>Origin - This is the origin of all the files that the CDN will distribute. This can be an S3 Bucket, an EC2 Instance, an ELB or Route53.</li>
+<li>Distribution - This is the name given to the CDN which consists of a collection of Edge Locations.</li>
+<li>Web Distribution - Typically used for Websites.</li>
+<li>RTMP - Used for Media Streaming.</li>
+<li>Edge Location are not just READ only - you can write to them too. (ie put an object on to them.)</li>
+<li>Objects are cached for the life of the TTL.</li>
+<li>You can clear cached  objects, but you will be charged.</li>
+</ul>
+<p>Snowball</p>
+<ul>
+<li>Understand what Snowball is</li>
+<li>import to S3</li>
+<li>export from S3</li>
+</ul>
+<p>File gateway</p>
+<ul>
+<li>File Gateway - For flat files; stored directly on S3.</li>
+<li>Volume Gateway<ul>
+<li>stored Volumes - Entire Dataset is stored on site and is asynchronously backed up to S3.</li>
+<li>Cached Volumes - Entire Dataset is stored on S3 and the most frequently accessed data is cached on site.</li>
+</ul>
+</li>
+</ul>
+<p>Gateway Virtual Tape library</p>
+<ul>
+<li><p>Used for backup and uses popular backup applications like netbackup, backup exec, veeam etc…</p>
+<p>Athena Exam tips:</p>
+<ul>
+<li>Athena is an interactive query service</li>
+<li>it allows you to query data located in S3 using standard SQL</li>
+<li>Serverless</li>
+<li>Commonly used to analyse log data stored in S3</li>
+</ul>
+</li>
+</ul>
+<p>Macie Exem tips:</p>
+<ul>
+<li>Macie uses AI to analyse data in S3 and helps indentify PII (personaly identifiable information)</li>
+<li>Can also be used to analyse CloudTrail logs for suspicious API activity.</li>
+<li>Includes Dashboards, Reports and Alerting</li>
+<li>Great for PCI-DSS compliance and preventing ID theft.</li>
+</ul>
+<p>Read S3 FAQs before taking the exam. It comes up A LOT !</p>
+<h1 id="EC2"><a href="#EC2" class="headerlink" title="EC2"></a>EC2</h1><p><strong>EC2 101 Elastic Compute Cloud</strong></p>
+<ul>
+<li>Termination protection is <em>turned off</em> by default, you must turn it on</li>
+<li>On an EBS-backed instance, <em>the default action is for the root EBS volume to be deleted</em> when the instance is terminated.</li>
+<li>EBS Root volumes of your DEFAULT AMI’s <em>CAN</em> be encryted. You can also use a third party tool (such as bit locker etc)<br>to encrypt the root volmume, or this can be done when creating AMI’s (lab to follow) in the AWS console or using API.</li>
+<li>Additional volumes can be encrypted.</li>
+</ul>
+<p><strong>Security Groups - Lab</strong></p>
+<ul>
+<li>All inbounds traffic is blocked by default.</li>
+<li>All outbounds traffic is allowed (statefull)</li>
+<li>Changes to SG take effect immmediately.</li>
+<li>You can have any number of EC2 instances within a security group.</li>
+<li>You can have multiple SG attached to EC2 Instances.</li>
+<li>SG are statefull</li>
+<li>You can not block specific  IP addresses using SG , instead use NACL</li>
+<li>You can specify allow rules, but not deny rules.</li>
+</ul>
+<p><strong>EBS 101</strong></p>
+<ul>
+<li>General Purpose SSD       =&gt; Most Work Loads      : gp2 -&gt; 1G-16T 16000 IOPS</li>
+<li>Provisioned IOPS SSD      =&gt; Databases            : io1 -&gt; 4G-16T 64000 IOPS</li>
+<li>Throughput Optimized HDD  =&gt; Big Data &amp; Warehouse : st1 -&gt; 500G-16T 500 IOPS</li>
+<li>Cold HDD                  =&gt; File Servers         : sc1 -&gt; 500G-16T 250 IOPS</li>
+<li>EBS Magnetic              =&gt; Workloads IAcess     : Standard -&gt; 1G-1T 40-200 IOPS</li>
+</ul>
+<p><strong>EBS Volumes and Snapshots</strong></p>
+<ul>
+<li>Volumes exist on EBS. Think of EBS as a virtual hard disk.</li>
+<li>Snapshots exists on S3. Think of Snapshots as a photograp of the disk.</li>
+<li>Snapshots are point in time copies of Volumes.</li>
+<li>Snapshots are incremental.</li>
+<li>First Snapshots may take some time to create</li>
+<li>To create a Snapshots for EBS that serve as root devices, you should stop the instance before taking the snapshot.</li>
+<li>However you can take a snap while the instance is running.</li>
+<li>You can create AMI’s from snapshot</li>
+<li>You can change EBS volume sizes on the fly, including changing the size and storage type.</li>
+<li><p>Volumes will ALWAYS be in the same AZ as the EC2 instance.</p>
+</li>
+<li><p>To move an EC2 volume from one AZ to another, take as snapshot of it, crate an AMI from the snapshot and then use the AMI to launch the EC2 instance in a new AZ.</p>
+</li>
+<li>To move an EC2 volume from one REGION to another, take as snapshot of it, crate an AMI from the snapshot and then copy the AMI from one region to the other. Then use the copied AMI to launch the new EC2 instance in the new region.</li>
+</ul>
+<p><strong>AMI Types (EBS vs. Instance Store)</strong></p>
+<ul>
+<li>All AMIs are categorized as either backed by EBS or backed by instance store.<ul>
+<li>The former means the root device for an instance launched from the AMI is an EBS volume created from an EBS snapshot.</li>
+<li>The latter means the root device for an instance launched from the AMI is an instance store volume created from a template stored in Amazon S3.</li>
+</ul>
+</li>
+<li>Instance Store Volumes are sometimes called Ephemeral Storage.</li>
+<li>Instance Store Volumes cannot be stopped. If the underlying host fails, you will lose your data.</li>
+<li>EBS backed instances can be stopped. You will not lose the data on this instance if it is stopped.</li>
+<li>You can reboot both, you will not lose your data.</li>
+<li>By Default, both ROOT volumes will be deleted on termination. However, with EBS volumes, you can tell AWS to keep the root device volume.</li>
+</ul>
+<p><strong>ENI vs. ENA vs. EFA [SAA-C02]</strong></p>
+<p>-</p>
+<p><strong>Encrypted Root Device Volumes and Snapshots - Lab</strong></p>
+<ul>
+<li>Snapshots of encrypted volumes are encrypted automatically</li>
+<li>Volumes restored from encryted Snapshots are encrypted automatically</li>
+<li>You can share snapshots, but only if they are unencrypted</li>
+<li>These snapshots can be shared with other AWS accounts or made public</li>
+<li><p>You can now encryted root device volumes upon creation of the EC2</p>
+</li>
+<li><p>Create a snapshot of the unencrypted root device volume.</p>
+</li>
+<li>Create a copy of the snapshot and select the encrypt option</li>
+<li>Create an AMI from the encrypted snapshot</li>
+<li>Use that AMI to launch new encrypted instances</li>
+</ul>
+<p><strong>Spot Instances and Spot Fleets [SAA-C02]</strong></p>
+<ul>
+<li>Spot instances can save up to 90% of the cost of On-Demand instances</li>
+<li>Useful for any type of computing where you don’t need persistent storage</li>
+<li>You can block Spot Instances from terminating by using Spot Block</li>
+<li>A spot fleet is a collection of spot instances and, optionally, On-demand Instances</li>
+</ul>
+<p><strong>EC2 Hibernate [SAA-C02]</strong></p>
+<ul>
+<li>EC2 Hibernate preserves the in-memory RAM on persistent storage (EBS)</li>
+<li>Much faster to boot up because you <em>do not need to reload the operating system</em></li>
+<li>Instance RAM must be less than <em>150GB</em></li>
+<li>Instance families include C3,C4,C5,M3,M4,M5,R3,R4,R5</li>
+<li>Available for Windows, Amazon Linux 2 MAI, and Ubuntu</li>
+<li>Instances can’t be hibernated for more than <em>60 Days</em></li>
+<li>Available for <em>On-Demand instances</em> and <em>Reserved instances</em></li>
+</ul>
+<p><strong>CloudWatch 101</strong></p>
+<ul>
+<li>CloudWatch is used for monitoring Performance.</li>
+<li>CloudWatch can monitor most os AWS as well as your applications that run on AWS.</li>
+<li>CloudWatch with EC2 cill monitor events every 5 minutes by default.</li>
+<li>You can have 1 minute intervals by turning on detailed monitoring.</li>
+<li>You can create CloudWatch alarms which trigger notifications.</li>
+<li>CloudWatch is all about performance. CloudTrail is all about auditing.</li>
+</ul>
+<p><a href="https://linuxacademy.com/" target="_blank" rel="noopener">Source</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">Source</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckeudcbpz001wrhiy4ns6ufsx" class="article-share-link">Partager</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AWS/">AWS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Nginx-ModSecurity" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/22/Nginx-ModSecurity/" class="article-date">
@@ -108,7 +546,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckcxxmmdu0005ddiyh36zizrp" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckeudcbne0001rhiyj1d7etp4" class="article-share-link">Partager</a>
       
       
       
@@ -178,7 +616,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckcxxmmea000gddiyblu2ses7" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckeudcbqv002prhiyy6oea57v" class="article-share-link">Partager</a>
       
       
       
@@ -224,7 +662,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckcxxmmdg0001ddiy2feql28z" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckeudcbq40020rhiyfxxc5mwx" class="article-share-link">Partager</a>
       
       
       
@@ -311,7 +749,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckcxxmmdr0004ddiylupcft5u" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckeudcbmt0000rhiyyz64vj7o" class="article-share-link">Partager</a>
       
       
       
@@ -422,7 +860,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckcxxmmg9002gddiyjzpfcoim" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckeudcbq2001yrhiy6nkxzeix" class="article-share-link">Partager</a>
       
       
       
@@ -474,7 +912,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckcxxmmek000pddiyw3ml3x4i" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckeudcbpx001vrhiyjkts2nxj" class="article-share-link">Partager</a>
       
       
       
@@ -522,7 +960,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckcxxmmdy0006ddiywxcbcgbl" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckeudcbno0004rhiytj5dg4dm" class="article-share-link">Partager</a>
       
       
       
@@ -567,7 +1005,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckcxxmmcq0000ddiyp7ey4qhy" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckeudcbo0000erhiy9j1shmj0" class="article-share-link">Partager</a>
       
       
       
@@ -615,59 +1053,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ckcxxmmeh000mddiy3pbnyc52" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="ckeudcbov001orhiywit1r9py" class="article-share-link">Partager</a>
       
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grep/">grep</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sort/">sort</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-post" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/16/post/" class="article-date">
-  <time datetime="2018-12-16T12:55:00.000Z" itemprop="datePublished">2018-12-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/16/post/">2018 first commit</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Wow ! This hexo blog is still up and working I can’t believe it.<br>So here is my first commit of 2018 :D \o/</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo go to sleep now ^^</span><br></pre></td></tr></table></figure>
-<p>Let’s keep working on this repo and see you later folks !</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">samedi 19 octobre 2019, 22:01:42 =&gt; and here we are &lt;=</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="ckcxxmme8000eddiy7tkie5l7" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Test/">Test</a></li></ul>
 
     </footer>
   </div>
@@ -692,7 +1082,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/Quick-Starts/">Quick Starts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/">ElasticSearch</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/Playing-with-Elastic-Stack-Modules/">Playing with Elastic Stack Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/How-to/">How to</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/Reparation-de-replication-master-master-sans-lock/">Réparation de réplication master/master (sans lock)</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/Playing-with-Nginx-and-Dynamic-Modules/">Playing with Nginx and Dynamic Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/iowait/">iowait</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/AWS-Certified-Solutions-Architect-Associate-SAA-C02/">AWS Certified Solutions Architect Associate SAA-C02</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/Quick-Starts/">Quick Starts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/">ElasticSearch</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/Playing-with-Elastic-Stack-Modules/">Playing with Elastic Stack Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/How-to/">How to</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/Reparation-de-replication-master-master-sans-lock/">Réparation de réplication master/master (sans lock)</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/Playing-with-Nginx-and-Dynamic-Modules/">Playing with Nginx and Dynamic Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/iowait/">iowait</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
     </div>
   </div>
 
@@ -702,7 +1092,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/42/">42</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ModSecurity/">ModSecurity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Univers/">Univers</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/githooks/">githooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iotop/">iotop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iowait/">iowait</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swap/">swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmstat/">vmstat</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/42/">42</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ModSecurity/">ModSecurity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Univers/">Univers</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/githooks/">githooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iotop/">iotop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iowait/">iowait</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swap/">swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmstat/">vmstat</a></li></ul>
     </div>
   </div>
 
@@ -712,7 +1102,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/Ansible/" style="font-size: 10px;">Ansible</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/ModSecurity/" style="font-size: 10px;">ModSecurity</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/githooks/" style="font-size: 10px;">githooks</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iotop/" style="font-size: 10px;">iotop</a> <a href="/tags/iowait/" style="font-size: 10px;">iowait</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a> <a href="/tags/vmstat/" style="font-size: 10px;">vmstat</a>
+      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/AWS/" style="font-size: 10px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 10px;">Ansible</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/ModSecurity/" style="font-size: 10px;">ModSecurity</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/githooks/" style="font-size: 10px;">githooks</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iotop/" style="font-size: 10px;">iotop</a> <a href="/tags/iowait/" style="font-size: 10px;">iowait</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a> <a href="/tags/vmstat/" style="font-size: 10px;">vmstat</a>
     </div>
   </div>
 
@@ -721,7 +1111,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">juillet 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mai 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">avril 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">octobre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">décembre 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">avril 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">mars 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">septembre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">juillet 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mai 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">avril 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">octobre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">décembre 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">avril 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">mars 2017</a></li></ul>
     </div>
   </div>
 
@@ -732,6 +1122,10 @@
     <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/09/08/AWS-SAAC-02/">AWS-SAAC-02</a>
+          </li>
         
           <li>
             <a href="/2020/07/22/Nginx-ModSecurity/">Nginx-ModSecurity</a>
@@ -747,10 +1141,6 @@
         
           <li>
             <a href="/2020/04/26/Elastic-Stack-Essentials/">Elastic-Stack-Essentials</a>
-          </li>
-        
-          <li>
-            <a href="/2020/04/12/IoWait-Ma-Tuer/">IoWait ma Tuer</a>
           </li>
         
       </ul>

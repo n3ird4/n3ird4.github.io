@@ -5,20 +5,15 @@
   
 
   
-  <title>hexo how to | n3ird4</title>
+  <title>Catégorie: AWS Certified Solutions Architect Associate SAA-C02 | n3ird4</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Comment fonctionne ce site avec hexo:  j’ai tout d’abord hexo init ~/hexo (dans ma home pour pas m’embeter)  dans ~/hexo =&amp;gt; npm install + tunning du config.yml qui va bien pour deployer via git par">
-<meta name="keywords" content="hexo,githooks">
-<meta property="og:type" content="article">
-<meta property="og:title" content="hexo how to">
-<meta property="og:url" content="http://91.208.181.214/2017/04/10/hexo-how-to/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="n3ird4">
+<meta property="og:url" content="http://91.208.181.214/categories/AWS/AWS-Certified-Solutions-Architect-Associate-SAA-C02/index.html">
 <meta property="og:site_name" content="n3ird4">
-<meta property="og:description" content="Comment fonctionne ce site avec hexo:  j’ai tout d’abord hexo init ~/hexo (dans ma home pour pas m’embeter)  dans ~/hexo =&amp;gt; npm install + tunning du config.yml qui va bien pour deployer via git par">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-04-26T10:57:14.877Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo how to">
-<meta name="twitter:description" content="Comment fonctionne ce site avec hexo:  j’ai tout d’abord hexo init ~/hexo (dans ma home pour pas m’embeter)  dans ~/hexo =&amp;gt; npm install + tunning du config.yml qui va bien pour deployer via git par">
+<meta name="twitter:title" content="n3ird4">
   
     <link rel="alternate" href="/atom.xml" title="n3ird4" type="application/atom+xml">
   
@@ -69,89 +64,39 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hexo-how-to" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/04/10/hexo-how-to/" class="article-date">
-  <time datetime="2017-04-10T20:42:00.000Z" itemprop="datePublished">2017-04-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>►<a class="article-category-link" href="/categories/Hexo/How-to/">How to</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      hexo how to
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2020/09/08/AWS-SAAC-02/" class="archive-article-date">
+  <time datetime="2020-09-08T19:21:42.000Z" itemprop="datePublished">sept. 8</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/09/08/AWS-SAAC-02/">AWS-SAAC-02</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Comment fonctionne ce site avec hexo:</strong></p>
-<ul>
-<li><p>j’ai tout d’abord hexo init ~/hexo (dans ma home pour pas m’embeter)</p>
-</li>
-<li><p>dans ~/hexo =&gt; npm install + tunning du config.yml qui va bien pour deployer via git par la suite.</p>
-</li>
-</ul>
-<p><strong>Comment je créer un article:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new my-super-article</span><br><span class="line">hexo publish my-super-article</span><br></pre></td></tr></table></figure></p>
-<p><strong>Comment Nginx fait le boulot:</strong></p>
-<ul>
-<li>Je crée un docroot vide =&gt; /var/www/hexo :)</li>
-</ul>
-<p><strong>Comment la magie opère:</strong></p>
-<ul>
-<li>git init –bare ~/hexo_bare (toujours à la racine pour pas m’embêter)</li>
-<li>création d’un hook post-receive =&gt; git –work-tree=/var/www/hexo –git-dir=/home/$USER/hexo_bare checkout -f</li>
-<li>Puis git clone <a href="https://github.com/n3ird4/n3ird4.github.io.git" target="_blank" rel="noopener">https://github.com/n3ird4/n3ird4.github.io.git</a> &amp;&amp; cd ~/n3ird4.github.io</li>
-<li>git remote add live ~/hexo_bare </li>
-</ul>
-<p><strong>Comment je deploie:</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">( <span class="built_in">cd</span> ~/n3ird4.github.io ; git pull ; git push live master )</span><br></pre></td></tr></table></figure>
-<p>Et voila via un appel au script de deploiement le taf se fait dans le repertoire ~/hexo et la synchro du /var/www/hexo est donc automatiquent effectuée via le push qui va venir remplir le contenu du docroot via le hook !</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="ckeudcbnt0006rhiyoi7dc6t1" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/githooks/">githooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2018/12/16/post/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
-      <div class="article-nav-title">
-        
-          2018 first commit
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/03/27/second-post/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
-      <div class="article-nav-title">second-post</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
 
 
 </section>
