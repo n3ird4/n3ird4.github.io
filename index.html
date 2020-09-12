@@ -553,13 +553,44 @@
 <li>You can’t merge placement groups.</li>
 <li>You can move an existing instance to a placement group. Before you move the instance, the instance must be in the stopped state. You can move or remove an instance using the AWS CLI or an AWS SDK, you can’t do it via the console yet.</li>
 </ul>
+<p><strong>HPC on AWS [SAA-C02]</strong></p>
+<ul>
+<li><strong>Data Transfer</strong>:</li>
+<li>Snowball, Snowmobile (terrabytes/petabytes worth of data)</li>
+<li>AWS DataSYnc to store on S3, EFS, FSx for Windows etc</li>
+<li>Direct Connect</li>
+<li><strong>Compute &amp; Networking</strong>:</li>
+<li>EC2 instances that are GPU or CPU Optimized</li>
+<li>EC2 Fleets (Spot Instance or Spot FLeets)</li>
+<li>Placement groups (cluster placement groups)</li>
+<li>Enhanced networking single root I/O virtualization (SR-IOV)</li>
+<li>Elastic Network Adapters or intel 82599 Virtual Function (VF) interfaces</li>
+<li>Elastic Fabric Adapters</li>
+<li><strong>Storage</strong>:<ul>
+<li>Instance-attached storage:<ul>
+<li><strong>EBS</strong>: sclae up to 64000 IOPS with Provisionned IOPS (PIOPS)</li>
+<li><strong>Instance Store</strong>: Sclae to millions of IOPS; low Latency</li>
+</ul>
+</li>
+<li>Network Storage:<ul>
+<li><strong>Amazon S3</strong>: Distributed object-based storage; not a file system.</li>
+<li><strong>Amazon EFS</strong>: Scale IOPS based on total size, or use Provisionned IOPS</li>
+<li><strong>Amazon FSx for Lustre</strong>: HPC-optimized distributed file system, millions of IOPS, which is also backed by S3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Orchestration &amp; AUtomation</strong>: </li>
+<li>AWS batch</li>
+<li>AWS ParallelCluster</li>
+</ul>
 <p>To be continued…</p>
 <p>Sources:<br><a href="https://linuxacademy.com/" target="_blank" rel="noopener">LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">AWS Faq</a><br><a href="https://learn.cantrill.io/p/aws-certified-solutions-architect-associate-saa-c02" target="_blank" rel="noopener">learn.cantrill.io</a> </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf054khd002n5biyvv4e73dz" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf05v4k7002noqiyzvbfav1s" class="article-share-link">Partager</a>
       
       
       
@@ -631,7 +662,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf054keg00095biyynttl206" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf05v4hw0009oqiyxh5jum1l" class="article-share-link">Partager</a>
       
       
       
@@ -687,7 +718,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf054keb00055biypuughgws" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf05v4ho0005oqiynvci3wgg" class="article-share-link">Partager</a>
       
       
       
@@ -757,7 +788,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf054ker000k5biyxl15n961" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf05v4ib000koqiysqoh2tt1" class="article-share-link">Partager</a>
       
       
       
@@ -803,7 +834,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf054kdz00015biychgyj2fq" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf05v4ha0001oqiyrywb5bql" class="article-share-link">Partager</a>
       
       
       
@@ -890,7 +921,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf054ke900045biy6basc7yt" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf05v4hl0004oqiyeb8i6ufb" class="article-share-link">Partager</a>
       
       
       
@@ -1001,7 +1032,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf054khg002o5biyc21z9519" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf05v4kb002ooqiy9kgz6wkq" class="article-share-link">Partager</a>
       
       
       
@@ -1053,7 +1084,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf054kf8000r5biy6ywkqy5j" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf05v4in000roqiycofp001e" class="article-share-link">Partager</a>
       
       
       
@@ -1101,7 +1132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf054ked00065biyv8pw2dwo" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf05v4ht0006oqiyy7wgu23i" class="article-share-link">Partager</a>
       
       
       
@@ -1146,7 +1177,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf054kdf00005biy36ebpnvb" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf05v4gj0000oqiydgq5oqlq" class="article-share-link">Partager</a>
       
       
       
