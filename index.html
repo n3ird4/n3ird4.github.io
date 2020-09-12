@@ -66,78 +66,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-blocklist-IP-address-with-Varnish" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/10/blocklist-IP-address-with-Varnish/" class="article-date">
-  <time datetime="2020-09-10T20:21:42.000Z" itemprop="datePublished">2020-09-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Varnish/">Varnish</a>►<a class="article-category-link" href="/categories/Varnish/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/10/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Prerequisites-and-example-of-blocking-IP-address-via-Varnish-behind-an-NginX-or-an-ALB-CDN-etc-…"><a href="#Prerequisites-and-example-of-blocking-IP-address-via-Varnish-behind-an-NginX-or-an-ALB-CDN-etc-…" class="headerlink" title="Prerequisites and example of blocking IP address via Varnish behind an NginX or an ALB, CDN, etc …"></a>Prerequisites and example of blocking IP address via Varnish behind an NginX or an ALB, CDN, etc …</h3><p><strong>Prerequisites </strong></p>
-<p>Make sure that the <em>X-Forwarded-For</em> Header is returned by NginX, ALB, CDN, etc.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Nginx vhost conf</span></span><br><span class="line">server &#123;</span><br><span class="line">    [...]</span><br><span class="line">    location / &#123;</span><br><span class="line">        [...]</span><br><span class="line">        proxy_set_header    X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        [...]</span><br><span class="line">        proxy_pass  http://127.0.0.1:80/;</span><br><span class="line">    &#125;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Setting up filtering</strong></p>
-<p>On the Varnish side, the filtering will go through the following 3 steps:</p>
-<ol>
-<li>Declaration or use of an ACL for the blocklist</li>
-<li>Cleaning the X-Forwarded-For header</li>
-<li>IP Cast, Test and Block</li>
-</ol>
-<p><strong>ACL Blocklist</strong></p>
-<p>After vcl_init and other acl directives, and before vcl_recv, make sure it is present or create the blocklist ACL and fill in the IPs to blocklist:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[...]</span><br><span class="line">acl whitelist &#123;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">acl blacklist &#123;</span><br><span class="line">    <span class="string">"X.X.X.X"</span>.</span><br><span class="line">    <span class="string">"Y.Y.Y.Y"</span>/24.</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">sub vcl\_recv &#123;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Cleaning the XFF Header</strong></p>
-<p>The created ACL contains objects of type IP, however, the XFF Header is a character string.<br>It is therefore necessary to cast the string into an IP object using the ip function of the sdt module.</p>
-<p>However, this function takes as input only one IP (as a string) <a href="see https://varnish-cache.org/docs/6.1/reference/vmod_std.generated.html#func-ip">Source: Varnish doc</a> , so you have to clean up the X-Forwarded-For Headers so that they contain only one IP:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sub vcl_recv &#123;</span><br><span class="line">    [...]</span><br><span class="line">    <span class="comment"># forward client IP</span></span><br><span class="line">    <span class="keyword">if</span> (req.restarts == 0) &#123;</span><br><span class="line">        <span class="comment"># </span></span><br><span class="line">	<span class="comment"># We only get the first IP of the XFF header if it exists,</span></span><br><span class="line">	<span class="comment"># otherwise we take the IP present in client.ip</span></span><br><span class="line">	<span class="comment">#</span></span><br><span class="line">        <span class="keyword">if</span> (req.http.X-Forwarded-For) &#123; <span class="built_in">set</span> req.http.X-Forwarded-For = regsub(req.http.X-Forwarded-For,<span class="string">"^(([0-9]&#123;1,3&#125;\.)&#123;3&#125;([0-9]&#123;1,3&#125;)).*"</span>,<span class="string">"\1"</span>); &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="built_in">set</span> req.http.X-Forwarded-For = client.ip; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>It is possible not to overwrite the XFF Header and instead create another Header which will be used for all the ACL tests, it will then be necessary to replace the set <em>req.http.X-Forwarded-For</em> by set <em>req.http.My-Custom-Header-Name</em> and be careful to replace it also wherever an ACL match is made.</p>
-<p>/!\ Ideally, this rule should be placed just after the loadbalancer’s health_check (httpprobe) so that all subsequent rules can benefit from it /!\</p>
-<p><strong>IP Cast, Test, and Block</strong></p>
-<p>Finally, you just have to cast the IP (string) into an IP object, check if it matches the ACL Blocklist and, if necessary, block it ;) </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sub vcl_recv &#123;</span><br><span class="line">    [...]</span><br><span class="line">    <span class="comment"># BlockList</span></span><br><span class="line">    <span class="keyword">if</span> (std.ip(req.http.X-Forwarded-For,<span class="string">"0.0.0.0"</span>) ~ blacklist) &#123;</span><br><span class="line">        <span class="built_in">return</span>(synth(403, <span class="string">"Not allowed."</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Warning ! You must place this directive after cleaning the XFF header, and not before, otherwise it will not work !</p>
-<p><strong>Debug &amp; Test</strong></p>
-<p>If the filtering does not work, it is possible to test the content of the XFF Header with varnishncsa as follow: </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">varnishncsa -F <span class="string">'%&#123;X-Forwarded-For&#125;i %l %u %t "%r" %s %b "%&#123;Referer&#125;i" "%&#123;User-agent&#125;i"'</span></span><br></pre></td></tr></table></figure>
-<p>or to check which directives and directive results were applied to the request with varnishlog.</p>
-<p>Happy blocking \o/</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/10/blocklist-IP-address-with-Varnish/" data-id="ckf052yu6000907iy5lnrij9s" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Varnish/">Varnish</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-AWS-SAAC-02" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/09/08/AWS-SAAC-02/" class="article-date">
@@ -631,11 +559,83 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf052ywf002n07iyajieft16" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf054khd002n5biyvv4e73dz" class="article-share-link">Partager</a>
       
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AWS/">AWS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-blocklist-IP-address-with-Varnish" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/01/blocklist-IP-address-with-Varnish/" class="article-date">
+  <time datetime="2020-09-01T20:21:42.000Z" itemprop="datePublished">2020-09-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Varnish/">Varnish</a>►<a class="article-category-link" href="/categories/Varnish/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/01/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Prerequisites-and-example-of-blocking-IP-address-via-Varnish-behind-an-NginX-or-an-ALB-CDN-etc-…"><a href="#Prerequisites-and-example-of-blocking-IP-address-via-Varnish-behind-an-NginX-or-an-ALB-CDN-etc-…" class="headerlink" title="Prerequisites and example of blocking IP address via Varnish behind an NginX or an ALB, CDN, etc …"></a>Prerequisites and example of blocking IP address via Varnish behind an NginX or an ALB, CDN, etc …</h3><p><strong>Prerequisites </strong></p>
+<p>Make sure that the <em>X-Forwarded-For</em> Header is returned by NginX, ALB, CDN, etc.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Nginx vhost conf</span></span><br><span class="line">server &#123;</span><br><span class="line">    [...]</span><br><span class="line">    location / &#123;</span><br><span class="line">        [...]</span><br><span class="line">        proxy_set_header    X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        [...]</span><br><span class="line">        proxy_pass  http://127.0.0.1:80/;</span><br><span class="line">    &#125;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Setting up filtering</strong></p>
+<p>On the Varnish side, the filtering will go through the following 3 steps:</p>
+<ol>
+<li>Declaration or use of an ACL for the blocklist</li>
+<li>Cleaning the X-Forwarded-For header</li>
+<li>IP Cast, Test and Block</li>
+</ol>
+<p><strong>ACL Blocklist</strong></p>
+<p>After vcl_init and other acl directives, and before vcl_recv, make sure it is present or create the blocklist ACL and fill in the IPs to blocklist:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[...]</span><br><span class="line">acl whitelist &#123;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">acl blacklist &#123;</span><br><span class="line">    <span class="string">"X.X.X.X"</span>.</span><br><span class="line">    <span class="string">"Y.Y.Y.Y"</span>/24.</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">sub vcl\_recv &#123;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Cleaning the XFF Header</strong></p>
+<p>The created ACL contains objects of type IP, however, the XFF Header is a character string.<br>It is therefore necessary to cast the string into an IP object using the ip function of the sdt module.</p>
+<p>However, this function takes as input only one IP (as a string) <a href="see https://varnish-cache.org/docs/6.1/reference/vmod_std.generated.html#func-ip">Source: Varnish doc</a> , so you have to clean up the X-Forwarded-For Headers so that they contain only one IP:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sub vcl_recv &#123;</span><br><span class="line">    [...]</span><br><span class="line">    <span class="comment"># forward client IP</span></span><br><span class="line">    <span class="keyword">if</span> (req.restarts == 0) &#123;</span><br><span class="line">        <span class="comment"># </span></span><br><span class="line">	<span class="comment"># We only get the first IP of the XFF header if it exists,</span></span><br><span class="line">	<span class="comment"># otherwise we take the IP present in client.ip</span></span><br><span class="line">	<span class="comment">#</span></span><br><span class="line">        <span class="keyword">if</span> (req.http.X-Forwarded-For) &#123; <span class="built_in">set</span> req.http.X-Forwarded-For = regsub(req.http.X-Forwarded-For,<span class="string">"^(([0-9]&#123;1,3&#125;\.)&#123;3&#125;([0-9]&#123;1,3&#125;)).*"</span>,<span class="string">"\1"</span>); &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="built_in">set</span> req.http.X-Forwarded-For = client.ip; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>It is possible not to overwrite the XFF Header and instead create another Header which will be used for all the ACL tests, it will then be necessary to replace the set <em>req.http.X-Forwarded-For</em> by set <em>req.http.My-Custom-Header-Name</em> and be careful to replace it also wherever an ACL match is made.</p>
+<p>/!\ Ideally, this rule should be placed just after the loadbalancer’s health_check (httpprobe) so that all subsequent rules can benefit from it /!\</p>
+<p><strong>IP Cast, Test, and Block</strong></p>
+<p>Finally, you just have to cast the IP (string) into an IP object, check if it matches the ACL Blocklist and, if necessary, block it ;) </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sub vcl_recv &#123;</span><br><span class="line">    [...]</span><br><span class="line">    <span class="comment"># BlockList</span></span><br><span class="line">    <span class="keyword">if</span> (std.ip(req.http.X-Forwarded-For,<span class="string">"0.0.0.0"</span>) ~ blacklist) &#123;</span><br><span class="line">        <span class="built_in">return</span>(synth(403, <span class="string">"Not allowed."</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Warning ! You must place this directive after cleaning the XFF header, and not before, otherwise it will not work !</p>
+<p><strong>Debug &amp; Test</strong></p>
+<p>If the filtering does not work, it is possible to test the content of the XFF Header with varnishncsa as follow: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">varnishncsa -F <span class="string">'%&#123;X-Forwarded-For&#125;i %l %u %t "%r" %s %b "%&#123;Referer&#125;i" "%&#123;User-agent&#125;i"'</span></span><br></pre></td></tr></table></figure>
+<p>or to check which directives and directive results were applied to the request with varnishlog.</p>
+<p>Happy blocking \o/</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf054keg00095biyynttl206" class="article-share-link">Partager</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Varnish/">Varnish</a></li></ul>
 
     </footer>
   </div>
@@ -687,7 +687,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf052yty000507iyajdvh5n6" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf054keb00055biypuughgws" class="article-share-link">Partager</a>
       
       
       
@@ -757,7 +757,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf052yug000g07iyrsxdct09" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf054ker000k5biyxl15n961" class="article-share-link">Partager</a>
       
       
       
@@ -803,7 +803,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf052yti000107iyg3gvjprc" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf054kdz00015biychgyj2fq" class="article-share-link">Partager</a>
       
       
       
@@ -890,7 +890,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf052ytt000407iyknmwxmj1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf054ke900045biy6basc7yt" class="article-share-link">Partager</a>
       
       
       
@@ -1001,7 +1001,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf052ywh002o07iyim29cqpa" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf054khg002o5biyc21z9519" class="article-share-link">Partager</a>
       
       
       
@@ -1053,7 +1053,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf052yut000r07iy7mhb7hgm" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf054kf8000r5biy6ywkqy5j" class="article-share-link">Partager</a>
       
       
       
@@ -1101,7 +1101,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf052yu2000607iyu5olodu8" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf054ked00065biyv8pw2dwo" class="article-share-link">Partager</a>
       
       
       
@@ -1146,7 +1146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf052yss000007iy1dycxqo6" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf054kdf00005biy36ebpnvb" class="article-share-link">Partager</a>
       
       
       
@@ -1217,11 +1217,11 @@
       <ul>
         
           <li>
-            <a href="/2020/09/10/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a>
+            <a href="/2020/09/08/AWS-SAAC-02/">AWS-SAAC-02</a>
           </li>
         
           <li>
-            <a href="/2020/09/08/AWS-SAAC-02/">AWS-SAAC-02</a>
+            <a href="/2020/09/01/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a>
           </li>
         
           <li>
