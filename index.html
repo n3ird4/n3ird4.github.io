@@ -280,20 +280,20 @@
 <p><strong>Athena vs. Macie [SAA-C02]</strong></p>
 <p><strong>S3 and IAM Summary</strong></p>
 <ul>
-<li>IAM consists of tje following:<ul>
-<li>Users/Group/Roles/Policies</li>
+<li>IAM consists of the following:<ul>
+<li>Users / Group / Roles / Policies</li>
 </ul>
 </li>
 <li>IAM is universal. It does not apply to regions at this time.</li>
 <li>the “root account” is simply the account created when first setup your AWS account. It has complete Admin access.</li>
 <li>New Users have NO permissions when first created.</li>
 <li>New Users are assigned Access Key ID &amp; Secret Access Keys when created.</li>
-<li>These are not the same as a password. You cannot use the Access key ID &amp; Secret Access  Key to login in to the console.<br>You can use this to access AWS via the APIs and Command Line, however.</li>
+<li>These are not the same as a password. You cannot use the Access key ID &amp; Secret Access Key to login in to the console.<br>You can use this to access AWS via the APIs and Command Line, however.</li>
 <li>You only get to view these once. if you loose them you have to regenerate them. So, save them in a secure location.</li>
 </ul>
 <p>=&gt; Always setup Multifactor Authentication on your root account.<br>=&gt; You can create and customise your own password rotation policies.</p>
 <ul>
-<li>Remember that S3 is OBJECT-BASED: i.e allows youto upload files.</li>
+<li>Remember that S3 is OBJECT-BASED: i.e allows you to upload files.</li>
 <li>Files can be from 0 Bytes to 5TB.</li>
 <li>There is unlimited storage.</li>
 <li>Files are stored in Buckets.</li>
@@ -582,7 +582,12 @@
 </li>
 <li><strong>Orchestration &amp; Automation</strong>: </li>
 <li>AWS batch</li>
-<li>AWS ParallelCluster</li>
+<li>AWS ParallelCluster <a href="https://aws.amazon.com/getting-started/hands-on/deploy-elastic-hpc-cluster/?nc1=h_ls" target="_blank" rel="noopener">cf Doc:</a></li>
+</ul>
+<p><strong>AWS WAF [SAA-C02]</strong><br><em>In the exam you will be given different scenarios and you will be asked how to block malicious IP addresses</em></p>
+<ul>
+<li>Use AWS WAF</li>
+<li>Use Network ACLs - (cf VPC Section)</li>
 </ul>
 <p>To be continued…</p>
 <p>Sources:<br><a href="https://linuxacademy.com/" target="_blank" rel="noopener">LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">AWS Faq</a><br><a href="https://learn.cantrill.io/p/aws-certified-solutions-architect-associate-saa-c02" target="_blank" rel="noopener">learn.cantrill.io</a> </p>
@@ -590,7 +595,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf05z6qy002mvziytie5r3lw" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf0vynvl002n37iy0on8kkye" class="article-share-link">Partager</a>
       
       
       
@@ -662,7 +667,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf05z6o7000avziyzwqce8tm" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf0vynsr000a37iy7rgzya7o" class="article-share-link">Partager</a>
       
       
       
@@ -718,7 +723,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf05z6o20006vziyayi3ubn1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf0vynsi000537iyjlsug16q" class="article-share-link">Partager</a>
       
       
       
@@ -788,7 +793,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf05z6og000kvziyj0xw05yi" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf0vynt1000k37iy7i77k6oi" class="article-share-link">Partager</a>
       
       
       
@@ -834,7 +839,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf05z6no0001vziymb68ye8o" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf0vyns2000137iykvp6jafa" class="article-share-link">Partager</a>
       
       
       
@@ -921,7 +926,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf05z6ny0004vziyugyj4ujy" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf0vynsf000437iyp1fx3tld" class="article-share-link">Partager</a>
       
       
       
@@ -1032,7 +1037,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf05z6r0002nvziy1krl3u4h" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf0vynvn002o37iy6gqpmd3d" class="article-share-link">Partager</a>
       
       
       
@@ -1084,7 +1089,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf05z6os000rvziy2up41ak5" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf0vyntd000r37iy6yqzfxfw" class="article-share-link">Partager</a>
       
       
       
@@ -1132,7 +1137,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf05z6o00005vziyknubgbcm" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf0vynsl000637iyoyog4hyy" class="article-share-link">Partager</a>
       
       
       
@@ -1177,7 +1182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf05z6n30000vziy20k6qj5t" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf0vynra000037iykbwv4b7f" class="article-share-link">Partager</a>
       
       
       
