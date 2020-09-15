@@ -654,8 +654,8 @@
 <ul>
 <li>Instance Store Volumes are sometimes called Ephemeral Storage.</li>
 <li>Instance store volumes cannot be stopped. If the underlying host fails, you will lose your data.</li>
-<li>EBS backend instances can be stopped. You will not lose teh data on this instance if it is stopped.</li>
-<li>You can reboot both, you will not lose your data</li>
+<li>EBS backed instances can be stopped. You will not lose the data on this instance if it is stopped.</li>
+<li>You can reboot both, you will not lose your data.</li>
 <li>By default, both ROOT Volumes will be deleted on termination. However, with EBS volumes, you can tell AWS to keep the root device volume.</li>
 </ul>
 <p><strong>Encrypting Root Device Volumes</strong></p>
@@ -665,11 +665,11 @@
 <li>Create an AMI from the encrypted Snapshot</li>
 <li>Use that AMI to launch new encrypted instances.</li>
 </ul>
-<p><strong>Enhanced Networking</strong><br><strong>In the exam you will be given difreent scenarios and you will be asked to choose whether you should use ENI, EN or EFA</strong></p>
+<p><strong>Enhanced Networking</strong><br><em>In the exam you will be given difreent scenarios and you will be asked to choose whether you should use ENI, EN or EFA</em></p>
 <ul>
 <li><strong>ENI</strong>: For basic Networking. Perhaps you need a separate management network to your production network or a separate logging network and you need to do this at law cost. In this scenario use multiple ENIs for each network.</li>
 <li><strong>Enhanced Network</strong>: For when you need speeds between 10Gbps and 100Gbps. Anywhere you need reliable, high throughput.</li>
-<li><strong>Elastic Fabric Adapter</strong>: For when you need to accelerate High Performance Computing (HPC) and machine learning applications or if you need to do an OS by-pass. If you see a scenario question mentioning HPC or ML and asking what network you want, choose EFA.</li>
+<li><strong>Elastic Fabric Adapter</strong>: For when you need to accelerate High Performance Computing (HPC) and machine learning applications or if you need to do an OS by-pass. If you see a scenario question mentioning HPC or ML and asking what network you want, choose EFA !</li>
 </ul>
 <p><strong>CloudWatch</strong></p>
 <ul>
@@ -724,24 +724,21 @@
 <li><strong>Amazon FSx for Windows</strong>: When you need centralised storage for Windows-based applications such as Sharepoint, Microsoft SQL Server, Workspaces, IIS Web Server or any other native Microsoft Application.</li>
 <li><strong>Amazon FSx for Lustre</strong>: When you need high-speed, high-capacity distributed storage. This will be for applications that do High Performance Compute (HPC), financial modelling etc. Remember that FSx for Lustre can store data directly on S3.</li>
 </ul>
-<p><strong>EC2 Placement Groups</strong></p>
-<p>Three types of Placement Group.</p>
+<p><strong>EC2 Placement Groups</strong><br><em>Three types of Placement Group</em></p>
 <ul>
 <li><strong>Clustered Placement Group</strong><ul>
-<li>Low Network Latency / High Network Throughput</li>
+<li>Low Network Latency / High Network Throughputi.</li>
 </ul>
 </li>
 <li><strong>Spread Placement Group</strong><ul>
 <li>Individual Critical EC2 instances.</li>
 </ul>
 </li>
-<li><p><strong>Partitioned</strong></p>
-<ul>
+<li><strong>Partitioned</strong><ul>
 <li>Multiple EC2 instances HDFS, HBASE, and Cassandra.</li>
 </ul>
 </li>
-<li><p>A Clustered placement group can’t span multiple AZs.</p>
-</li>
+<li>A Clustered placement group can’t span multiple AZs.</li>
 <li>A Spread placement and Partitioned can.</li>
 <li>The name you specify for a placement group must be unique within you AWS account.</li>
 <li>Only certain types of instances can be launched in a placement group (Compute Optimized, GPU, Memory Optimized, Storage Optimized)</li>
@@ -933,7 +930,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4dhep0002xaciymm6cydg7" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4dsq5w002xk0iydnqjulg1" class="article-share-link">Partager</a>
       
       
       
@@ -1005,7 +1002,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf4dhem50009aciyuff3fvc1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf4dsq260009k0iyzs7d6ye8" class="article-share-link">Partager</a>
       
       
       
@@ -1061,7 +1058,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf4dhelz0005aciyzva3cw71" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf4dsq220005k0iya3imn1zl" class="article-share-link">Partager</a>
       
       
       
@@ -1131,7 +1128,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf4dheml000maciyihn6p2jg" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf4dsq2i000kk0iy6pmecqkx" class="article-share-link">Partager</a>
       
       
       
@@ -1177,7 +1174,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf4dhelk0001aciy1h1df77s" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf4dsq1q0001k0iyz9d18oxh" class="article-share-link">Partager</a>
       
       
       
@@ -1264,7 +1261,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf4dhelw0004aciy0iuuze7u" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf4dsq200004k0iygh4ml484" class="article-share-link">Partager</a>
       
       
       
@@ -1375,7 +1372,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf4dheoj002naciysjivhszd" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf4dsq56002nk0iytk9ex4su" class="article-share-link">Partager</a>
       
       
       
@@ -1427,7 +1424,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf4dhemt000raciy60lkty79" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf4dsq2t000rk0iyja03glas" class="article-share-link">Partager</a>
       
       
       
@@ -1475,7 +1472,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf4dhem10006aciyt1vi4rar" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf4dsq240006k0iytqy2me53" class="article-share-link">Partager</a>
       
       
       
@@ -1520,7 +1517,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf4dheku0000aciyldm9l6f2" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf4dsq170000k0iy1u406p1u" class="article-share-link">Partager</a>
       
       
       
