@@ -951,13 +951,75 @@
 <li>By default, log data is <strong>stored on the master node</strong>.</li>
 <li>You can configure replication to S3 on <strong>five-minutes intervals for all log data from the master node</strong>; however, this can only be configured when creating the cluster for the first time.</li>
 </ul>
+<p><strong>Databases Summary</strong></p>
+<ul>
+<li><strong>RDS</strong> (OLTP)</li>
+<li>DynamoDB (NoSQL)</li>
+<li>RedShift OLAP</li>
+<li>ElastiCache (memcached / Redis)</li>
+<li>RDS runs on VM</li>
+<li>You cannot log in to these operating systems however.</li>
+<li>Patching of the RDS Operating System and DB is Amazon’s responsibility.</li>
+<li>RDS is NOT Serverless</li>
+<li>Aurora Serverless Is Serverless</li>
+<li>2 types of Backups for RDS:<ul>
+<li>Automated Backups</li>
+<li>Database Snapshots</li>
+</ul>
+</li>
+<li>Read Replicas can be Multi-AZ<ul>
+<li>Used to increas performance.</li>
+<li>Must have backups turned on.</li>
+<li>Can be in different regions.</li>
+<li>Can be MySQL, PostrgeSQL, MariaDB, Oracle, Aurora.</li>
+<li>Can be promoted to master, this will break the Read Replica.</li>
+<li>MSSQL is now available to be used with Read Replicas.</li>
+</ul>
+</li>
+<li>MutliAZ:<ul>
+<li>Used for DR.</li>
+<li>You can force a failover from one AZ to another by rebooting the RDS instance.</li>
+</ul>
+</li>
+<li><strong>DynamoDB</strong>:<ul>
+<li>Stored on SSD storage.</li>
+<li>Spread accross 3 geographically distinct data centres.</li>
+<li>Eventual Consistent Reads (default)</li>
+<li>Strongly Consistent Reads.</li>
+</ul>
+</li>
+<li><strong>RedShift</strong>:<ul>
+<li>Is used for Business intelligence.</li>
+<li>Available in only 1 AZ.</li>
+<li>Backups are enabled by default with a 1 day retention period.</li>
+<li>Maximum retention period is 35 days.</li>
+<li>Redshift always attempts to maintain at least 3 copies of your data (the original and replica on the compute nodes and backup in Amazon S3)</li>
+<li>RedShift can also asynchronously replicate you snapshots to S3 in another region for disaster recovery.</li>
+</ul>
+</li>
+<li><strong>Aurora</strong>:<ul>
+<li>2 copies of your data are contained in each AZ, with minimum of 3 AZ. 6 copies of your data.</li>
+<li>You can share Aurora snapshots with other AWS accounts.</li>
+<li>3 types of replicas available. Aurora Replicas, MySQL replicas &amp; PostgreSQL replicas. Automated failover is only available with Aurora Replicas.</li>
+<li>Aurora has automated backups turned on by default. You can also take snapshots with Aurora. You can share these snapshots with other AWS accounts.</li>
+<li>Use Aurora Serverless if you want a simple, cost effective option for infrequent, intermittent, or unpredictable workloads.</li>
+</ul>
+</li>
+<li><strong>Elasticache</strong>:<ul>
+<li>Use ElastiCache to increase database and web application performance.</li>
+<li>Redis is Multi-AZ</li>
+<li>You can do back ups and restores of Redis.</li>
+<li>If you need to scale horizontally, use Memcached.</li>
+</ul>
+</li>
+</ul>
 <p>To be continued…</p>
 <p>Sources:<br><a href="https://linuxacademy.com/" target="_blank" rel="noopener">LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">AWS Faq</a><br><a href="https://learn.cantrill.io/p/aws-certified-solutions-architect-associate-saa-c02" target="_blank" rel="noopener">learn.cantrill.io</a><br><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" rel="noopener">AWS Well-Architected Framework</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4exnf1002xihiyi4m5qy2x" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4frkyn002x58iywzap8lyd" class="article-share-link">Partager</a>
       
       
       
@@ -1029,7 +1091,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf4exnb90009ihiyikxepqbb" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf4frkvs000958iywb7xs9pk" class="article-share-link">Partager</a>
       
       
       
@@ -1085,7 +1147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf4exnb10004ihiyavc2up6q" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf4frkvm000558iyx1e49xnl" class="article-share-link">Partager</a>
       
       
       
@@ -1155,7 +1217,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf4exnbl000kihiy2p9de4fe" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf4frkw6000k58iyx8045rid" class="article-share-link">Partager</a>
       
       
       
@@ -1201,7 +1263,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf4exnaq0001ihiyawxviylq" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf4frkv6000158iyc3xw0ebd" class="article-share-link">Partager</a>
       
       
       
@@ -1288,7 +1350,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf4exnb40005ihiy5pnlx6jf" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf4frkvj000458iyishoqe3q" class="article-share-link">Partager</a>
       
       
       
@@ -1399,7 +1461,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf4exneb002nihiyw894lrz7" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf4frky6002n58iycjq5ylr5" class="article-share-link">Partager</a>
       
       
       
@@ -1451,7 +1513,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf4exnc0000qihiy34h7kg0f" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf4frkwm000r58iyv6y2adnl" class="article-share-link">Partager</a>
       
       
       
@@ -1499,7 +1561,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf4exnb60006ihiyilv9qm0l" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf4frkvp000658iy2mng84qv" class="article-share-link">Partager</a>
       
       
       
@@ -1544,7 +1606,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf4exna60000ihiymg859yp7" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf4frkud000058iya15gxvb0" class="article-share-link">Partager</a>
       
       
       
