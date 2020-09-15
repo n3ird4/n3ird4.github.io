@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Yo this is my taking notes so far, work in progress  AWS - 10,000-Foot Overview Identity and Access Management &amp;amp; S3 EC2 Databases on AWS Advanced IAM Route 53 VPCs HA Architecture Applications Sec">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-09-15T19:32:14.685Z">
+<meta property="og:updated_time" content="2020-09-15T19:52:03.180Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AWS-SAAC-02">
 <meta name="twitter:description" content="Yo this is my taking notes so far, work in progress  AWS - 10,000-Foot Overview Identity and Access Management &amp;amp; S3 EC2 Databases on AWS Advanced IAM Route 53 VPCs HA Architecture Applications Sec">
@@ -917,13 +917,26 @@
 <li>Currently only available in 1 AZ</li>
 <li>Can restore snapshots to new AZs in the event of an outage.</li>
 </ul>
+<p><strong>Aurora [SAA-C02]</strong><br><em>Aurora is a custom-designed relational database engine that forms part of RDS. Rather than an evolution, Aurora significantly replaces much of the traditional MySQL and PostgreSQL architecture in favor of cluster and shared storage architecture, which is more scalable and resilient with much higher performance.</em></p>
+<ul>
+<li>2 copies of your data are contained in each AZ, with minimum of 3 AZ. 6 copies of your data.</li>
+<li>You can share Aurora Snapshots with other AWS account.</li>
+<li>3 types of replicas available:<ul>
+<li>Aurora Replicas (15) (Automated failover is only available with Aurora Replicas.)</li>
+<li>MySQL replicas (5)</li>
+<li>PostgresQL replicas. (1)</li>
+</ul>
+</li>
+<li>Aurora has automated backups turned on by default. You can also take snapshots with Aurora. You can share these snapshots with other AWS accounts.</li>
+<li>Use Aurora Serverless if you want a simple, cost effective option for infrequent, intermittent, or unpredictable workloads.</li>
+</ul>
 <p>To be continued…</p>
 <p>Sources:<br><a href="https://linuxacademy.com/" target="_blank" rel="noopener">LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">AWS Faq</a><br><a href="https://learn.cantrill.io/p/aws-certified-solutions-architect-associate-saa-c02" target="_blank" rel="noopener">learn.cantrill.io</a> </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4csd5v002urwiyxqjfhuvc" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4dhep0002xaciymm6cydg7" class="article-share-link">Partager</a>
       
       
       
