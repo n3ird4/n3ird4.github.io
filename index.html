@@ -775,13 +775,152 @@
 <li>RDS is NOT Serverless.</li>
 <li>Aurora Serverless is Serverless.</li>
 </ul>
+<p><strong>RDS: Backups, Multi-AZ, and Read Replicas</strong></p>
+<ul>
+<li>TODO….</li>
+</ul>
+<p><strong>RDS: Backups, Multi-AZ, and Read Replicas - Lab</strong></p>
+<ul>
+<li>There are two different types of Backups for RDS:<ul>
+<li>Automated Backups</li>
+<li>Databases Snapshots</li>
+</ul>
+</li>
+<li>Read Replicas:<ul>
+<li>Can be Multi-AZ</li>
+<li>Used to increase performance.</li>
+<li>Must have backups turned on.</li>
+<li>Can be in different regions.</li>
+<li>Can be MySQL, PostrgeSQL, MariaDB, Oracle, Aurora.</li>
+<li>Can be promoted to master, this will break the Read Replica.</li>
+</ul>
+</li>
+<li>MutliAZ:<ul>
+<li>Used for DR(Disaster Recovery)</li>
+<li>You can force a failover from one AZ to another by rebooting the RDS instance.</li>
+</ul>
+</li>
+</ul>
+<p><strong>DynamoDB</strong></p>
+<ul>
+<li>Stored on SSD storage.</li>
+<li>Spread across 3 geographically distinct data centers.</li>
+<li>Eventual Consistent Reads (Default).</li>
+<li>Strongly Consistent Reads.</li>
+<li><strong>Eventual Consistent Reads</strong>: Consistency across all copies of data is usually reached within a second. Repeating a read after a short time should return updated data. (Best Read Performance)</li>
+<li><strong>Strongly Consistent Reads</strong>: A strongly consistent read returns a result that reflects all writes that received a successful response prior to the read.</li>
+</ul>
+<p><strong>Advanced DynamoDB [SAA-C02]</strong></p>
+<ul>
+<li><strong>DAX</strong> (DynamoDB Accelerator)</li>
+<li>Fully managed, highly available, in-memory cache</li>
+<li>10x performance improvement</li>
+<li>Reduces request time from milliseconds to <strong>microseconds</strong> - even under load !</li>
+<li>No need for developers to manage caching logic.</li>
+<li>Compatible with DynamoDB API calls</li>
+<li><strong>Transactions</strong>:<ul>
+<li>Multiple “all-or-nothing” operations.</li>
+<li>Financial transactions.</li>
+<li>Fulfilling orders.</li>
+<li>Two underlying reads or writes - prepare/commit</li>
+<li>Up to 25 items or 4 MB of data.</li>
+</ul>
+</li>
+<li><strong>On-Demand capacity</strong>:<ul>
+<li><strong>Pay-per-request</strong> pricing.</li>
+<li>Balance cost and performance.</li>
+<li>No minimum capacity.</li>
+<li>No charge for read/write - only storage and backups.</li>
+<li><strong>Pay more per request</strong> than with provisioned capacity.</li>
+<li>Use for new product launches.</li>
+</ul>
+</li>
+<li><strong>Backup and Restore</strong>:<ul>
+<li><strong>On-Demand backup and restore</strong>:<ul>
+<li>Full backups at any time.</li>
+<li>Zero impact on table performance or availability</li>
+<li>Consistent within seconds and <strong>retained until deleted</strong></li>
+<li>Operates within same region as the source table.</li>
+</ul>
+</li>
+<li><strong>Point in Time Recovery (PITR)</strong>:<ul>
+<li>Protects against accidental writes or deletes.</li>
+<li>Restore to any point in the last <strong>35 days</strong>.</li>
+<li>Incremental backups.</li>
+<li>Not enabled by default.</li>
+<li>Latest restorable: <strong>five minutes</strong> in the past.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Streams</strong><ul>
+<li>Time-ordered sequence of item-level changes in a table.</li>
+<li>Stored for 24 hours.</li>
+<li>Inserts, updates and deletes.</li>
+<li>Combine with Lambda functions for functionality like stored procedures.</li>
+</ul>
+</li>
+<li><p><strong>Global Tables</strong>:</p>
+<ul>
+<li><strong>Managed Multi-Master, Multi-Region Replication</strong>:<ul>
+<li>Globally distributed applications.</li>
+<li>Based on DynamoDB streams.</li>
+<li>Multi-region redundancy for DR or HA.</li>
+<li>No application rewrites.</li>
+<li>Replication latency under <strong>one second</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Database Migration Servicve (DMS)</strong>:</p>
+</li>
+<li><p><strong>Security</strong>:</p>
+<ul>
+<li>Encryption at REST using KMS.</li>
+<li>Site-to-site VPN.</li>
+<li>Direct Connect (DX).</li>
+<li>IMA policies and roles.</li>
+<li>Fine-grained access.</li>
+<li>CloudWatch and CloudTrail.</li>
+<li>VPC Endpoint.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Redshift</strong>:<br><em>Redshift is a petabyte-scale data warehouse product available within AWS. It’s capable of being used for ad-hoc warehousing/analytics or long-running deployments.</em></p>
+<ul>
+<li>RedShift is used for Business Intelligence.</li>
+<li>OLAP: Online Analytic Processing: using for Business Intelligence or Date Warehousing.</li>
+<li>Single Node (160G)</li>
+<li>Multi-Node<ul>
+<li>Leader Node (manages client connections and receives queries)</li>
+<li>Compute Node (store data and perform queries and computations). Up to 128 Compute Nodes.</li>
+</ul>
+</li>
+<li>MPP: Massive Parallel Processing.</li>
+<li>Backups:<ul>
+<li>Enable by default with 1 day retention period.</li>
+<li>Maximum retention period is 35 days.</li>
+<li>Redshift always attempts to maintain at least three copies of your data (the original and replica on the compute nodes and a backup in Amazon S3).</li>
+<li>RedShift can also asynchronously replicate your snapshots to S3 in another region for disaster recovery.</li>
+</ul>
+</li>
+<li>Encrypted in transit using SSL</li>
+<li>Encrypted at REST using AES-256 encryption.</li>
+<li>By default Redshift takes care of key management.<ul>
+<li>Manage your own keys through HSM.</li>
+<li>AWS key Management Service.</li>
+</ul>
+</li>
+<li>Currently only available in 1 AZ</li>
+<li>Can restore snapshots to new AZs in the event of an outage.</li>
+</ul>
 <p>To be continued…</p>
 <p>Sources:<br><a href="https://linuxacademy.com/" target="_blank" rel="noopener">LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">AWS Faq</a><br><a href="https://learn.cantrill.io/p/aws-certified-solutions-architect-associate-saa-c02" target="_blank" rel="noopener">learn.cantrill.io</a> </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf31anza002xeqiyvt6bshv1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4csd5v002urwiyxqjfhuvc" class="article-share-link">Partager</a>
       
       
       
@@ -853,7 +992,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf31anw40009eqiybs6whjjl" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf4csd3b0009rwiygftn5lox" class="article-share-link">Partager</a>
       
       
       
@@ -909,7 +1048,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf31anvy0005eqiyc0j5ewj2" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf4csd360005rwiyiea2kzb0" class="article-share-link">Partager</a>
       
       
       
@@ -979,7 +1118,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf31anwj000keqiyvscabqo7" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf4csd3n000krwiysgphfjzf" class="article-share-link">Partager</a>
       
       
       
@@ -1025,7 +1164,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf31anvi0001eqiyojv1jemu" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf4csd2s0001rwiy7cxl9gq6" class="article-share-link">Partager</a>
       
       
       
@@ -1112,7 +1251,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf31anvu0004eqiyfwh8z98u" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf4csd330004rwiyd3v6hq1j" class="article-share-link">Partager</a>
       
       
       
@@ -1223,7 +1362,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf31anyq002neqiywy1b96ik" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf4csd5b002grwiyqpnova1e" class="article-share-link">Partager</a>
       
       
       
@@ -1275,7 +1414,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf31anwv000reqiyi7xgyq23" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf4csd3u000prwiywc171zyi" class="article-share-link">Partager</a>
       
       
       
@@ -1323,7 +1462,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf31anw00006eqiyair29vqo" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf4csd380006rwiyi89ol3rj" class="article-share-link">Partager</a>
       
       
       
@@ -1368,7 +1507,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf31anus0000eqiy9yt4n9qu" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf4csd220000rwiy9cli7u26" class="article-share-link">Partager</a>
       
       
       
