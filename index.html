@@ -600,8 +600,8 @@
 <p><strong>EC2 Instances Types</strong>:<br>F - For FPGA<br>I - For IOPS<br>G - Graphics<br>H - High Disk Throughput<br>T - Cheap general purpose (Think T2 micro)<br>D - For Density<br>R - For RAM<br>M - Main choice for general purpose apps<br>C - For compute<br>P - Graphics (think Pics)<br>X - Extreme Memory<br>Z - Extreme Memory AND CPU<br>A - Arm-based workloads<br>U - Bare Metal</p>
 <p><strong>EBS</strong>:</p>
 <ul>
-<li>EBS = hard disk drive on the cloud. Termination Protection is <strong>turned off</strong> by default, you must turn it on.</li>
-<li>on a EBS-Backed instance, the <strong>default action is for the root EBS volume to be deleted</strong> when instance is terminated.</li>
+<li>EBS = hard disk drive on the cloud. Termination Protection is <strong>turned off</strong> by default, you must turn it on!</li>
+<li>On a EBS-Backed instance, the <strong>default action is for the root EBS volume to be deleted</strong> when instance is terminated.</li>
 <li>EBS Root Volumes of your DEFAULT AMI’s <strong>CAN</strong> be encrypted. You can also use a third party tool (such as bit locker etc) to encrypt the root volume, or this can be done when creating AMI’s (remember the lab) in the AWS console or using the API.<ul>
 <li>Additional volumes can be encrypted.</li>
 </ul>
@@ -614,7 +614,7 @@
 <li>Changes to SG take effect immediately.</li>
 <li>You can have any number of EC2 instances within a security group.</li>
 <li>You can have multiple security groups attached to EC2 Instances.</li>
-<li>SG are <strong>STATEFULL</strong> (NACL are STATELESS)</li>
+<li><strong>SG</strong> are <strong>STATEFULL</strong> (<strong>NACL</strong> are <strong>STATELESS</strong>)</li>
 <li>If you create an inbound rule allowing traffic in, that traffic is automatically allowed back out again.</li>
 <li>You cannot block specific IP addresses using SG, instead use NACL.</li>
 </ul>
@@ -625,7 +625,7 @@
 <li>Snapshots are point in time copies of Volumes.</li>
 <li><strong>Snapshots are incremental</strong> this means that only the blocks that have changed since your last snapshot are moved to S3.</li>
 <li>If this is your first snapshot, it may take some time to create.</li>
-<li>To create a snapshot for Amazon EBS volumes that server as root devices, you should stop the instance before taking the snapshot.</li>
+<li>To create a snapshot for Amazon EBS volumes that serves as root devices, you should stop the instance before taking the snapshot.</li>
 <li>However you can take a snap while the instance is running.</li>
 <li>You can create AMI’s from both Volumes and snapshots</li>
 <li>You can change EBS volume sizes on the fly, including changing the size and storage type.</li>
@@ -924,13 +924,26 @@
 <li>Aurora has automated backups turned on by default. You can also take snapshots with Aurora. You can share these snapshots with other AWS accounts.</li>
 <li>Use Aurora Serverless if you want a simple, cost effective option for infrequent, intermittent, or unpredictable workloads.</li>
 </ul>
+<p><strong>Elasticache</strong></p>
+<ul>
+<li>Use Elasticache to increase database and web application performance.</li>
+<li>Redis is Multi-AZ.</li>
+<li>You can do back ups and restores of Redis.</li>
+</ul>
+<p><strong>Database Migration Service (DMS) [SAA-C02]</strong><br><em>In this Part, we’ll cover Database Migration Service (DMS), which can help with homogeneous migrations as well as migrations between different database engines, such as Oracle or SQL Server, to Amazon Aurora or DynamoDB.</em></p>
+<ul>
+<li>DMS allows you to <strong>migrate databases</strong> from one source to AWS.</li>
+<li>The source can either be on-premises, or inside AWS itself or another cloud provider such as Azure.</li>
+<li>You can do <strong>homogenous</strong> migrations (same DB engines) or <strong>heterogeneous</strong> migrations.</li>
+<li>If you do heterogeneous migration, you will need the <strong>AWS Schema Conversion Tool (SCT)</strong></li>
+</ul>
 <p>To be continued…</p>
-<p>Sources:<br><a href="https://linuxacademy.com/" target="_blank" rel="noopener">LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">AWS Faq</a><br><a href="https://learn.cantrill.io/p/aws-certified-solutions-architect-associate-saa-c02" target="_blank" rel="noopener">learn.cantrill.io</a> </p>
+<p>Sources:<br><a href="https://linuxacademy.com/" target="_blank" rel="noopener">LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">AWS Faq</a><br><a href="https://learn.cantrill.io/p/aws-certified-solutions-architect-associate-saa-c02" target="_blank" rel="noopener">learn.cantrill.io</a><br><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" rel="noopener">AWS Well-Architected Framework</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4dsq5w002xk0iydnqjulg1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4ej30p002x3fiy7lb48979" class="article-share-link">Partager</a>
       
       
       
@@ -1002,7 +1015,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf4dsq260009k0iyzs7d6ye8" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf4ej2xz000a3fiyd37qmn8g" class="article-share-link">Partager</a>
       
       
       
@@ -1058,7 +1071,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf4dsq220005k0iya3imn1zl" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf4ej2xr00053fiyrwczyur0" class="article-share-link">Partager</a>
       
       
       
@@ -1128,7 +1141,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf4dsq2i000kk0iy6pmecqkx" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf4ej2ya000k3fiy85uizb8f" class="article-share-link">Partager</a>
       
       
       
@@ -1174,7 +1187,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf4dsq1q0001k0iyz9d18oxh" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf4ej2xd00013fiyg8c3lf7o" class="article-share-link">Partager</a>
       
       
       
@@ -1261,7 +1274,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf4dsq200004k0iygh4ml484" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf4ej2xo00043fiyyzon79u3" class="article-share-link">Partager</a>
       
       
       
@@ -1372,7 +1385,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf4dsq56002nk0iytk9ex4su" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf4ej309002n3fiyosvx17us" class="article-share-link">Partager</a>
       
       
       
@@ -1424,7 +1437,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf4dsq2t000rk0iyja03glas" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf4ej2yk000p3fiyet8x0eo3" class="article-share-link">Partager</a>
       
       
       
@@ -1472,7 +1485,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf4dsq240006k0iytqy2me53" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf4ej2xu00063fiydusquawf" class="article-share-link">Partager</a>
       
       
       
@@ -1517,7 +1530,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf4dsq170000k0iy1u406p1u" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf4ej2wk00003fiymdpo49w4" class="article-share-link">Partager</a>
       
       
       

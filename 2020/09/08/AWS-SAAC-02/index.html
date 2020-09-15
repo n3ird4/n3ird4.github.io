@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Yo this is my taking notes so far, work in progress  AWS - 10,000-Foot Overview Identity and Access Management &amp;amp; S3 EC2 Databases on AWS Advanced IAM Route 53 VPCs HA Architecture Applications Sec">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-09-15T20:00:45.377Z">
+<meta property="og:updated_time" content="2020-09-15T20:21:21.302Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AWS-SAAC-02">
 <meta name="twitter:description" content="Yo this is my taking notes so far, work in progress  AWS - 10,000-Foot Overview Identity and Access Management &amp;amp; S3 EC2 Databases on AWS Advanced IAM Route 53 VPCs HA Architecture Applications Sec">
@@ -603,8 +603,8 @@
 <p><strong>EC2 Instances Types</strong>:<br>F - For FPGA<br>I - For IOPS<br>G - Graphics<br>H - High Disk Throughput<br>T - Cheap general purpose (Think T2 micro)<br>D - For Density<br>R - For RAM<br>M - Main choice for general purpose apps<br>C - For compute<br>P - Graphics (think Pics)<br>X - Extreme Memory<br>Z - Extreme Memory AND CPU<br>A - Arm-based workloads<br>U - Bare Metal</p>
 <p><strong>EBS</strong>:</p>
 <ul>
-<li>EBS = hard disk drive on the cloud. Termination Protection is <strong>turned off</strong> by default, you must turn it on.</li>
-<li>on a EBS-Backed instance, the <strong>default action is for the root EBS volume to be deleted</strong> when instance is terminated.</li>
+<li>EBS = hard disk drive on the cloud. Termination Protection is <strong>turned off</strong> by default, you must turn it on!</li>
+<li>On a EBS-Backed instance, the <strong>default action is for the root EBS volume to be deleted</strong> when instance is terminated.</li>
 <li>EBS Root Volumes of your DEFAULT AMI’s <strong>CAN</strong> be encrypted. You can also use a third party tool (such as bit locker etc) to encrypt the root volume, or this can be done when creating AMI’s (remember the lab) in the AWS console or using the API.<ul>
 <li>Additional volumes can be encrypted.</li>
 </ul>
@@ -617,7 +617,7 @@
 <li>Changes to SG take effect immediately.</li>
 <li>You can have any number of EC2 instances within a security group.</li>
 <li>You can have multiple security groups attached to EC2 Instances.</li>
-<li>SG are <strong>STATEFULL</strong> (NACL are STATELESS)</li>
+<li><strong>SG</strong> are <strong>STATEFULL</strong> (<strong>NACL</strong> are <strong>STATELESS</strong>)</li>
 <li>If you create an inbound rule allowing traffic in, that traffic is automatically allowed back out again.</li>
 <li>You cannot block specific IP addresses using SG, instead use NACL.</li>
 </ul>
@@ -628,7 +628,7 @@
 <li>Snapshots are point in time copies of Volumes.</li>
 <li><strong>Snapshots are incremental</strong> this means that only the blocks that have changed since your last snapshot are moved to S3.</li>
 <li>If this is your first snapshot, it may take some time to create.</li>
-<li>To create a snapshot for Amazon EBS volumes that server as root devices, you should stop the instance before taking the snapshot.</li>
+<li>To create a snapshot for Amazon EBS volumes that serves as root devices, you should stop the instance before taking the snapshot.</li>
 <li>However you can take a snap while the instance is running.</li>
 <li>You can create AMI’s from both Volumes and snapshots</li>
 <li>You can change EBS volume sizes on the fly, including changing the size and storage type.</li>
@@ -927,13 +927,26 @@
 <li>Aurora has automated backups turned on by default. You can also take snapshots with Aurora. You can share these snapshots with other AWS accounts.</li>
 <li>Use Aurora Serverless if you want a simple, cost effective option for infrequent, intermittent, or unpredictable workloads.</li>
 </ul>
+<p><strong>Elasticache</strong></p>
+<ul>
+<li>Use Elasticache to increase database and web application performance.</li>
+<li>Redis is Multi-AZ.</li>
+<li>You can do back ups and restores of Redis.</li>
+</ul>
+<p><strong>Database Migration Service (DMS) [SAA-C02]</strong><br><em>In this Part, we’ll cover Database Migration Service (DMS), which can help with homogeneous migrations as well as migrations between different database engines, such as Oracle or SQL Server, to Amazon Aurora or DynamoDB.</em></p>
+<ul>
+<li>DMS allows you to <strong>migrate databases</strong> from one source to AWS.</li>
+<li>The source can either be on-premises, or inside AWS itself or another cloud provider such as Azure.</li>
+<li>You can do <strong>homogenous</strong> migrations (same DB engines) or <strong>heterogeneous</strong> migrations.</li>
+<li>If you do heterogeneous migration, you will need the <strong>AWS Schema Conversion Tool (SCT)</strong></li>
+</ul>
 <p>To be continued…</p>
-<p>Sources:<br><a href="https://linuxacademy.com/" target="_blank" rel="noopener">LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">AWS Faq</a><br><a href="https://learn.cantrill.io/p/aws-certified-solutions-architect-associate-saa-c02" target="_blank" rel="noopener">learn.cantrill.io</a> </p>
+<p>Sources:<br><a href="https://linuxacademy.com/" target="_blank" rel="noopener">LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">AWS Faq</a><br><a href="https://learn.cantrill.io/p/aws-certified-solutions-architect-associate-saa-c02" target="_blank" rel="noopener">learn.cantrill.io</a><br><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" rel="noopener">AWS Well-Architected Framework</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4dsq5w002xk0iydnqjulg1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf4ej30p002x3fiy7lb48979" class="article-share-link">Partager</a>
       
       
       
