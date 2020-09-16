@@ -162,16 +162,16 @@
 </ul>
 <p><strong>S3 Performance</strong></p>
 <ul>
-<li>S3 Prefix : /folder1/folder</li>
-<li>S3 performance (3500 PUT) (5500GET) per second per prefix</li>
-<li>KMS Request Rates</li>
-<li>S3 Multipart Uploads:<ul>
-<li>Recommended for files over 100MB</li>
-<li>Required for files over 5GB</li>
-<li>Parallelize uploads (increase efficiency)</li>
+<li>S3 Prefix : /folder1/folder.</li>
+<li>S3 performance (3500 PUT) (5500GET) per second per prefix.</li>
+<li>KMS Request Rates.</li>
+<li><strong>S3 Multipart Uploads</strong>:<ul>
+<li>Recommended for files over 100MB.</li>
+<li>Required for files over 5GB.</li>
+<li>Parallelize uploads (increase efficiency).</li>
 </ul>
 </li>
-<li>S3 Byte-Range-Fetches:<ul>
+<li><strong>S3 Byte-Range-Fetches</strong>:<ul>
 <li>Parallelize downloads by specifying byte ranges.</li>
 <li>If there’s a failure in the download, it’s only for a specific byte range.</li>
 </ul>
@@ -185,22 +185,22 @@
 </ul>
 <p><strong>AWS Organizations and Consolidated Billing</strong></p>
 <ul>
-<li>revoir vite fait</li>
+<li>TODO once again…work in progress…</li>
 <li>One bill per AWS account.</li>
 <li>Very easy to track charges and allocate costs.</li>
-<li>Volume pricing discount</li>
+<li>Volume pricing discount.</li>
 </ul>
-<p><strong>Sharing S3 Buckets Across Accounts - Lab</strong></p>
+<p><strong>Sharing S3 Buckets Across Accounts</strong></p>
 <ul>
-<li>3 different ways to share S3 Buckets across accounts<ul>
+<li>3 different ways to share S3 Buckets across accounts:<ul>
 <li>Using bucket Policies &amp; IAM (applies across the entire bucket) Programmatic Access Only.</li>
-<li>Using bucket ACL’s &amp; IAM (individual objects). Programmatic Access only.</li>
+<li>Using bucket ACL’s &amp; IAM (individual objects). Programmatic Access Only.</li>
 <li>Cross-account IAM Roles. Programmatic AND Console access.</li>
 </ul>
 </li>
-<li>A revoir la fin vite fait</li>
+<li>TODO once again…work in progress…</li>
 </ul>
-<p><strong>Cross-Region Replication Lab</strong></p>
+<p><strong>Cross-Region Replication (CRR)</strong></p>
 <ul>
 <li>Versioning must be enabled on both the source and destination buckets.</li>
 <li>Files in an existing bucket are not replicated automatically.</li>
@@ -209,7 +209,7 @@
 <li>Deleting individual versions or delete markers will not be replicated.</li>
 <li>Understand what Cross Region Replication is at a high level.</li>
 </ul>
-<p><em>Cross-region replication is an S3 feature where source and destination buckets are in different regions. Replication happens to objects uploaded/modified after the configuration is enabled. CRR allows for modification of the storage class or permissions on the destination object and can support objects encrypted with SSE-S3 by default or SSE-KMS with additional configuration.</em></p>
+<p><em>Cross-region replication is an S3 feature where source and destination buckets are in different regions. Replication happens to objects uploaded/modified after the configuration is enabled. CRR allows for modification of the storage class or permissions on the destination object and can support objects encrypted with <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html" target="_blank" rel="noopener">SSE-S3</a> by default or <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingKMSEncryption.html" target="_blank" rel="noopener">SSE-KMS</a> with additional configuration.</em></p>
 <p><strong>S3 Transfer Acceleration</strong></p>
 <p><em>S3 Transfer Acceleration enables fast, easy, and secure transfers of files over long distances between your client and an S3 bucket using Amazon CloudFront’s globally distributed edge locations</em></p>
 <ul>
@@ -1019,7 +1019,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf5epbps002xrwiyu48wexk5" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf5go9qm002x07iybsbexda3" class="article-share-link">Partager</a>
       
       
       
@@ -1091,7 +1091,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf5epbll0009rwiy5rj3i4p9" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf5go9mr000907iybkjvmg3m" class="article-share-link">Partager</a>
       
       
       
@@ -1147,7 +1147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf5epblg0005rwiy4br55yzf" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf5go9mm000507iymb23zko4" class="article-share-link">Partager</a>
       
       
       
@@ -1217,7 +1217,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf5epblx000krwiyuhmjjpft" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf5go9n3000k07iy5tvja249" class="article-share-link">Partager</a>
       
       
       
@@ -1263,7 +1263,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf5epbl50001rwiyte37r3qx" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf5go9ma000107iyfg4wx0g2" class="article-share-link">Partager</a>
       
       
       
@@ -1350,7 +1350,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf5epble0004rwiyyr6naoqf" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf5go9mk000407iyxfiivbf1" class="article-share-link">Partager</a>
       
       
       
@@ -1461,7 +1461,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf5epbou002nrwiylbjwai6g" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf5go9pp002n07iyehen8hok" class="article-share-link">Partager</a>
       
       
       
@@ -1513,7 +1513,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf5epbma000rrwiykz4hjsw0" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf5go9nf000r07iyzlspiqwx" class="article-share-link">Partager</a>
       
       
       
@@ -1561,7 +1561,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf5epbli0006rwiynztc6czy" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf5go9mo000607iym9ko88nv" class="article-share-link">Partager</a>
       
       
       
@@ -1606,7 +1606,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf5epbkl0000rwiyemb26c8u" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf5go9lp000007iy4k7lyl5c" class="article-share-link">Partager</a>
       
       
       
