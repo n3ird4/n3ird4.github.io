@@ -1019,7 +1019,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf5du0lz002x5fiy4uywqi82" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf5epbps002xrwiyu48wexk5" class="article-share-link">Partager</a>
       
       
       
@@ -1091,7 +1091,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf5du0j800095fiyxch0hw5l" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf5epbll0009rwiy5rj3i4p9" class="article-share-link">Partager</a>
       
       
       
@@ -1147,7 +1147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf5du0j300055fiy9xcgdfau" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf5epblg0005rwiy4br55yzf" class="article-share-link">Partager</a>
       
       
       
@@ -1217,7 +1217,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf5du0jl000k5fiyfd82zxr7" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf5epblx000krwiyuhmjjpft" class="article-share-link">Partager</a>
       
       
       
@@ -1263,7 +1263,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf5du0io00015fiywxtx5m0u" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf5epbl50001rwiyte37r3qx" class="article-share-link">Partager</a>
       
       
       
@@ -1304,10 +1304,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Lab effectué sur <a href="https://linuxacademy.com/" target="_blank" rel="noopener">Linuxacademy</a>.</p>
-<p>Le cours <em>Elastic Stack Essentials (Legacy)</em> est une introduction sympa à la stack Elastic qui vous propose après une présentation succinte de<br>Kibana, Logstash, Beats, X-pack etc…de monter un petit cluster de 3 noeuds afin de mettre en pratique et tester ces différents outils. Cool !</p>
-<p>Voici donc la mise en pratique de ce Lab qui va se découper de la manière suivante: </p>
+<p>Le cours <em>Elastic Stack Essentials (Legacy)</em> est une introduction sympa à la stack Elastic qui vous propose après une présentation succinte de<br>Kibana, Logstash, Beats, X-pack etc…de monter un petit cluster de 3 noeuds afin de mettre en pratique et tester ces différents outils. Cool!</p>
+<p>Voici la mise en pratique de ce Lab qui va se découper de la manière suivante: </p>
 <ul>
-<li>Installer ES sur chaque noeuds</li>
+<li>Installer ES sur chaque noeuds (Debian 10)</li>
 <li>Configurer le cluster (Master / data-node)</li>
 <li>Génerer et deployer un certificat sur chaque noeuds</li>
 <li>Génerer un mot de passe avec elasticsearch-setup-passwords</li>
@@ -1318,7 +1318,7 @@
 </ul>
 <h3 id="Installer-ES-sur-chaque-noeuds"><a href="#Installer-ES-sur-chaque-noeuds" class="headerlink" title="Installer ES sur chaque noeuds"></a>Installer ES sur chaque noeuds</h3><p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html" target="_blank" rel="noopener">source</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># install as root</span></span><br><span class="line">sudo su -</span><br><span class="line"><span class="comment"># import GPG key</span></span><br><span class="line">wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</span><br><span class="line"><span class="comment"># Verify that apt-transport-https is already install</span></span><br><span class="line">root@n3ird4:~<span class="comment"># apt-cache policy apt-transport-https</span></span><br><span class="line">apt-transport-https:</span><br><span class="line">  Installed: 1.4.9</span><br><span class="line">  Candidate: 1.4.9</span><br><span class="line">  Version table:</span><br><span class="line"> *** 1.4.9 500</span><br><span class="line">        500 http://deb.debian.org/debian stretch/main amd64 Packages</span><br><span class="line">        500 http://security.debian.org stretch/updates/main amd64 Packages</span><br><span class="line">        100 /var/lib/dpkg/status</span><br><span class="line"><span class="comment"># Create repo definition</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb https://artifacts.elastic.co/packages/7.x/apt stable main"</span> | sudo tee <span class="_">-a</span> /etc/apt/sources.list.d/elastic-7.x.list</span><br><span class="line"><span class="comment"># Install ES \o/</span></span><br><span class="line">apt-get update &amp;&amp; apt-get install elasticsearch</span><br><span class="line"><span class="comment"># ES start on boot</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> elasticsearch.service</span><br></pre></td></tr></table></figure>
-<h3 id="Configurer-le-cluster-Master-data-node"><a href="#Configurer-le-cluster-Master-data-node" class="headerlink" title="Configurer le cluster (Master / data-node)"></a>Configurer le cluster (Master / data-node)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sur les 3 noeuds il faut éditer le /etc/elasticsearch/elasticsearch.yml tel que :</span></span><br><span class="line">cluster.name: whatever42</span><br><span class="line">network.host: [_local_, _site_]</span><br><span class="line">discovery.seed_hosts: [<span class="string">"172.31.35.158"</span>] (My master-node private ip Address from Linuxacademy)</span><br><span class="line">cluster.initial_master_nodes: [<span class="string">"master-1"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># puis on passe à la configuration des noeuds un par un :</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sur le master</span></span><br><span class="line">node.name: master-1</span><br><span class="line">node.master: <span class="literal">true</span></span><br><span class="line">node.data: <span class="literal">false</span></span><br><span class="line">node.ingest: <span class="literal">true</span></span><br><span class="line">node.ml: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sur le data-1</span></span><br><span class="line">node.name: data-1</span><br><span class="line">node.master: <span class="literal">false</span></span><br><span class="line">node.data: <span class="literal">true</span></span><br><span class="line">node.ingest: <span class="literal">false</span></span><br><span class="line">node.ml: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sur le data-2</span></span><br><span class="line">node.name: data-2</span><br><span class="line">node.master: <span class="literal">false</span></span><br><span class="line">node.data: <span class="literal">true</span></span><br><span class="line">node.ingest: <span class="literal">false</span></span><br><span class="line">node.ml: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># On start ES</span></span><br><span class="line"></span><br><span class="line">systemctl start elasticsearch</span><br><span class="line"></span><br><span class="line"><span class="comment"># et on check via l'API cat que tout va bien :</span></span><br><span class="line"></span><br><span class="line">root@n3ird4:~<span class="comment"># curl localhost:9200/_cat/nodes?v</span></span><br><span class="line">ip            heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name</span><br><span class="line">172.31.35.158            9          96  60    0.66    0.21     0.08 im        *      master-1</span><br><span class="line">172.31.37.11             8          96  43    0.38    0.14     0.05 d         -      data-1</span><br><span class="line">172.31.39.155            8          97  45    0.50    0.18     0.07 d         -      data-2</span><br><span class="line"></span><br><span class="line"><span class="comment"># au passage petit tip pratique pour lister les commandes dispo de l'API _cat : </span></span><br><span class="line"></span><br><span class="line">root@n3ird4:~<span class="comment"># curl http://localhost:9200/_cat/</span></span><br><span class="line">=^.^=</span><br><span class="line">/_cat/allocation</span><br><span class="line">/_cat/shards</span><br><span class="line">/_cat/shards/&#123;index&#125;</span><br><span class="line">/_cat/master</span><br><span class="line">/_cat/nodes</span><br><span class="line">/_cat/indices</span><br><span class="line">/_cat/indices/&#123;index&#125;</span><br><span class="line">/_cat/segments</span><br><span class="line">/_cat/segments/&#123;index&#125;</span><br><span class="line">/_cat/count</span><br><span class="line">/_cat/count/&#123;index&#125;</span><br><span class="line">/_cat/recovery</span><br><span class="line">/_cat/recovery/&#123;index&#125;</span><br><span class="line">/_cat/health</span><br><span class="line">/_cat/pending_tasks</span><br><span class="line">/_cat/aliases</span><br><span class="line">/_cat/aliases/&#123;<span class="built_in">alias</span>&#125;</span><br><span class="line">/_cat/thread_pool</span><br><span class="line">/_cat/plugins</span><br><span class="line">/_cat/fielddata</span><br><span class="line">/_cat/fielddata/&#123;fields&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Configurer-le-cluster-Master-data-node"><a href="#Configurer-le-cluster-Master-data-node" class="headerlink" title="Configurer le cluster (Master / data-node)"></a>Configurer le cluster (Master / data-node)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sur les 3 noeuds il faut éditer le /etc/elasticsearch/elasticsearch.yml tel que :</span></span><br><span class="line">cluster.name: whatever42</span><br><span class="line">network.host: [_local_, _site_]</span><br><span class="line">discovery.seed_hosts: [<span class="string">"XX.XX.XX.XX"</span>] (My master-node private ip Address from Linuxacademy)</span><br><span class="line">cluster.initial_master_nodes: [<span class="string">"master-1"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># puis on passe à la configuration des noeuds un par un :</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sur le master</span></span><br><span class="line">node.name: master-1</span><br><span class="line">node.master: <span class="literal">true</span></span><br><span class="line">node.data: <span class="literal">false</span></span><br><span class="line">node.ingest: <span class="literal">true</span></span><br><span class="line">node.ml: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sur le data-1</span></span><br><span class="line">node.name: data-1</span><br><span class="line">node.master: <span class="literal">false</span></span><br><span class="line">node.data: <span class="literal">true</span></span><br><span class="line">node.ingest: <span class="literal">false</span></span><br><span class="line">node.ml: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sur le data-2</span></span><br><span class="line">node.name: data-2</span><br><span class="line">node.master: <span class="literal">false</span></span><br><span class="line">node.data: <span class="literal">true</span></span><br><span class="line">node.ingest: <span class="literal">false</span></span><br><span class="line">node.ml: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># On start ES</span></span><br><span class="line"></span><br><span class="line">systemctl start elasticsearch</span><br><span class="line"></span><br><span class="line"><span class="comment"># et on check via l'API cat que tout va bien :</span></span><br><span class="line"></span><br><span class="line">root@n3ird4:~<span class="comment"># curl localhost:9200/_cat/nodes?v</span></span><br><span class="line">ip            heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name</span><br><span class="line">172.31.35.158            9          96  60    0.66    0.21     0.08 im        *      master-1</span><br><span class="line">172.31.37.11             8          96  43    0.38    0.14     0.05 d         -      data-1</span><br><span class="line">172.31.39.155            8          97  45    0.50    0.18     0.07 d         -      data-2</span><br><span class="line"></span><br><span class="line"><span class="comment"># au passage petit tip pratique pour lister les commandes dispo de l'API _cat : </span></span><br><span class="line"></span><br><span class="line">root@n3ird4:~<span class="comment"># curl http://localhost:9200/_cat/</span></span><br><span class="line">=^.^=</span><br><span class="line">/_cat/allocation</span><br><span class="line">/_cat/shards</span><br><span class="line">/_cat/shards/&#123;index&#125;</span><br><span class="line">/_cat/master</span><br><span class="line">/_cat/nodes</span><br><span class="line">/_cat/indices</span><br><span class="line">/_cat/indices/&#123;index&#125;</span><br><span class="line">/_cat/segments</span><br><span class="line">/_cat/segments/&#123;index&#125;</span><br><span class="line">/_cat/count</span><br><span class="line">/_cat/count/&#123;index&#125;</span><br><span class="line">/_cat/recovery</span><br><span class="line">/_cat/recovery/&#123;index&#125;</span><br><span class="line">/_cat/health</span><br><span class="line">/_cat/pending_tasks</span><br><span class="line">/_cat/aliases</span><br><span class="line">/_cat/aliases/&#123;<span class="built_in">alias</span>&#125;</span><br><span class="line">/_cat/thread_pool</span><br><span class="line">/_cat/plugins</span><br><span class="line">/_cat/fielddata</span><br><span class="line">/_cat/fielddata/&#123;fields&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Generer-et-deployer-un-certificat-sur-chaque-noeuds-Xpack"><a href="#Generer-et-deployer-un-certificat-sur-chaque-noeuds-Xpack" class="headerlink" title="Génerer et deployer un certificat sur chaque noeuds + Xpack"></a>Génerer et deployer un certificat sur chaque noeuds + Xpack</h3><p>Dans cette partie on apprend comment sécuriser de manière minimale un cluster ES à savoir:</p>
 <ul>
 <li>Générer un certificat auto-signé</li>
@@ -1350,7 +1350,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf5du0j000045fiyd3x7olyg" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf5epble0004rwiyyr6naoqf" class="article-share-link">Partager</a>
       
       
       
@@ -1461,7 +1461,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf5du0lg002n5fiywql4ca7e" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf5epbou002nrwiylbjwai6g" class="article-share-link">Partager</a>
       
       
       
@@ -1513,7 +1513,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf5du0jw000r5fiywmgb70kf" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf5epbma000rrwiykz4hjsw0" class="article-share-link">Partager</a>
       
       
       
@@ -1561,7 +1561,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf5du0j500065fiyvdfhweam" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf5epbli0006rwiynztc6czy" class="article-share-link">Partager</a>
       
       
       
@@ -1606,7 +1606,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf5du0hz00005fiydxsa8you" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf5epbkl0000rwiyemb26c8u" class="article-share-link">Partager</a>
       
       
       
