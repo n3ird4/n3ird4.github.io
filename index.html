@@ -1013,13 +1013,70 @@
 </ul>
 </li>
 </ul>
+<h1 id="Advanced-IAM"><a href="#Advanced-IAM" class="headerlink" title="Advanced IAM"></a>Advanced IAM</h1><p><strong>AWS Directory Service [SAA-C02]</strong><br><em>Here we’ll go over AWS Directory Service, which offers multiple identity management solutions — such as Microsoft Managed AD, AD Connector, and Simple AD — to suit different use cases. Each solves a different part of the problem for IT admins and DevOps engineers in managing user access to AWS resources.</em></p>
+<ul>
+<li>Family of managed services.</li>
+<li>Connect AWS resources with on-premises AD.</li>
+<li>Standalone directory in the cloud.</li>
+<li>Use existing corporate credentials.</li>
+<li>SSO to any domain-joined EC2 instance.</li>
+<li><strong>AD compatible</strong>:<ul>
+<li>Managed Microsoft AD (aka, Directory Service for Microsoft Active Directory).</li>
+<li>AD Connector.</li>
+<li>Simple AD.</li>
+</ul>
+</li>
+<li><strong>NOT AD Compatible</strong>:<ul>
+<li>Cloud Directory.</li>
+<li>Cognito user pool.</li>
+</ul>
+</li>
+</ul>
+<p><strong>IAM Policies [SAA-C02]</strong><br><em>we’ll discuss the structure of IAM policies and the logic by which their rules are applied when determining access to AWS resources</em></p>
+<ul>
+<li>Amazon Resource Name (ARN) all begin with: arn:partition:service:region:account_id:</li>
+<li>JSON Document that defines permission.</li>
+<li>Identity Policy.</li>
+<li>Resource Policy.</li>
+<li>No effect until attached.</li>
+<li>A Policy is a list of <strong>statements</strong> (EAR PEAR).</li>
+<li>Each statements matches an <strong>AWS API request</strong></li>
+<li><p>Effect is either Allow or Deny.</p>
+</li>
+<li><p>Not explicitly allowed == <strong>implicitly denied</strong>.</p>
+</li>
+<li>Explicitly deny &gt; everything else</li>
+<li>Only attached policies have effect.</li>
+<li>AWS <strong>joins</strong> all applicable policies.</li>
+<li>AWS-managed VS. Customer-managed</li>
+<li><strong>Permission Boundaries</strong>:<ul>
+<li>Used to <strong>delegate</strong> administration to other users.</li>
+<li>Prevent <strong>privilege escalation</strong> or <strong>unnecessarily broad permissions</strong>.</li>
+<li>Control <strong>maxium</strong> permissions an IAM policy can grant.</li>
+</ul>
+</li>
+<li><strong>Use cases</strong>:<ul>
+<li>Developers creating roles for Lambda functions.</li>
+<li>Application owners creating roles for EC2 instances.</li>
+<li>Admins creating ad hoc users</li>
+</ul>
+</li>
+</ul>
+<p><strong>AWS Resource Access Manager (RAM) [SAA-C02]</strong>:</p>
+<ul>
+<li>RAM allows you to securely <strong>share AWS resources</strong> with any AWS account or within your AWS Organization.</li>
+</ul>
+<p><strong>AWS Single Sign-On [SAA-C02]</strong>:<br><em>AWS SSO provides a user portal so users can find and access the roles they can assume in their assigned AWS accounts and business applications in one place. AWS SSO offers pre-configured SAML integrations to many business applications, including Salesforce, G Suite, and Office 365.</em></p>
+<ul>
+<li>If you SAML 2.0 in a exam question look for SSO in one of the answer.</li>
+</ul>
 <p>To be continued…</p>
 <p>Sources:<br><a href="https://linuxacademy.com/" target="_blank" rel="noopener">LinuxAcademy</a><br><a href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">AWS Faq</a><br><a href="https://learn.cantrill.io/p/aws-certified-solutions-architect-associate-saa-c02" target="_blank" rel="noopener">learn.cantrill.io</a><br><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" rel="noopener">AWS Well-Architected Framework</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf5h2d9v002xbliy13oxqndn" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf5qp9j1002xuiiyzbz02v4f" class="article-share-link">Partager</a>
       
       
       
@@ -1091,7 +1148,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf5h2d6u0009bliyjekwdgnj" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckf5qp9g70009uiiyhye8se2o" class="article-share-link">Partager</a>
       
       
       
@@ -1147,7 +1204,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf5h2d6m0005bliyug24hh35" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckf5qp9g10005uiiytxmltpva" class="article-share-link">Partager</a>
       
       
       
@@ -1217,7 +1274,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf5h2d7f000kbliywjdej9bu" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckf5qp9gk000kuiiyxm5xdx5x" class="article-share-link">Partager</a>
       
       
       
@@ -1263,7 +1320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf5h2d670001bliyurr8s2jc" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckf5qp9fn0001uiiytt2twvof" class="article-share-link">Partager</a>
       
       
       
@@ -1350,7 +1407,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf5h2d6j0004bliy1iab22h0" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckf5qp9fy0004uiiylmkjlgo7" class="article-share-link">Partager</a>
       
       
       
@@ -1461,7 +1518,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf5h2d9e002nbliywsjgs5jx" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckf5qp9if002nuiiysc19yzof" class="article-share-link">Partager</a>
       
       
       
@@ -1513,7 +1570,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf5h2d7q000rbliytvejd8rg" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckf5qp9gv000ruiiydsu9gff7" class="article-share-link">Partager</a>
       
       
       
@@ -1561,7 +1618,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf5h2d6r0006bliynsuufibi" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="ckf5qp9g40006uiiyohu1akzz" class="article-share-link">Partager</a>
       
       
       
@@ -1606,7 +1663,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf5h2d5g0000bliyor7j41v4" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="ckf5qp9ew0000uiiyufhyg6fs" class="article-share-link">Partager</a>
       
       
       
