@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Yo this is my taking notes so far, work in progress  AWS - 10,000-Foot Overview Identity and Access Management &amp;amp; S3 EC2 Databases on AWS Advanced IAM Route 53 VPCs HA Architecture Applications Sec">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-09-16T12:31:44.772Z">
+<meta property="og:updated_time" content="2020-09-16T12:46:44.295Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AWS-SAAC-02">
 <meta name="twitter:description" content="Yo this is my taking notes so far, work in progress  AWS - 10,000-Foot Overview Identity and Access Management &amp;amp; S3 EC2 Databases on AWS Advanced IAM Route 53 VPCs HA Architecture Applications Sec">
@@ -124,27 +124,27 @@
 <ul>
 <li><a href="https://aws.amazon.com/s3/storage-classes/" target="_blank" rel="noopener">6 different Tiers</a>:</li>
 </ul>
-<p>S3 Standard<br>S3 Infrequent Access<br>S3 Intelligent - Tiering =&gt; exactement le meme prix mise à part pour le infrequent Acess là ça devient plus avantageux<br>S3 One Zone - Infrequent Access<br>S3 Glacier<br>S3 Glacier Deep Archive</p>
+<p>S3 Standard<br>S3 Infrequent Access<br>S3 Intelligent - Tiering =&gt; exactly the same price except for the infrequent Acess there it becomes more advantageous<br>S3 One Zone - Infrequent Access<br>S3 Glacier<br>S3 Glacier Deep Archive</p>
 <p>Bucket Policies =&gt; Bucket Level<br>Access Control Policy =&gt; Individual objects</p>
-<p>S3 Can be configured to create access logs.</p>
-<p><strong><em>Encryption in Transit is achieved by</em></strong></p>
+<p>S3 can be configured to create access logs.</p>
+<p><strong>Encryption in TRANSIT is achieved by</strong>:</p>
 <ul>
-<li>SSL / TLS<br><strong><em>Encryption At Rest (Server Side) is achieved by</em></strong></li>
-<li>Service Side: (were aws help you)<ul>
-<li>SSE-S3  S3 Managed-Keys (ServerSideEncryption)</li>
-<li>SSE-KMS AWS Key Management Service, Managed Keys  </li>
-<li>SSE-C   Server Side Encryption with Customer provided key</li>
+<li>SSL / TLS<br><strong>Encryption At REST (Server Side) is achieved by</strong></li>
+<li>Service Side: (where AWS help you)<ul>
+<li>SSE-S3 S3 Managed-Keys (ServerSideEncryption).</li>
+<li>SSE-KMS AWS Key Management Service, Managed Keys.  </li>
+<li>SSE-C Server Side Encryption with Customer provided key.</li>
 </ul>
 </li>
 <li>Client Side:</li>
 </ul>
 <p><strong>Versioning</strong></p>
 <ul>
-<li>stores all versions of an object (including all writes and even if you delete an object)</li>
-<li>Great backup tool</li>
-<li>Once enabled, Versioning cannot be disabled, only suspended</li>
-<li>Integrate with lifecycle rules</li>
-<li>Versioning’s MFA delete capability (can be used to provide an additional layer of security)</li>
+<li>Stores all versions of an object (including all writes and even if you delete an object).</li>
+<li>Great backup tool.</li>
+<li>Once enabled, Versioning cannot be disabled, only suspended!</li>
+<li>Integrate with lifecycle rules.</li>
+<li>Versioning’s MFA delete capability (can be used to provide an additional layer of security).</li>
 </ul>
 <p><strong>LifeCycle Management with s3</strong></p>
 <ul>
@@ -182,9 +182,9 @@
 </ul>
 <p><strong>S3 Select and Glacier Select</strong></p>
 <ul>
-<li>is used to retrieve only a subset of data from an object by using simple SQL expressions.</li>
+<li>Is used to retrieve only a subset of data from an object by using simple SQL expressions.</li>
 <li>Get data by rows or columns using simple SQL expressions.</li>
-<li>Save money on data transfer and increase speed.<br>+400% de perf</li>
+<li>Save money on data transfer and increase speed. (+400% !!) </li>
 </ul>
 <p><strong>AWS Organizations and Consolidated Billing</strong></p>
 <ul>
@@ -1022,7 +1022,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf5d92xq002xooiyoaqy3pqa" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf5du0lz002x5fiy4uywqi82" class="article-share-link">Partager</a>
       
       
       
