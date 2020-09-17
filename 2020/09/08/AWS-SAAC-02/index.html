@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Yo this is my taking notes so far, work in progress  AWS - 10,000-Foot Overview Identity and Access Management &amp;amp; S3 EC2 Databases on AWS Advanced IAM Route 53 VPCs HA Architecture Applications Sec">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-09-16T20:20:30.579Z">
+<meta property="og:updated_time" content="2020-09-17T07:08:37.332Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AWS-SAAC-02">
 <meta name="twitter:description" content="Yo this is my taking notes so far, work in progress  AWS - 10,000-Foot Overview Identity and Access Management &amp;amp; S3 EC2 Databases on AWS Advanced IAM Route 53 VPCs HA Architecture Applications Sec">
@@ -1126,7 +1126,18 @@
 <h1 id="Route-53"><a href="#Route-53" class="headerlink" title="Route 53"></a>Route 53</h1><p><em>Work in progress \o/</em></p>
 <h1 id="VPC"><a href="#VPC" class="headerlink" title="VPC"></a>VPC</h1><p><em>Work in progress \o/</em></p>
 <h1 id="HA-Architecture"><a href="#HA-Architecture" class="headerlink" title="HA Architecture"></a>HA Architecture</h1><p><em>Work in progress \o/</em></p>
-<h1 id="Applications"><a href="#Applications" class="headerlink" title="Applications"></a>Applications</h1><p><em>Work in progress \o/</em></p>
+<h1 id="Applications"><a href="#Applications" class="headerlink" title="Applications"></a>Applications</h1><p><strong>SQS [SAA-C02]</strong><br><em>Simple Queue Service (SQS) provides standard or FIFO queues as a service. It helps applications scale by allowing decoupling of application components and inter-process, -service, and -server messaging.</em></p>
+<ul>
+<li>SQS is pull-based, not pushed-based (you have to have an EC2 pulling the message out of the queue)</li>
+<li>Messages are 256KB in size.</li>
+<li>Messages can be kept in the queue from 1 minute to 14 days; the default retention period is 4 days.</li>
+<li>Visibility Timeout is the amount of time that the message in invisible in the SQS queue after a reader picks up that message. Provided the job is processed before the visibility timeout expires, the message will then be deleted from the queue. If the job is not processed within that time, the message will become visible again and another reader will process it. This could result in the same message being delivered twice.</li>
+<li>Visibility timeout maximum is 12 Hours.</li>
+<li>SQS guarantees that your messages will be processed at least once.</li>
+<li>SQS <strong>long polling</strong> is a way to retrieve messages from your Amazon SQS queue. While the regular short polling returns immediately (even if the message queue being polled is empty), long polling doesn’t return a response until a message arrives in the message queue, or the long poll times out.</li>
+<li>Any time you see a scenario based question about “decoupling” your infrastructure - think SQS.</li>
+</ul>
+<p><em>Work in progress \o/</em></p>
 <h1 id="Security"><a href="#Security" class="headerlink" title="Security"></a>Security</h1><p><em>Work in progress \o/</em></p>
 <h1 id="Serverless"><a href="#Serverless" class="headerlink" title="Serverless"></a>Serverless</h1><p><em>Work in progress \o/</em></p>
 <p>To be continued…&gt;(((°&gt;…</p>
@@ -1135,7 +1146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf5txu74002x6qiyieg131e1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckf6h3d1p002xrviylsytmm2b" class="article-share-link">Partager</a>
       
       
       
