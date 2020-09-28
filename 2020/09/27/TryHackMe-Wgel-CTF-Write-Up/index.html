@@ -5,23 +5,28 @@
   
 
   
-  <title>TryHackMe_Wgel_CTF_Write_Up | n3ird4</title>
+  <title>TryHackMe Wgel CTF Write-Up | n3ird4</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="I’m having fun spending some time on TryHackMe. So here is a write-up (work in progress) about Wgel-CTF ! Let’s start with a basic nmap scan: Now let’s check this site on port 80:  We can notice somet">
+  <meta name="description" content="I’m having fun spending some time on TryHackMe. So here is a write-up (work in progress) about Wgel-CTF ! Let’s start with a basic Nmap scan: Fair enough we can notice something strange below: So let’">
 <meta name="keywords" content="tryhackme">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TryHackMe_Wgel_CTF_Write_Up">
+<meta property="og:title" content="TryHackMe Wgel CTF Write-Up">
 <meta property="og:url" content="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/index.html">
 <meta property="og:site_name" content="n3ird4">
-<meta property="og:description" content="I’m having fun spending some time on TryHackMe. So here is a write-up (work in progress) about Wgel-CTF ! Let’s start with a basic nmap scan: Now let’s check this site on port 80:  We can notice somet">
+<meta property="og:description" content="I’m having fun spending some time on TryHackMe. So here is a write-up (work in progress) about Wgel-CTF ! Let’s start with a basic Nmap scan: Fair enough we can notice something strange below: So let’">
 <meta property="og:locale" content="fr">
 <meta property="og:image" content="http://91.208.181.214/images/1_nmap.png">
 <meta property="og:image" content="http://91.208.181.214/images/2_check_port_80.png">
 <meta property="og:image" content="http://91.208.181.214/images/3_find_user_jessie.png">
-<meta property="og:updated_time" content="2020-09-27T22:09:41.541Z">
+<meta property="og:image" content="http://91.208.181.214/images/4_use_gobuster.png">
+<meta property="og:image" content="http://91.208.181.214/images/5_check_sitemap.png">
+<meta property="og:image" content="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/images/6_gobuster_sitemap_with_another_list.png">
+<meta property="og:image" content="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/images/7_find_ssh_key.png">
+<meta property="og:image" content="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/images/9_flag1.png">
+<meta property="og:updated_time" content="2020-09-28T22:30:17.909Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TryHackMe_Wgel_CTF_Write_Up">
-<meta name="twitter:description" content="I’m having fun spending some time on TryHackMe. So here is a write-up (work in progress) about Wgel-CTF ! Let’s start with a basic nmap scan: Now let’s check this site on port 80:  We can notice somet">
+<meta name="twitter:title" content="TryHackMe Wgel CTF Write-Up">
+<meta name="twitter:description" content="I’m having fun spending some time on TryHackMe. So here is a write-up (work in progress) about Wgel-CTF ! Let’s start with a basic Nmap scan: Fair enough we can notice something strange below: So let’">
 <meta name="twitter:image" content="http://91.208.181.214/images/1_nmap.png">
   
     <link rel="alternate" href="/atom.xml" title="n3ird4" type="application/atom+xml">
@@ -80,7 +85,7 @@
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/CTF/">CTF</a>►<a class="article-category-link" href="/categories/CTF/Wgel/">Wgel</a>
+    <a class="article-category-link" href="/categories/CTF/">CTF</a>►<a class="article-category-link" href="/categories/CTF/TryHackMe-Wgel/">TryHackMe Wgel</a>
   </div>
 
   </div>
@@ -91,7 +96,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      TryHackMe_Wgel_CTF_Write_Up
+      TryHackMe Wgel CTF Write-Up
     </h1>
   
 
@@ -100,18 +105,22 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>I’m having fun spending some time on TryHackMe. So here is a write-up (work in progress) about Wgel-CTF !</p>
-<h3 id="Let’s-start-with-a-basic-nmap-scan"><a href="#Let’s-start-with-a-basic-nmap-scan" class="headerlink" title="Let’s start with a basic nmap scan:"></a>Let’s start with a basic nmap scan:</h3><p><img src="/images/1_nmap.png" alt="nmap the target"></p>
-<p>Now let’s check this site on port 80:</p>
-<p><img src="/images/2_check_port_80.png" alt="access the website on port 80"></p>
-<p>We can notice something strange here so let’s dig into the source code:</p>
-<p><img src="/images/3_find_user_jessie.png" alt="Check the source code"></p>
+<h3 id="Let’s-start-with-a-basic-Nmap-scan"><a href="#Let’s-start-with-a-basic-Nmap-scan" class="headerlink" title="Let’s start with a basic Nmap scan:"></a>Let’s start with a basic Nmap scan:</h3><p><img src="/images/1_nmap.png" alt="nmap the target"></p>
+<h3 id="Fair-enough-we-can-notice-something-strange-below"><a href="#Fair-enough-we-can-notice-something-strange-below" class="headerlink" title="Fair enough we can notice something strange below:"></a>Fair enough we can notice something strange below:</h3><p><img src="/images/2_check_port_80.png" alt="access the website on port 80"></p>
+<h3 id="So-let’s-dig-into-the-source-code"><a href="#So-let’s-dig-into-the-source-code" class="headerlink" title="So let’s dig into the source code:"></a>So let’s dig into the source code:</h3><p><img src="/images/3_find_user_jessie.png" alt="Check the source code"></p>
+<h3 id="And-start-scanning-with-gobuster"><a href="#And-start-scanning-with-gobuster" class="headerlink" title="And start scanning with gobuster:"></a>And start scanning with gobuster:</h3><p><img src="/images/4_use_gobuster.png" alt="Scan using gobuster"></p>
+<h3 id="Now-we-can-check-sitemap"><a href="#Now-we-can-check-sitemap" class="headerlink" title="Now we can check /sitemap"></a>Now we can check /sitemap</h3><p><img src="/images/5_check_sitemap.png" alt="there is not much of interest in /sitemap"></p>
+<h3 id="So-let’s-try-something-different"><a href="#So-let’s-try-something-different" class="headerlink" title="So let’s try something different:"></a>So let’s try something different:</h3><p><img src="images/6_gobuster_sitemap_with_another_list.png" alt="Scan using gobuster with another list"></p>
+<h3 id="Bingo-o"><a href="#Bingo-o" class="headerlink" title="Bingo \o/"></a>Bingo \o/</h3><p><img src="images/7_find_ssh_key.png" alt="Here is the private key of the user found earlier ;-)"></p>
+<h3 id="Connect-to-the-compromise-instance"><a href="#Connect-to-the-compromise-instance" class="headerlink" title="Connect to the compromise instance:"></a>Connect to the compromise instance:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.10.5.44/sitemap/.ssh/id_rsa</span><br><span class="line">sudo chmod 400 id_rsa</span><br><span class="line">ssh -i id_rsa &lt;UserFoundEarlier&gt;@10.10.5.44</span><br></pre></td></tr></table></figure>
+<h3 id="And-get-the-flag"><a href="#And-get-the-flag" class="headerlink" title="And get the flag !"></a>And get the flag !</h3><p><img src="images/9_flag1.png" alt=""></p>
 <p>[work in progress…]</p>
 <p>zzz…</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckflnq2h30005wjiyg22xtnbj" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckfn3vyy3000crtiyeyhhe6pk" class="article-share-link">Partager</a>
       
       
       
@@ -143,7 +152,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/AWS-Certified-Solutions-Architect-Associate-SAA-C02/">AWS Certified Solutions Architect Associate SAA-C02</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/Quick-Starts/">Quick Starts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/Wgel/">Wgel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/">ElasticSearch</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/Playing-with-Elastic-Stack-Modules/">Playing with Elastic Stack Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/How-to/">How to</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/Reparation-de-replication-master-master-sans-lock/">Réparation de réplication master/master (sans lock)</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/Playing-with-Nginx-and-Dynamic-Modules/">Playing with Nginx and Dynamic Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/iowait/">iowait</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Varnish/">Varnish</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Varnish/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/AWS-Certified-Solutions-Architect-Associate-SAA-C02/">AWS Certified Solutions Architect Associate SAA-C02</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/Quick-Starts/">Quick Starts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-Wgel/">TryHackMe Wgel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/">ElasticSearch</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/Playing-with-Elastic-Stack-Modules/">Playing with Elastic Stack Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/How-to/">How to</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/Reparation-de-replication-master-master-sans-lock/">Réparation de réplication master/master (sans lock)</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/Playing-with-Nginx-and-Dynamic-Modules/">Playing with Nginx and Dynamic Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/iowait/">iowait</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Varnish/">Varnish</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Varnish/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
     </div>
   </div>
 
@@ -185,7 +194,7 @@
       <ul>
         
           <li>
-            <a href="/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/">TryHackMe_Wgel_CTF_Write_Up</a>
+            <a href="/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/">TryHackMe Wgel CTF Write-Up</a>
           </li>
         
           <li>
