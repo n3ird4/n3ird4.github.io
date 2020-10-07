@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/images/6_gobuster_sitemap_with_another_list.png">
 <meta property="og:image" content="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/images/7_find_ssh_key.png">
 <meta property="og:image" content="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/images/9_flag1.png">
-<meta property="og:updated_time" content="2020-09-28T22:35:48.274Z">
+<meta property="og:updated_time" content="2020-10-07T17:32:47.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TryHackMe Wgel CTF Write-Up">
 <meta name="twitter:description" content="I’m having fun spending some time on TryHackMe. So here is a write-up about Wgel-CTF ! Let’s start with a basic Nmap scan: Fair enough we can notice something strange below: So let’s dig into the sour">
@@ -114,12 +114,12 @@
 <h3 id="Bingo-o"><a href="#Bingo-o" class="headerlink" title="Bingo \o/"></a>Bingo \o/</h3><p><img src="images/7_find_ssh_key.png" alt="Here is the private key of the user found earlier ;-)"></p>
 <h3 id="Connect-to-the-compromise-instance"><a href="#Connect-to-the-compromise-instance" class="headerlink" title="Connect to the compromise instance:"></a>Connect to the compromise instance:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.10.5.44/sitemap/.ssh/id_rsa</span><br><span class="line">sudo chmod 400 id_rsa</span><br><span class="line">ssh -i id_rsa &lt;UserFoundEarlier&gt;@10.10.5.44</span><br></pre></td></tr></table></figure>
 <h3 id="And-get-the-flag"><a href="#And-get-the-flag" class="headerlink" title="And get the flag !"></a>And get the flag !</h3><p><img src="images/9_flag1.png" alt=""></p>
-<p>Hope you enjoyed ;-)</p>
+<p>\o/ Hope you enjoyed ;-)</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckfzjtjos000am0iyntnc1yl9" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckfzo76cm0009n3iy9xy4oyrw" class="article-share-link">Partager</a>
       
       
       
