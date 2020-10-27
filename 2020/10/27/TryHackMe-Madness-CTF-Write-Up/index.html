@@ -7,19 +7,27 @@
   
   <title>TryHackMe Madness CTF Writeup | n3ird4</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="I’m having a lot of fun on THM so here is my Madness writeup !">
+  <meta name="description" content="I’m having a lot of fun on THM so here is my Madness writeup !  As usual let’s start with a basic nmap scan1234567891011121314# Nmap 7.91 scan initiated Thu Oct 21 21:42:42 2020 as: nmap -sC -sV -oN n">
 <meta name="keywords" content="tryhackme">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TryHackMe Madness CTF Writeup">
 <meta property="og:url" content="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/index.html">
 <meta property="og:site_name" content="n3ird4">
-<meta property="og:description" content="I’m having a lot of fun on THM so here is my Madness writeup !">
+<meta property="og:description" content="I’m having a lot of fun on THM so here is my Madness writeup !  As usual let’s start with a basic nmap scan1234567891011121314# Nmap 7.91 scan initiated Thu Oct 21 21:42:42 2020 as: nmap -sC -sV -oN n">
 <meta property="og:locale" content="fr">
 <meta property="og:image" content="https://media.giphy.com/media/ui9twqrw0GSA0/giphy.gif">
-<meta property="og:updated_time" content="2020-10-27T13:05:38.156Z">
+<meta property="og:image" content="http://91.208.181.214/images/madness_1.PNG">
+<meta property="og:image" content="http://91.208.181.214/images/madness_2.PNG">
+<meta property="og:image" content="http://91.208.181.214/images/madness_3.PNG">
+<meta property="og:image" content="http://91.208.181.214/images/madness_4.png">
+<meta property="og:image" content="https://www.file-recovery.com/jpg-signature-format.htm">
+<meta property="og:image" content="http://91.208.181.214/images/madness_5.png">
+<meta property="og:image" content="http://91.208.181.214/images/thm1.jpg">
+<meta property="og:image" content="http://91.208.181.214/images/madness_6.jpg">
+<meta property="og:updated_time" content="2020-10-27T14:30:21.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TryHackMe Madness CTF Writeup">
-<meta name="twitter:description" content="I’m having a lot of fun on THM so here is my Madness writeup !">
+<meta name="twitter:description" content="I’m having a lot of fun on THM so here is my Madness writeup !  As usual let’s start with a basic nmap scan1234567891011121314# Nmap 7.91 scan initiated Thu Oct 21 21:42:42 2020 as: nmap -sC -sV -oN n">
 <meta name="twitter:image" content="https://media.giphy.com/media/ui9twqrw0GSA0/giphy.gif">
   
     <link rel="alternate" href="/atom.xml" title="n3ird4" type="application/atom+xml">
@@ -99,11 +107,30 @@
       
         <p>I’m having a lot of fun on THM so here is my <em>Madness</em> writeup !</p>
 <p><img src="https://media.giphy.com/media/ui9twqrw0GSA0/giphy.gif" alt="Welcome to Madness CTF"></p>
+<h3 id="As-usual-let’s-start-with-a-basic-nmap-scan"><a href="#As-usual-let’s-start-with-a-basic-nmap-scan" class="headerlink" title="As usual let’s start with a basic nmap scan"></a>As usual let’s start with a basic nmap scan</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># Nmap 7.91 scan initiated Thu Oct 21 21:42:42 2020 as: nmap -sC -sV -oN nmap.txt X.X.X.X</span><br><span class="line">Nmap scan report for X.X.X.X</span><br><span class="line">Host is up (0.024s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 ac:f9:85:10:52:65:6e:17:f5:1c:34:e7:d8:64:67:b1 (RSA)</span><br><span class="line">|   256 dd:8e:5a:ec:b1:95:cd:dc:4d:01:b3:fe:5f:4e:12:c1 (ECDSA)</span><br><span class="line">|_  256 e9:ed:e3:eb:58:77:3b:00:5e:3a:f5:24:d8:58:34:8e (ED25519)</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))</span><br><span class="line">|_http-server-header: Apache/2.4.18 (Ubuntu)</span><br><span class="line">|_http-title: Apache2 Ubuntu Default Page: It works</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br></pre></td></tr></table></figure>
+<p>Ok so let’s have a look on this Ubuntu Default Page. </p>
+<h3 id="Check-Ubuntu-Default-Page-source-code"><a href="#Check-Ubuntu-Default-Page-source-code" class="headerlink" title="Check Ubuntu Default Page source code"></a>Check Ubuntu Default Page source code</h3><p><img src="/images/madness_1.PNG" alt="default page source code"></p>
+<p><img src="/images/madness_2.PNG" alt="default page source code with curl"></p>
+<h3 id="Let’s-get-this-thm-jpg-picture"><a href="#Let’s-get-this-thm-jpg-picture" class="headerlink" title="Let’s get this thm.jpg picture"></a>Let’s get this thm.jpg picture</h3><p><img src="/images/madness_3.PNG" alt="thm.jpg seems to be corrupted"></p>
+<p>Something strange isn’t it ? We try to get a jpg file but firefox consider it as a png.<br>So let’s grab this picture : </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.X.X.X/thm.jpg</span><br></pre></td></tr></table></figure>
+<p>I could not find anything with strings command on this file so I had to open it with hexeditor: </p>
+<p><img src="/images/madness_4.png" alt="hexeditor"> </p>
+<p>Regarding this <img src="https://www.file-recovery.com/jpg-signature-format.htm" alt="article"> I learnt that a jpg file has to start with a “FF D8 FF” signature so faire enough, someone change the jpg signature and we have to fix it if we want to able to see this picture.</p>
+<p><img src="/images/madness_5.png" alt="Fixing jpg signature with hexeditor"> </p>
+<p>And…. Tada \o/ </p>
+<p><img src="/images/thm1.jpg" alt="Fixing jpg signature and discorvering a secret path"></p>
+<p>Now we have a secret path to look into.</p>
+<h3 id="Dive-into-the-secret-folder"><a href="#Dive-into-the-secret-folder" class="headerlink" title="Dive into the secret folder"></a>Dive into the secret folder</h3><p>On this page I’m asked to find a “secret” ! </p>
+<p><img src="/images/madness_6.jpg" alt="secret path home page"></p>
+<p>So I decided to bruteforce this step like this : </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali  ~/ctf/tryhackme/madness  for i in &#123;1..100&#125;; do curl -s http://$IP/XXXXXXXXX/\?secret\=$i | grep -B2 right ;done </span><br><span class="line">&lt;p&gt;Secret Entered: XX&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;Urgh, you got it right! But I won&apos;t tell you who I am! XXXXXXXXX&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>Work in progress…</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgrzhcei0004nciyoob0ujtb" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgs2hrs200097viyew8jlt3b" class="article-share-link">Partager</a>
       
       
       

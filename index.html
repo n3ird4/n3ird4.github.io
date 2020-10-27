@@ -94,11 +94,30 @@
       
         <p>I’m having a lot of fun on THM so here is my <em>Madness</em> writeup !</p>
 <p><img src="https://media.giphy.com/media/ui9twqrw0GSA0/giphy.gif" alt="Welcome to Madness CTF"></p>
+<h3 id="As-usual-let’s-start-with-a-basic-nmap-scan"><a href="#As-usual-let’s-start-with-a-basic-nmap-scan" class="headerlink" title="As usual let’s start with a basic nmap scan"></a>As usual let’s start with a basic nmap scan</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># Nmap 7.91 scan initiated Thu Oct 21 21:42:42 2020 as: nmap -sC -sV -oN nmap.txt X.X.X.X</span><br><span class="line">Nmap scan report for X.X.X.X</span><br><span class="line">Host is up (0.024s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 ac:f9:85:10:52:65:6e:17:f5:1c:34:e7:d8:64:67:b1 (RSA)</span><br><span class="line">|   256 dd:8e:5a:ec:b1:95:cd:dc:4d:01:b3:fe:5f:4e:12:c1 (ECDSA)</span><br><span class="line">|_  256 e9:ed:e3:eb:58:77:3b:00:5e:3a:f5:24:d8:58:34:8e (ED25519)</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))</span><br><span class="line">|_http-server-header: Apache/2.4.18 (Ubuntu)</span><br><span class="line">|_http-title: Apache2 Ubuntu Default Page: It works</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br></pre></td></tr></table></figure>
+<p>Ok so let’s have a look on this Ubuntu Default Page. </p>
+<h3 id="Check-Ubuntu-Default-Page-source-code"><a href="#Check-Ubuntu-Default-Page-source-code" class="headerlink" title="Check Ubuntu Default Page source code"></a>Check Ubuntu Default Page source code</h3><p><img src="/images/madness_1.PNG" alt="default page source code"></p>
+<p><img src="/images/madness_2.PNG" alt="default page source code with curl"></p>
+<h3 id="Let’s-get-this-thm-jpg-picture"><a href="#Let’s-get-this-thm-jpg-picture" class="headerlink" title="Let’s get this thm.jpg picture"></a>Let’s get this thm.jpg picture</h3><p><img src="/images/madness_3.PNG" alt="thm.jpg seems to be corrupted"></p>
+<p>Something strange isn’t it ? We try to get a jpg file but firefox consider it as a png.<br>So let’s grab this picture : </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.X.X.X/thm.jpg</span><br></pre></td></tr></table></figure>
+<p>I could not find anything with strings command on this file so I had to open it with hexeditor: </p>
+<p><img src="/images/madness_4.png" alt="hexeditor"> </p>
+<p>Regarding this <img src="https://www.file-recovery.com/jpg-signature-format.htm" alt="article"> I learnt that a jpg file has to start with a “FF D8 FF” signature so faire enough, someone change the jpg signature and we have to fix it if we want to able to see this picture.</p>
+<p><img src="/images/madness_5.png" alt="Fixing jpg signature with hexeditor"> </p>
+<p>And…. Tada \o/ </p>
+<p><img src="/images/thm1.jpg" alt="Fixing jpg signature and discorvering a secret path"></p>
+<p>Now we have a secret path to look into.</p>
+<h3 id="Dive-into-the-secret-folder"><a href="#Dive-into-the-secret-folder" class="headerlink" title="Dive into the secret folder"></a>Dive into the secret folder</h3><p>On this page I’m asked to find a “secret” ! </p>
+<p><img src="/images/madness_6.jpg" alt="secret path home page"></p>
+<p>So I decided to bruteforce this step like this : </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali  ~/ctf/tryhackme/madness  for i in &#123;1..100&#125;; do curl -s http://$IP/XXXXXXXXX/\?secret\=$i | grep -B2 right ;done </span><br><span class="line">&lt;p&gt;Secret Entered: XX&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;Urgh, you got it right! But I won&apos;t tell you who I am! XXXXXXXXX&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>Work in progress…</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgrzhcei0004nciyoob0ujtb" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgs2hrs200097viyew8jlt3b" class="article-share-link">Partager</a>
       
       
       
@@ -138,7 +157,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>I’m having fun spending some time on TryHackMe. So here is a write-up about Wgel-CTF !</p>
+        <p>I’m having fun spending some time on TryHackMe. So here is a writeup about Wgel-CTF !</p>
 <h3 id="Let’s-start-with-a-basic-Nmap-scan"><a href="#Let’s-start-with-a-basic-Nmap-scan" class="headerlink" title="Let’s start with a basic Nmap scan:"></a>Let’s start with a basic Nmap scan:</h3><p><img src="/images/1_nmap.png" alt="nmap the target"></p>
 <h3 id="Fair-enough-we-can-notice-something-strange-below"><a href="#Fair-enough-we-can-notice-something-strange-below" class="headerlink" title="Fair enough we can notice something strange below:"></a>Fair enough we can notice something strange below:</h3><p><img src="/images/2_check_port_80.png" alt="access the website on port 80"></p>
 <h3 id="So-let’s-dig-into-the-source-code"><a href="#So-let’s-dig-into-the-source-code" class="headerlink" title="So let’s dig into the source code:"></a>So let’s dig into the source code:</h3><p><img src="/images/3_find_user_jessie.png" alt="Check the source code"></p>
@@ -153,7 +172,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckgrzhcek0005nciy3k349uh2" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckgs2hrs4000a7viy3041d2fr" class="article-share-link">Partager</a>
       
       
       
@@ -1266,7 +1285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckgrzhcl50034nciylkmg5pqc" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckgs2hrw9003a7viymisny6so" class="article-share-link">Partager</a>
       
       
       
@@ -1332,7 +1351,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckgrzhceq000anciy3tlu170h" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckgs2hrs9000g7viywuqoozht" class="article-share-link">Partager</a>
       
       
       
@@ -1388,7 +1407,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckgrzhcfv000pnciylpmls2vj" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckgs2hrrw00057viyavdxksw5" class="article-share-link">Partager</a>
       
       
       
@@ -1458,7 +1477,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckgrzhcey000enciyjke71s3m" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckgs2hrso000p7viykqb4h4id" class="article-share-link">Partager</a>
       
       
       
@@ -1504,7 +1523,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckgrzhckl002xnciyh6agl6po" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckgs2hrrj00017viyxendy0j8" class="article-share-link">Partager</a>
       
       
       
@@ -1591,7 +1610,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckgrzhcdi0000nciythfvrqd4" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckgs2hrrt00047viyh2ic71v0" class="article-share-link">Partager</a>
       
       
       
@@ -1702,7 +1721,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckgrzhcju002nnciyyxb19h8k" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckgs2hrvd00307viy6l516tzg" class="article-share-link">Partager</a>
       
       
       
@@ -1754,7 +1773,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckgrzhcfs000lnciyizxaclra" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckgs2hrsu000v7viycdf48cbp" class="article-share-link">Partager</a>
       
       
       
