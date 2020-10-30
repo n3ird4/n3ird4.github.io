@@ -108,17 +108,24 @@
 <p><img src="/images/madness_5.png" alt="Fixing jpg signature with hexeditor"> </p>
 <p>And…. Tada \o/ </p>
 <p><img src="/images/thm1.jpg" alt="Fixing jpg signature and discorvering a secret path"></p>
-<p>Now we have a secret path to look into.</p>
+<p>Now that I have a valid .jpg let’s play with steghide: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">steghide extract -sf thm1.jpg</span><br><span class="line"></span><br><span class="line">Enter passphrase: </span><br><span class="line">steghide: could not extract any data with that passphrase!</span><br></pre></td></tr></table></figure>
+<p>Faire enough the passphrase might be somewhere on the secret folder.</p>
 <h3 id="Dive-into-the-secret-folder"><a href="#Dive-into-the-secret-folder" class="headerlink" title="Dive into the secret folder"></a>Dive into the secret folder</h3><p>On this page I’m asked to find a “secret” ! </p>
 <p><img src="/images/madness_6.png" alt="secret path home page"></p>
 <p>So I decided to bruteforce this step like this : </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali:~/ctf/tryhackme/madness# for i in &#123;1..100&#125;; do curl -s http://$IP/XXXXXXXXX/\?secret\=$i | grep -B2 right ;done </span><br><span class="line"></span><br><span class="line">&lt;p&gt;Secret Entered: XX&lt;/p&gt;</span><br><span class="line">&lt;p&gt;Urgh, you got it right! But I won&apos;t tell you who I am! XXXXXXXXX&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-<p>Work in progress…</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali:~/ctf/tryhackme/madness<span class="comment"># for i in &#123;1..100&#125;; do curl -s http://$IP/XXXXXXXXX/\?secret\=$i | grep -B2 right ;done </span></span><br><span class="line"></span><br><span class="line">&lt;p&gt;Secret Entered: XX&lt;/p&gt;</span><br><span class="line">&lt;p&gt;Urgh, you got it right! But I won<span class="string">'t tell you who I am! XXXXXXXXX&lt;/p&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Ahah we got the passphrase now :) </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ rw00t@kali  ~/ctf/tryhackme/madness  steghide extract -sf thm1.jpg</span><br><span class="line">Enter passphrase:</span><br><span class="line">wrote extracted data to <span class="string">"hidden.txt"</span>.</span><br><span class="line"> ⚡ rw00t@kali  ~/ctf/tryhackme/madness  cat hidden.txt</span><br><span class="line">Fine you found the password!</span><br><span class="line"></span><br><span class="line">Here<span class="string">'s a username</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">xxxxx</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">I didn'</span>t say I would make it easy <span class="keyword">for</span> you!</span><br></pre></td></tr></table></figure>
+<p>So finally I have a potential ssh user but this name looks weird !</p>
+<p><em>HINT: There’s something ROTten about this guys name!</em> </p>
+<p>Ok I have my user name now \o/</p>
+<p>Work (still) in progress…</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgsgtvdd0009mjiyse42nng3" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgw3rgym0005y8iy1qh4j7uz" class="article-share-link">Partager</a>
       
       
       
@@ -173,7 +180,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckgsgtvdf000amjiyekmva5q7" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckgw3rgyp0006y8iydho0yltx" class="article-share-link">Partager</a>
       
       
       
@@ -1286,7 +1293,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckgsgtvgn003amjiy4ikj79qv" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckgw3rh440037y8iyow7miqfm" class="article-share-link">Partager</a>
       
       
       
@@ -1352,7 +1359,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckgsgtvdj000emjiy3ob52wk6" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckgw3rgzb000ky8iycoaelu3f" class="article-share-link">Partager</a>
       
       
       
@@ -1408,7 +1415,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckgsgtvd70005mjiy2uw4dkte" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckgw3rgya0001y8iyo6zbzuxe" class="article-share-link">Partager</a>
       
       
       
@@ -1478,7 +1485,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckgsgtvdz000pmjiynmbcm7xt" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckgw3rgzt000ry8iyk7k2za6r" class="article-share-link">Partager</a>
       
       
       
@@ -1524,7 +1531,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckgsgtvct0001mjiyphyv69fc" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckgw3rgxp0000y8iyns2nqbju" class="article-share-link">Partager</a>
       
       
       
@@ -1611,7 +1618,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckgsgtvd40004mjiy4dp7st5m" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckgw3rh3j0030y8iy7hf06v3k" class="article-share-link">Partager</a>
       
       
       
@@ -1722,7 +1729,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckgsgtvg20030mjiytv1n50ae" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckgw3rh2i002qy8iymqjgiso1" class="article-share-link">Partager</a>
       
       
       
@@ -1774,7 +1781,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckgsgtvea000vmjiyy9lj93b0" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckgw3rgzw000ty8iyecgqjwlj" class="article-share-link">Partager</a>
       
       
       
