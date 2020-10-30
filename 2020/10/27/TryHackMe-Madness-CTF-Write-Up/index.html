@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://91.208.181.214/images/thm1.jpg">
 <meta property="og:image" content="http://91.208.181.214/images/madness_6.png">
 <meta property="og:image" content="http://91.208.181.214/images/madness_7.png">
-<meta property="og:updated_time" content="2020-10-30T14:02:18.817Z">
+<meta property="og:updated_time" content="2020-10-30T15:26:30.794Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TryHackMe Madness CTF Writeup">
 <meta name="twitter:description" content="I’m having a lot of fun on THM so here is my Madness writeup !  As usual let’s start with a basic nmap scan1234567891011121314# Nmap 7.91 scan initiated Thu Oct 21 21:42:42 2020 as: nmap -sC -sV -oN n">
@@ -134,13 +134,17 @@
 <p>So finally I have a potential ssh user but this name looks weird !</p>
 <p><em>HINT: There’s something ROTten about this guys name!</em> </p>
 <p>Ok I have my user name now \o/</p>
+<p>Knowing that this challenge does not require SSH Brute forcing, I decided to take a look at the following image on the home page of the challenge.</p>
 <p><img src="/images/madness_7.png" alt="Madness We&#39;re all mad here!!!"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness<span class="comment">#  wget https://i.imgur.com/5iW7kC8.jpg</span></span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness<span class="comment"># steghide extract -sf 5iW7kC8.jpg</span></span><br><span class="line">Enter passphrase: &lt;==================&gt; just press enter without any password ;)</span><br><span class="line">wrote extracted data to <span class="string">"password.txt"</span>.</span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness<span class="comment"># cat password.txt</span></span><br><span class="line">I didn<span class="string">'t think you'</span>d find me! Congratulations!</span><br><span class="line"></span><br><span class="line">Here take my password</span><br><span class="line"></span><br><span class="line">XXXXXXXXXX</span><br></pre></td></tr></table></figure>
+<p>Oh yeah !!! </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ rw00t@kali:~/ctf/tryhackme/madness<span class="comment"># ssh SSH_USER@$IP</span></span><br><span class="line">&lt;ssh-user&gt;@X.X.X.X<span class="string">'s password:</span></span><br><span class="line"><span class="string">Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-170-generic x86_64)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="string"> * Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="string"> * Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">The programs included with the Ubuntu system are free software;</span></span><br><span class="line"><span class="string">the exact distribution terms for each program are described in the</span></span><br><span class="line"><span class="string">individual files in /usr/share/doc/*/copyright.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by</span></span><br><span class="line"><span class="string">applicable law.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;ssh-user&gt;@ubuntu:~$ cat user.txt</span></span><br><span class="line"><span class="string">THM&#123;XXXXXXXXXXXXXXXXXXXXXXXXXXXX&#125;</span></span><br></pre></td></tr></table></figure>
 <p>Work (still) in progress…</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgwbwpp70009w4iyfao0penr" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgwetbgy0009ngiywktrn126" class="article-share-link">Partager</a>
       
       
       
