@@ -96,7 +96,7 @@
 <p><img src="https://media.giphy.com/media/ui9twqrw0GSA0/giphy.gif" alt="Welcome to Madness CTF"></p>
 <h3 id="As-usual-let’s-start-with-a-basic-nmap-scan"><a href="#As-usual-let’s-start-with-a-basic-nmap-scan" class="headerlink" title="As usual let’s start with a basic nmap scan"></a>As usual let’s start with a basic nmap scan</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># Nmap 7.91 scan initiated Thu Oct 21 21:42:42 2020 as: nmap -sC -sV -oN nmap.txt X.X.X.X</span><br><span class="line">Nmap scan report for X.X.X.X</span><br><span class="line">Host is up (0.024s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 ac:f9:85:10:52:65:6e:17:f5:1c:34:e7:d8:64:67:b1 (RSA)</span><br><span class="line">|   256 dd:8e:5a:ec:b1:95:cd:dc:4d:01:b3:fe:5f:4e:12:c1 (ECDSA)</span><br><span class="line">|_  256 e9:ed:e3:eb:58:77:3b:00:5e:3a:f5:24:d8:58:34:8e (ED25519)</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))</span><br><span class="line">|_http-server-header: Apache/2.4.18 (Ubuntu)</span><br><span class="line">|_http-title: Apache2 Ubuntu Default Page: It works</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br></pre></td></tr></table></figure>
 <p>Ok so let’s have a look on this Ubuntu Default Page. </p>
-<h3 id="Check-Ubuntu-Default-Page-source-code"><a href="#Check-Ubuntu-Default-Page-source-code" class="headerlink" title="Check Ubuntu Default Page source code"></a>Check Ubuntu Default Page source code</h3><p><img src="/images/madness_1.PNG" alt="default page source code"></p>
+<h3 id="Check-Ubuntu-Default-Page-source-code"><a href="#Check-Ubuntu-Default-Page-source-code" class="headerlink" title="Check Ubuntu Default Page source code"></a>Check Ubuntu Default Page source code</h3><p><img src="/images/madness_1.png" alt="default page source code"></p>
 <p><img src="/images/madness_2.PNG" alt="default page source code with curl"></p>
 <h3 id="Let’s-get-this-thm-jpg-picture"><a href="#Let’s-get-this-thm-jpg-picture" class="headerlink" title="Let’s get this thm.jpg picture"></a>Let’s get this thm.jpg picture</h3><p><img src="/images/madness_3.PNG" alt="thm.jpg seems to be corrupted"></p>
 <p>Something strange isn’t it ? We try to get a jpg file but firefox consider it as a png.<br>So let’s grab this picture : </p>
@@ -125,7 +125,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgw3rgym0005y8iy1qh4j7uz" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgw3vrco000972iyat2p8zf0" class="article-share-link">Partager</a>
       
       
       
@@ -180,7 +180,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckgw3rgyp0006y8iydho0yltx" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckgw3vrcq000a72iyo3mm1mr2" class="article-share-link">Partager</a>
       
       
       
@@ -1293,7 +1293,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckgw3rh440037y8iyow7miqfm" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckgw3vrh4003a72iywj8ji7sf" class="article-share-link">Partager</a>
       
       
       
@@ -1359,7 +1359,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckgw3rgzb000ky8iycoaelu3f" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckgw3vrct000e72iy2mqb4a9c" class="article-share-link">Partager</a>
       
       
       
@@ -1415,7 +1415,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckgw3rgya0001y8iyo6zbzuxe" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckgw3vrcj000572iyw1p9f8a0" class="article-share-link">Partager</a>
       
       
       
@@ -1485,7 +1485,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckgw3rgzt000ry8iyk7k2za6r" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckgw3vrde000p72iy6s0ib6o3" class="article-share-link">Partager</a>
       
       
       
@@ -1531,7 +1531,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckgw3rgxp0000y8iyns2nqbju" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckgw3vrc7000172iyazu2h4jx" class="article-share-link">Partager</a>
       
       
       
@@ -1618,7 +1618,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckgw3rh3j0030y8iy7hf06v3k" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckgw3vrch000472iyj8js2tpk" class="article-share-link">Partager</a>
       
       
       
@@ -1729,7 +1729,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckgw3rh2i002qy8iymqjgiso1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckgw3vrg8003072iyasv1qa59" class="article-share-link">Partager</a>
       
       
       
@@ -1781,7 +1781,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckgw3rgzw000ty8iyecgqjwlj" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckgw3vrdl000v72iya3okj8da" class="article-share-link">Partager</a>
       
       
       
