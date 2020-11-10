@@ -116,21 +116,21 @@
 <p>So I decided to bruteforce this step like this : </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali:~/ctf/tryhackme/madness<span class="comment"># for i in &#123;1..100&#125;; do curl -s http://$IP/XXXXXXXXX/\?secret\=$i | grep -B2 right ;done </span></span><br><span class="line"></span><br><span class="line">&lt;p&gt;Secret Entered: XX&lt;/p&gt;</span><br><span class="line">&lt;p&gt;Urgh, you got it right! But I won<span class="string">'t tell you who I am! XXXXXXXXX&lt;/p&gt;</span></span><br></pre></td></tr></table></figure>
 <p>Ahah we got the passphrase now :) </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness<span class="comment"># steghide extract -sf thm1.jpg</span></span><br><span class="line">Enter passphrase:</span><br><span class="line">wrote extracted data to <span class="string">"hidden.txt"</span>.</span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness <span class="comment"># cat hidden.txt</span></span><br><span class="line">Fine you found the password!</span><br><span class="line"></span><br><span class="line">Here<span class="string">'s a username</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">xxxxx</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">I didn'</span>t say I would make it easy <span class="keyword">for</span> you!</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali :~/ctf/tryhackme/madness<span class="comment"># steghide extract -sf thm1.jpg</span></span><br><span class="line">Enter passphrase:</span><br><span class="line">wrote extracted data to <span class="string">"hidden.txt"</span>.</span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness <span class="comment"># cat hidden.txt</span></span><br><span class="line">Fine you found the password!</span><br><span class="line"></span><br><span class="line">Here<span class="string">'s a username</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">xxxxx</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">I didn'</span>t say I would make it easy <span class="keyword">for</span> you!</span><br></pre></td></tr></table></figure>
 <p>So finally I have a potential ssh user but this name looks weird !</p>
 <p><em>HINT: There’s something ROTten about this guys name!</em> </p>
 <p>Ok I have my user name now \o/</p>
 <p>Knowing that this challenge does not require SSH Brute forcing, I decided to take a look at the following image on the home page of the challenge.</p>
 <p><img src="/images/madness_7.png" alt="Madness We&#39;re all mad here!!!"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness<span class="comment">#  wget https://i.imgur.com/5iW7kC8.jpg</span></span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness<span class="comment"># steghide extract -sf 5iW7kC8.jpg</span></span><br><span class="line">Enter passphrase: &lt;==================&gt; just press enter without any password ;)</span><br><span class="line">wrote extracted data to <span class="string">"password.txt"</span>.</span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness<span class="comment"># cat password.txt</span></span><br><span class="line">I didn<span class="string">'t think you'</span>d find me! Congratulations!</span><br><span class="line"></span><br><span class="line">Here take my password</span><br><span class="line"></span><br><span class="line">XXXXXXXXXX</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> ⚡ w00t@kali :~/ctf/tryhackme/madness<span class="comment">#  wget https://i.imgur.com/5iW7kC8.jpg</span></span><br><span class="line"> ⚡ w00t@kali :~/ctf/tryhackme/madness<span class="comment"># steghide extract -sf 5iW7kC8.jpg</span></span><br><span class="line">Enter passphrase: &lt;==================&gt; just press enter without any password ;)</span><br><span class="line">wrote extracted data to <span class="string">"password.txt"</span>.</span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness<span class="comment"># cat password.txt</span></span><br><span class="line">I didn<span class="string">'t think you'</span>d find me! Congratulations!</span><br><span class="line"></span><br><span class="line">Here take my password</span><br><span class="line"></span><br><span class="line">XXXXXXXXXX</span><br></pre></td></tr></table></figure>
 <p>Oh yeah !!! </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ rw00t@kali:~/ctf/tryhackme/madness<span class="comment"># ssh SSH_USER@$IP</span></span><br><span class="line">&lt;ssh-user&gt;@X.X.X.X<span class="string">'s password:</span></span><br><span class="line"><span class="string">Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-170-generic x86_64)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="string"> * Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="string"> * Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">The programs included with the Ubuntu system are free software;</span></span><br><span class="line"><span class="string">the exact distribution terms for each program are described in the</span></span><br><span class="line"><span class="string">individual files in /usr/share/doc/*/copyright.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by</span></span><br><span class="line"><span class="string">applicable law.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;ssh-user&gt;@ubuntu:~$ cat user.txt</span></span><br><span class="line"><span class="string">THM&#123;XXXXXXXXXXXXXXXXXXXXXXXXXXXX&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali:~/ctf/tryhackme/madness<span class="comment"># ssh SSH_USER@$IP</span></span><br><span class="line">&lt;ssh-user&gt;@ubuntu:~$ cat user.txt</span><br><span class="line">THM&#123;XXXXXXXXXXXXXXXXXXXXXXXXXXXX&#125;</span><br></pre></td></tr></table></figure>
 <p>Work (still) in progress…</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckgwetbgy0009ngiywktrn126" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhbpg1wg0000eiiyui9vf40k" class="article-share-link">Partager</a>
       
       
       
@@ -185,7 +185,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckgwetbh0000angiyp5htgbwz" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhbpg1za001keiiyf82bplt1" class="article-share-link">Partager</a>
       
       
       
@@ -1298,7 +1298,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckgwetbki003angiywdnjrxon" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhbpg2360035eiiyhxkog7fu" class="article-share-link">Partager</a>
       
       
       
@@ -1364,7 +1364,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckgwetbh4000engiyh26opu2o" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhbpg1xa0004eiiygg3lnvx1" class="article-share-link">Partager</a>
       
       
       
@@ -1420,7 +1420,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckgwetbgr0005ngiyxw7oed3l" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhbpg1x00001eiiy8hxvtlxd" class="article-share-link">Partager</a>
       
       
       
@@ -1490,7 +1490,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckgwetbhp000pngiydynpbhdy" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhbpg1yn001feiiyyteuk38z" class="article-share-link">Partager</a>
       
       
       
@@ -1536,7 +1536,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckgwetbgc0001ngiyviax65ri" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhbpg1zi001reiiyuu0tgcpu" class="article-share-link">Partager</a>
       
       
       
@@ -1623,7 +1623,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckgwetbgo0004ngiyq9g7aodn" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhbpg1zm001veiiyu4r6e89l" class="article-share-link">Partager</a>
       
       
       
@@ -1734,7 +1734,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckgwetbjw0030ngiy7vtdnp85" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhbpg21q002veiiynundw2uh" class="article-share-link">Partager</a>
       
       
       
@@ -1786,7 +1786,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckgwetbi0000vngiy0iobjc5k" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckhbpg1z2001jeiiy42p0enxp" class="article-share-link">Partager</a>
       
       
       
