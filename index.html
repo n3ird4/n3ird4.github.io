@@ -124,12 +124,17 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> ⚡ w00t@kali :~/ctf/tryhackme/madness<span class="comment">#  wget https://i.imgur.com/5iW7kC8.jpg</span></span><br><span class="line"> ⚡ w00t@kali :~/ctf/tryhackme/madness<span class="comment"># steghide extract -sf 5iW7kC8.jpg</span></span><br><span class="line">Enter passphrase: &lt;==================&gt; just press enter without any password ;)</span><br><span class="line">wrote extracted data to <span class="string">"password.txt"</span>.</span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness<span class="comment"># cat password.txt</span></span><br><span class="line">I didn<span class="string">'t think you'</span>d find me! Congratulations!</span><br><span class="line"></span><br><span class="line">Here take my password</span><br><span class="line"></span><br><span class="line">XXXXXXXXXX</span><br></pre></td></tr></table></figure>
 <p>Oh yeah !!! </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali:~/ctf/tryhackme/madness<span class="comment"># ssh SSH_USER@$IP</span></span><br><span class="line">&lt;ssh-user&gt;@ubuntu:~$ cat user.txt</span><br><span class="line">THM&#123;XXXXXXXXXXXXXXXXXXXXXXXXXXXX&#125;</span><br></pre></td></tr></table></figure>
-<p>Work (still) in progress…</p>
+<p>Let’s see if privilege escalation is possible via a my old good friend: find command</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;ssh-user&gt;@ubuntu:~$ sudo <span class="_">-l</span></span><br><span class="line">[sudo] password <span class="keyword">for</span> joker: </span><br><span class="line">Sorry, user joker may not run sudo on ubuntu.</span><br><span class="line">&lt;ssh-user&gt;@ubuntu:~$ </span><br><span class="line"></span><br><span class="line">&lt;ssh-user&gt;@ubuntu:~$ find / -type f -perm -u=s 2&gt;/dev/null</span><br><span class="line">/usr/lib/openssh/ssh-keysign</span><br><span class="line">/usr/lib/dbus-1.0/dbus-daemon-launch-helper</span><br><span class="line">/usr/lib/eject/dmcrypt-get-device</span><br><span class="line">/usr/bin/vmware-user-suid-wrapper</span><br><span class="line">/usr/bin/gpasswd</span><br><span class="line">/usr/bin/passwd</span><br><span class="line">/usr/bin/newgrp</span><br><span class="line">/usr/bin/chsh</span><br><span class="line">/usr/bin/chfn</span><br><span class="line">/usr/bin/sudo</span><br><span class="line">/bin/fusermount</span><br><span class="line">/bin/su</span><br><span class="line">/bin/ping6</span><br><span class="line">/bin/screen-4.5.0</span><br><span class="line">/bin/screen-4.5.0.old</span><br><span class="line">/bin/mount</span><br><span class="line">/bin/ping</span><br><span class="line">/bin/umount</span><br><span class="line">&lt;ssh-user&gt;@ubuntu:~$</span><br></pre></td></tr></table></figure>
+<p>So screen was obviously a good way but nothing was exploitable with <a href="https://gtfobins.github.io/gtfobins/screen/#shell" target="_blank" rel="noopener">gtfobins</a> tips so I decided to browse exploitdb and I found this script: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">└─$ searchsploit GNU Screen 4.5.0                                                                                                130 ⨯</span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line"> Exploit Title                                                                                       |  Path</span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line">GNU Screen 4.5.0 - Local Privilege Escalation                                                        | linux/<span class="built_in">local</span>/41154.sh</span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br></pre></td></tr></table></figure>
+<p>And indeed I get root on the server \o/</p>
+<p><img src="/images/madness_8.png" alt="Using www.exploit-db.com/exploits/41154 script !"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhn4oqg70005bliyacaoragh" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhn84zxj0009o4iy62c6et48" class="article-share-link">Partager</a>
       
       
       
@@ -184,7 +189,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhn4oqga0006bliy5fdc9s0d" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhn84zxm000ao4iyd66h49vy" class="article-share-link">Partager</a>
       
       
       
@@ -1297,7 +1302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhn4oqlt0038bliy9ujjo94q" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhn8500t003ao4iyyjoo38ad" class="article-share-link">Partager</a>
       
       
       
@@ -1363,7 +1368,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhn4oqkt002rbliy8ttbknm9" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhn84zxq000eo4iy7jwdctty" class="article-share-link">Partager</a>
       
       
       
@@ -1419,7 +1424,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhn4oqg10004bliyf17vut5f" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhn84zxe0005o4iy2vn29f6u" class="article-share-link">Partager</a>
       
       
       
@@ -1489,7 +1494,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhn4oqkw002tbliyp6ujgsoj" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhn84zy9000po4iy4l7rznm3" class="article-share-link">Partager</a>
       
       
       
@@ -1535,7 +1540,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhn4oqf40000bliyid5ur9c9" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhn84zx00001o4iyv2ehhds6" class="article-share-link">Partager</a>
       
       
       
@@ -1622,7 +1627,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhn4oqfp0001bliytoaw942h" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhn84zxb0004o4iyzd9zaxe8" class="article-share-link">Partager</a>
       
       
       
@@ -1733,7 +1738,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhn4oqju002gbliyunroshyw" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhn8500b0030o4iy4hwj2uav" class="article-share-link">Partager</a>
       
       
       
@@ -1785,7 +1790,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckhn4oqh2000nbliy2al78jsf" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckhn84zyg000vo4iyaq2w8yft" class="article-share-link">Partager</a>
       
       
       
