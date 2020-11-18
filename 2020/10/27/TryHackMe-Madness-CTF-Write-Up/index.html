@@ -20,12 +20,11 @@
 <meta property="og:image" content="http://91.208.181.214/images/madness_2.PNG">
 <meta property="og:image" content="http://91.208.181.214/images/madness_3.PNG">
 <meta property="og:image" content="http://91.208.181.214/images/madness_4.png">
-<meta property="og:image" content="https://www.file-recovery.com/jpg-signature-format.htm">
 <meta property="og:image" content="http://91.208.181.214/images/madness_5.png">
 <meta property="og:image" content="http://91.208.181.214/images/thm1.jpg">
 <meta property="og:image" content="http://91.208.181.214/images/madness_6.png">
 <meta property="og:image" content="http://91.208.181.214/images/madness_7.png">
-<meta property="og:updated_time" content="2020-11-10T08:20:11.857Z">
+<meta property="og:updated_time" content="2020-11-18T08:12:32.054Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TryHackMe Madness CTF Writeup">
 <meta name="twitter:description" content="I’m having a lot of fun on THM so here is my Madness writeup !  As usual let’s start with a basic nmap scan1234567891011121314# Nmap 7.91 scan initiated Thu Oct 21 21:42:42 2020 as: nmap -sC -sV -oN n">
@@ -117,19 +116,18 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.X.X.X/thm.jpg</span><br></pre></td></tr></table></figure>
 <p>I could not find anything with strings command on this file so I had to open it with hexeditor: </p>
 <p><img src="/images/madness_4.png" alt="hexeditor"> </p>
-<p>Regarding this <img src="https://www.file-recovery.com/jpg-signature-format.htm" alt="article about jpg signature format"></p>
-<p>I learnt that a jpg file has to start with a “FF D8 FF” signature so faire enough, someone change the jpg signature and we have to fix it if we want to able to see this picture.</p>
+<p>Regarding this <a href="https://www.file-recovery.com/jpg-signature-format.htm" target="_blank" rel="noopener">article</a> about jpg signature format, I learnt that a jpg file has to start with a “FF D8 FF” signature so faire enough, someone change the jpg signature and we have to fix it in order to get this picture.</p>
 <p><img src="/images/madness_5.png" alt="Fixing jpg signature with hexeditor"> </p>
 <p>And…. Tada \o/ </p>
 <p><img src="/images/thm1.jpg" alt="Fixing jpg signature and discorvering a secret path"></p>
 <p>Now that I have a valid .jpg let’s play with steghide: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">steghide extract -sf thm1.jpg</span><br><span class="line"></span><br><span class="line">Enter passphrase: </span><br><span class="line">steghide: could not extract any data with that passphrase!</span><br></pre></td></tr></table></figure>
-<p>Faire enough the passphrase might be somewhere on the secret folder.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">steghide extract -sf thm.jpg</span><br><span class="line"></span><br><span class="line">Enter passphrase: </span><br><span class="line">steghide: could not extract any data with that passphrase!</span><br></pre></td></tr></table></figure>
+<p>Faire enough the passphrase might be somewhere on the secret folder shown on the thm.jpg.</p>
 <h3 id="Dive-into-the-secret-folder"><a href="#Dive-into-the-secret-folder" class="headerlink" title="Dive into the secret folder"></a>Dive into the secret folder</h3><p>On this page I’m asked to find a “secret” ! </p>
 <p><img src="/images/madness_6.png" alt="secret path home page"></p>
 <p>So I decided to bruteforce this step like this : </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali:~/ctf/tryhackme/madness<span class="comment"># for i in &#123;1..100&#125;; do curl -s http://$IP/XXXXXXXXX/\?secret\=$i | grep -B2 right ;done </span></span><br><span class="line"></span><br><span class="line">&lt;p&gt;Secret Entered: XX&lt;/p&gt;</span><br><span class="line">&lt;p&gt;Urgh, you got it right! But I won<span class="string">'t tell you who I am! XXXXXXXXX&lt;/p&gt;</span></span><br></pre></td></tr></table></figure>
-<p>Ahah we got the passphrase now :) </p>
+<p>Ahah easy, we got the passphrase now :) </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali :~/ctf/tryhackme/madness<span class="comment"># steghide extract -sf thm1.jpg</span></span><br><span class="line">Enter passphrase:</span><br><span class="line">wrote extracted data to <span class="string">"hidden.txt"</span>.</span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness <span class="comment"># cat hidden.txt</span></span><br><span class="line">Fine you found the password!</span><br><span class="line"></span><br><span class="line">Here<span class="string">'s a username</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">xxxxx</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">I didn'</span>t say I would make it easy <span class="keyword">for</span> you!</span><br></pre></td></tr></table></figure>
 <p>So finally I have a potential ssh user but this name looks weird !</p>
 <p><em>HINT: There’s something ROTten about this guys name!</em> </p>
@@ -144,7 +142,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhbpg1wg0000eiiyui9vf40k" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhn4oqg70005bliyacaoragh" class="article-share-link">Partager</a>
       
       
       

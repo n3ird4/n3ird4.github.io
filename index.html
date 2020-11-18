@@ -103,19 +103,18 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.X.X.X/thm.jpg</span><br></pre></td></tr></table></figure>
 <p>I could not find anything with strings command on this file so I had to open it with hexeditor: </p>
 <p><img src="/images/madness_4.png" alt="hexeditor"> </p>
-<p>Regarding this <img src="https://www.file-recovery.com/jpg-signature-format.htm" alt="article about jpg signature format"></p>
-<p>I learnt that a jpg file has to start with a “FF D8 FF” signature so faire enough, someone change the jpg signature and we have to fix it if we want to able to see this picture.</p>
+<p>Regarding this <a href="https://www.file-recovery.com/jpg-signature-format.htm" target="_blank" rel="noopener">article</a> about jpg signature format, I learnt that a jpg file has to start with a “FF D8 FF” signature so faire enough, someone change the jpg signature and we have to fix it in order to get this picture.</p>
 <p><img src="/images/madness_5.png" alt="Fixing jpg signature with hexeditor"> </p>
 <p>And…. Tada \o/ </p>
 <p><img src="/images/thm1.jpg" alt="Fixing jpg signature and discorvering a secret path"></p>
 <p>Now that I have a valid .jpg let’s play with steghide: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">steghide extract -sf thm1.jpg</span><br><span class="line"></span><br><span class="line">Enter passphrase: </span><br><span class="line">steghide: could not extract any data with that passphrase!</span><br></pre></td></tr></table></figure>
-<p>Faire enough the passphrase might be somewhere on the secret folder.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">steghide extract -sf thm.jpg</span><br><span class="line"></span><br><span class="line">Enter passphrase: </span><br><span class="line">steghide: could not extract any data with that passphrase!</span><br></pre></td></tr></table></figure>
+<p>Faire enough the passphrase might be somewhere on the secret folder shown on the thm.jpg.</p>
 <h3 id="Dive-into-the-secret-folder"><a href="#Dive-into-the-secret-folder" class="headerlink" title="Dive into the secret folder"></a>Dive into the secret folder</h3><p>On this page I’m asked to find a “secret” ! </p>
 <p><img src="/images/madness_6.png" alt="secret path home page"></p>
 <p>So I decided to bruteforce this step like this : </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali:~/ctf/tryhackme/madness<span class="comment"># for i in &#123;1..100&#125;; do curl -s http://$IP/XXXXXXXXX/\?secret\=$i | grep -B2 right ;done </span></span><br><span class="line"></span><br><span class="line">&lt;p&gt;Secret Entered: XX&lt;/p&gt;</span><br><span class="line">&lt;p&gt;Urgh, you got it right! But I won<span class="string">'t tell you who I am! XXXXXXXXX&lt;/p&gt;</span></span><br></pre></td></tr></table></figure>
-<p>Ahah we got the passphrase now :) </p>
+<p>Ahah easy, we got the passphrase now :) </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> ⚡ w00t@kali :~/ctf/tryhackme/madness<span class="comment"># steghide extract -sf thm1.jpg</span></span><br><span class="line">Enter passphrase:</span><br><span class="line">wrote extracted data to <span class="string">"hidden.txt"</span>.</span><br><span class="line"> ⚡ rw00t@kali :~/ctf/tryhackme/madness <span class="comment"># cat hidden.txt</span></span><br><span class="line">Fine you found the password!</span><br><span class="line"></span><br><span class="line">Here<span class="string">'s a username</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">xxxxx</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">I didn'</span>t say I would make it easy <span class="keyword">for</span> you!</span><br></pre></td></tr></table></figure>
 <p>So finally I have a potential ssh user but this name looks weird !</p>
 <p><em>HINT: There’s something ROTten about this guys name!</em> </p>
@@ -130,7 +129,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhbpg1wg0000eiiyui9vf40k" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhn4oqg70005bliyacaoragh" class="article-share-link">Partager</a>
       
       
       
@@ -185,7 +184,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhbpg1za001keiiyf82bplt1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhn4oqga0006bliy5fdc9s0d" class="article-share-link">Partager</a>
       
       
       
@@ -1298,7 +1297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhbpg2360035eiiyhxkog7fu" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhn4oqlt0038bliy9ujjo94q" class="article-share-link">Partager</a>
       
       
       
@@ -1364,7 +1363,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhbpg1xa0004eiiygg3lnvx1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhn4oqkt002rbliy8ttbknm9" class="article-share-link">Partager</a>
       
       
       
@@ -1420,7 +1419,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhbpg1x00001eiiy8hxvtlxd" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhn4oqg10004bliyf17vut5f" class="article-share-link">Partager</a>
       
       
       
@@ -1490,7 +1489,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhbpg1yn001feiiyyteuk38z" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhn4oqkw002tbliyp6ujgsoj" class="article-share-link">Partager</a>
       
       
       
@@ -1536,7 +1535,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhbpg1zi001reiiyuu0tgcpu" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhn4oqf40000bliyid5ur9c9" class="article-share-link">Partager</a>
       
       
       
@@ -1623,7 +1622,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhbpg1zm001veiiyu4r6e89l" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhn4oqfp0001bliytoaw942h" class="article-share-link">Partager</a>
       
       
       
@@ -1734,7 +1733,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhbpg21q002veiiynundw2uh" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhn4oqju002gbliyunroshyw" class="article-share-link">Partager</a>
       
       
       
@@ -1786,7 +1785,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckhbpg1z2001jeiiy42p0enxp" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckhn4oqh2000nbliy2al78jsf" class="article-share-link">Partager</a>
       
       
       
