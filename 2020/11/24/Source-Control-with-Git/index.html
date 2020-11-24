@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Source: LinuxAcademy  simple tutorial in order to understand Git. Need some prerequisites (confident with command lines and Linux OS)  Getting Started We will cover :  Git Architecture. Working with l">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-11-24T15:43:10.448Z">
+<meta property="og:updated_time" content="2020-11-24T15:50:43.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Source Control with Git">
 <meta name="twitter:description" content="Source: LinuxAcademy  simple tutorial in order to understand Git. Need some prerequisites (confident with command lines and Linux OS)  Getting Started We will cover :  Git Architecture. Working with l">
@@ -141,7 +141,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git diff</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"modify me"</span> &gt;&gt; CHANGELOG.md</span><br><span class="line">$ git diff</span><br><span class="line">$ git diff HEAD^ HEAD</span><br><span class="line">$ git diff --summary hashid hashid</span><br><span class="line">$ man git-diff</span><br></pre></td></tr></table></figure>
 <p>7) How garbage collection works</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git gc --prune (man git)</span><br><span class="line">$ git gc --auto</span><br><span class="line">$ git config gc.pruneexpire <span class="string">"30 days"</span></span><br></pre></td></tr></table></figure>
-<h2 id="Git’s-Logs-and-Auditing"><a href="#Git’s-Logs-and-Auditing" class="headerlink" title="Git’s Logs and Auditing"></a>Git’s Logs and Auditing</h2><p>WIP…</p>
+<h2 id="Git’s-Logs-and-Auditing"><a href="#Git’s-Logs-and-Auditing" class="headerlink" title="Git’s Logs and Auditing"></a>Git’s Logs and Auditing</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --graph</span><br><span class="line">$ git <span class="built_in">log</span> --grap --since=<span class="string">"42 days ago"</span></span><br><span class="line">$ git <span class="built_in">log</span> -S toto =&gt; shows commits with the word toto</span><br><span class="line">$ git <span class="built_in">log</span> --pretty=format:<span class="string">"%h - %an - %ar - %s"</span> (<span class="built_in">hash</span> / author / relative time / subject )</span><br><span class="line">$ =&gt; Install oh-my-zsh <span class="keyword">in</span> order to use all super cool aliases (glog glgga glg etc...)</span><br></pre></td></tr></table></figure>
 <h2 id="Push-Pull-and-Tracking-Remote-Repositories"><a href="#Push-Pull-and-Tracking-Remote-Repositories" class="headerlink" title="Push, Pull, and Tracking Remote Repositories"></a>Push, Pull, and Tracking Remote Repositories</h2><p>WIP…</p>
 <h2 id="Setting-Up-and-Using-a-GitLab-Server"><a href="#Setting-Up-and-Using-a-GitLab-Server" class="headerlink" title="Setting Up and Using a GitLab Server"></a>Setting Up and Using a GitLab Server</h2><p>WIP…</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://about.gitlab.com/install/#debian</span></span><br><span class="line"></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y curl openssh-server ca-certificates</span><br><span class="line">sudo apt-get install -y postfix</span><br><span class="line"></span><br><span class="line"><span class="comment"># https://packages.gitlab.com/gitlab/gitlab-ce</span></span><br><span class="line">curl <span class="_">-s</span> https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
@@ -149,7 +149,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/11/24/Source-Control-with-Git/" data-id="ckhw5ez4q0009c5iy2uygbxll" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/11/24/Source-Control-with-Git/" data-id="ckhw5oowv0009kuiy47ddxknm" class="article-share-link">Partager</a>
       
       
       
