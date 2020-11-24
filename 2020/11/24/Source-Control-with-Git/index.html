@@ -7,18 +7,18 @@
   
   <title>Source Control with Git | n3ird4</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Source Control with GitSource: LinuxAcademy  simple tutorial in order to understand Git. Need some prerequisites (confident with command lines and Linux OS)  Getting Started We will cover :  Git Archi">
+  <meta name="description" content="Source: LinuxAcademy  simple tutorial in order to understand Git. Need some prerequisites (confident with command lines and Linux OS)  Getting Started We will cover :  Git Architecture. Working with l">
 <meta name="keywords" content="git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Source Control with Git">
 <meta property="og:url" content="http://91.208.181.214/2020/11/24/Source-Control-with-Git/index.html">
 <meta property="og:site_name" content="n3ird4">
-<meta property="og:description" content="Source Control with GitSource: LinuxAcademy  simple tutorial in order to understand Git. Need some prerequisites (confident with command lines and Linux OS)  Getting Started We will cover :  Git Archi">
+<meta property="og:description" content="Source: LinuxAcademy  simple tutorial in order to understand Git. Need some prerequisites (confident with command lines and Linux OS)  Getting Started We will cover :  Git Architecture. Working with l">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-11-24T15:36:07.471Z">
+<meta property="og:updated_time" content="2020-11-24T15:40:28.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Source Control with Git">
-<meta name="twitter:description" content="Source Control with GitSource: LinuxAcademy  simple tutorial in order to understand Git. Need some prerequisites (confident with command lines and Linux OS)  Getting Started We will cover :  Git Archi">
+<meta name="twitter:description" content="Source: LinuxAcademy  simple tutorial in order to understand Git. Need some prerequisites (confident with command lines and Linux OS)  Getting Started We will cover :  Git Architecture. Working with l">
   
     <link rel="alternate" href="/atom.xml" title="n3ird4" type="application/atom+xml">
   
@@ -95,7 +95,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Source-Control-with-Git"><a href="#Source-Control-with-Git" class="headerlink" title="Source Control with Git"></a>Source Control with Git</h1><p>Source: <a href="https://linuxacademy.com/cp/courses/lesson/course/1970/lesson/7/module/195" target="_blank" rel="noopener">LinuxAcademy</a></p>
+        <p>Source: <a href="https://linuxacademy.com/cp/courses/lesson/course/1970/lesson/7/module/195" target="_blank" rel="noopener">LinuxAcademy</a></p>
 <ul>
 <li>simple tutorial in order to understand Git.</li>
 <li>Need some prerequisites (confident with command lines and Linux OS)</li>
@@ -127,7 +127,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"blablabla"</span></span><br><span class="line">$ cat .git/COMMIT_EDITMSG</span><br><span class="line">$ git <span class="built_in">log</span></span><br><span class="line">$ ls .git/objects/42/ (id from the <span class="built_in">hash</span>)</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
 <p>7) Ignoring Certain File types</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat .git/info/exclude</span><br><span class="line">$ mkdir build</span><br><span class="line">$ touch .gitignore</span><br><span class="line">$ git add .gitignore</span><br><span class="line">$ git status</span><br><span class="line">$ git commit -m <span class="string">"adding a .gitignore file"</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"build/*"</span> &gt; .gitignore</span><br><span class="line">$ git status</span><br><span class="line">$ git commit -m <span class="string">"updated our .gitignore file to exclude build directory"</span></span><br><span class="line">$ [build something <span class="keyword">in</span> build directory]</span><br><span class="line">$ git status (directory is clean)</span><br><span class="line">$ vim CHANEGLOG.md (<span class="built_in">set</span> backup + add some lines)</span><br><span class="line">$ git status</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"*~"</span> &gt;&gt; .gitignore (CHANEGLOG.md~)</span><br><span class="line">$ git commit <span class="_">-a</span> -m <span class="string">"updated changelog, and ignoring vim backup files in gitignore"</span></span><br><span class="line">$ git status (directory is clean)</span><br><span class="line">$ git check-ignore *~ (show CHANEGLOG.md~)</span><br></pre></td></tr></table></figure>
-<p>8) QUIZ: The Basics of Using Git</p>
 <h2 id="Tags-Branching-Merging-and-Reverting"><a href="#Tags-Branching-Merging-and-Reverting" class="headerlink" title="Tags, Branching, Merging and Reverting"></a>Tags, Branching, Merging and Reverting</h2><p>1) Using Tags</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git tag <span class="_">-a</span> v0.1 -m <span class="string">"First tag for the project"</span> (create an unsigned, annotated tag)</span><br><span class="line">$ git tag</span><br><span class="line">$ git show v0.1</span><br><span class="line">- annotated tag contains full objects and a database of your commits. Including information about who created a tag and it is also checksumed</span><br><span class="line">- lightweight tag more <span class="keyword">for</span> private or Temporarily labour.</span><br><span class="line">- git tag create a lightweight tag by default</span><br><span class="line">- you can delete a tag like this:</span><br><span class="line">$ git tag <span class="_">-d</span> v0.1</span><br><span class="line">$ git tag</span><br></pre></td></tr></table></figure>
 <p>2) Using Branches</p>
@@ -147,7 +146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/11/24/Source-Control-with-Git/" data-id="ckhw57wbo0009xhiy4q2uh14c" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/11/24/Source-Control-with-Git/" data-id="ckhw5btlv00095giyv9llbubs" class="article-share-link">Partager</a>
       
       
       

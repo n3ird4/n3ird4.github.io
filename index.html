@@ -92,7 +92,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Source-Control-with-Git"><a href="#Source-Control-with-Git" class="headerlink" title="Source Control with Git"></a>Source Control with Git</h1><p>Source: <a href="https://linuxacademy.com/cp/courses/lesson/course/1970/lesson/7/module/195" target="_blank" rel="noopener">LinuxAcademy</a></p>
+        <p>Source: <a href="https://linuxacademy.com/cp/courses/lesson/course/1970/lesson/7/module/195" target="_blank" rel="noopener">LinuxAcademy</a></p>
 <ul>
 <li>simple tutorial in order to understand Git.</li>
 <li>Need some prerequisites (confident with command lines and Linux OS)</li>
@@ -124,7 +124,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"blablabla"</span></span><br><span class="line">$ cat .git/COMMIT_EDITMSG</span><br><span class="line">$ git <span class="built_in">log</span></span><br><span class="line">$ ls .git/objects/42/ (id from the <span class="built_in">hash</span>)</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
 <p>7) Ignoring Certain File types</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat .git/info/exclude</span><br><span class="line">$ mkdir build</span><br><span class="line">$ touch .gitignore</span><br><span class="line">$ git add .gitignore</span><br><span class="line">$ git status</span><br><span class="line">$ git commit -m <span class="string">"adding a .gitignore file"</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"build/*"</span> &gt; .gitignore</span><br><span class="line">$ git status</span><br><span class="line">$ git commit -m <span class="string">"updated our .gitignore file to exclude build directory"</span></span><br><span class="line">$ [build something <span class="keyword">in</span> build directory]</span><br><span class="line">$ git status (directory is clean)</span><br><span class="line">$ vim CHANEGLOG.md (<span class="built_in">set</span> backup + add some lines)</span><br><span class="line">$ git status</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"*~"</span> &gt;&gt; .gitignore (CHANEGLOG.md~)</span><br><span class="line">$ git commit <span class="_">-a</span> -m <span class="string">"updated changelog, and ignoring vim backup files in gitignore"</span></span><br><span class="line">$ git status (directory is clean)</span><br><span class="line">$ git check-ignore *~ (show CHANEGLOG.md~)</span><br></pre></td></tr></table></figure>
-<p>8) QUIZ: The Basics of Using Git</p>
 <h2 id="Tags-Branching-Merging-and-Reverting"><a href="#Tags-Branching-Merging-and-Reverting" class="headerlink" title="Tags, Branching, Merging and Reverting"></a>Tags, Branching, Merging and Reverting</h2><p>1) Using Tags</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git tag <span class="_">-a</span> v0.1 -m <span class="string">"First tag for the project"</span> (create an unsigned, annotated tag)</span><br><span class="line">$ git tag</span><br><span class="line">$ git show v0.1</span><br><span class="line">- annotated tag contains full objects and a database of your commits. Including information about who created a tag and it is also checksumed</span><br><span class="line">- lightweight tag more <span class="keyword">for</span> private or Temporarily labour.</span><br><span class="line">- git tag create a lightweight tag by default</span><br><span class="line">- you can delete a tag like this:</span><br><span class="line">$ git tag <span class="_">-d</span> v0.1</span><br><span class="line">$ git tag</span><br></pre></td></tr></table></figure>
 <p>2) Using Branches</p>
@@ -144,7 +143,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/11/24/Source-Control-with-Git/" data-id="ckhw57wbo0009xhiy4q2uh14c" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/11/24/Source-Control-with-Git/" data-id="ckhw5btlv00095giyv9llbubs" class="article-share-link">Partager</a>
       
       
       
@@ -226,7 +225,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhw57wbu000exhiy0cz8tt3t" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhw5btlx000a5giykjsym7wu" class="article-share-link">Partager</a>
       
       
       
@@ -281,7 +280,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhw57wbr000axhiycpeubvun" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhw5btm0000e5giyehrhh3ph" class="article-share-link">Partager</a>
       
       
       
@@ -1394,7 +1393,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhw57wet003hxhiybuo8lrqw" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhw5btp1003h5giyx5mon6p2" class="article-share-link">Partager</a>
       
       
       
@@ -1460,7 +1459,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhw57wbx000gxhiyyjju59nn" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhw5btm3000g5giy4reieti0" class="article-share-link">Partager</a>
       
       
       
@@ -1516,7 +1515,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhw57wbj0005xhiyg6rd4m8e" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhw5btlp00055giyfg20qsjc" class="article-share-link">Partager</a>
       
       
       
@@ -1586,7 +1585,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhw57wce000rxhiyujm0ty9l" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhw5btmk000r5giyz890521e" class="article-share-link">Partager</a>
       
       
       
@@ -1632,7 +1631,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhw57wb40001xhiy2qi1ab2b" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhw5btlb00015giydxbwwm06" class="article-share-link">Partager</a>
       
       
       
@@ -1719,7 +1718,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhw57wbg0004xhiywp8e66ob" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhw5btlm00045giyygj5eum9" class="article-share-link">Partager</a>
       
       
       
@@ -1830,7 +1829,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhw57wed0037xhiyoc9mcp0t" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhw5btoh00375giy3iskx12a" class="article-share-link">Partager</a>
       
       
       
