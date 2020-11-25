@@ -66,112 +66,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Source-Control-with-Git" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/11/24/Source-Control-with-Git/" class="article-date">
-  <time datetime="2020-11-24T15:20:42.000Z" itemprop="datePublished">2020-11-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Git/">Git</a>►<a class="article-category-link" href="/categories/Git/Source-Control-with-Git/">Source Control with Git</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/24/Source-Control-with-Git/">Source Control with Git</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Source: <a href="https://linuxacademy.com/cp/courses/lesson/course/1970/lesson/7/module/195" target="_blank" rel="noopener">LinuxAcademy</a></p>
-<ul>
-<li>simple tutorial in order to understand Git.</li>
-<li>Need some prerequisites (confident with command lines and Linux OS)</li>
-</ul>
-<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><p> We will cover :</p>
-<ul>
-<li>Git Architecture.</li>
-<li>Working with local and remote Git repositories.</li>
-<li>Adding and tracking files with Git.</li>
-<li>Changing a project via forking rebasing and tagging releases.</li>
-<li>Install a Gitlab server.</li>
-</ul>
-<h2 id="Installation-of-Git-on-Debian"><a href="#Installation-of-Git-on-Debian" class="headerlink" title="Installation of Git on Debian"></a>Installation of Git on Debian</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install git</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
-<h2 id="The-Basics-of-Using-Git"><a href="#The-Basics-of-Using-Git" class="headerlink" title="The Basics of Using Git"></a>The Basics of Using Git</h2><p>1) Understanding teh Git File System</p>
-<p>.git directory / staging area / branch</p>
-<p>ls .git/<br>COMMIT_EDITMSG  =&gt; plain text file containing each commit to the repository.<br>head            =&gt; plain text file reference the current branch that we are working on.<br>config          =&gt; configuration info about the repository (dev username and email address…)<br>description     =&gt; plain text file that contains the name of the repository.<br>hooks/          =&gt; contains scripts that you can create to setup some automatic tasks.<br>index           =&gt; keeps tracks of the item in our staging area and of file ready to be commited.<br>info/           =&gt; Contains item such as an exclude file which dicted what files that git will ignore (we’ll use a .gitignore file instead)<br>logs/           =&gt; Contains the log file for teh activity that goes on within the Git repo (commit &amp; changing to the project)<br>objects/        =&gt; Database of compressed file that are hash versions of content of files that have been commited to the repo.<br>                  (The index file is the link between this database and what is currently sitting in the wokring directory)<br>refs/           =&gt; Contains ref file and folders for the branches and tags of your repo.</p>
-<p>2) creating a local repository (empty)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git init MySuperRepo</span><br><span class="line"></span><br><span class="line">git init --bare big-project.git</span><br><span class="line">rm -rf big-project.git</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init /path/to/dircetory</span><br><span class="line"><span class="comment"># initializes a git repo, either by creating a new directory or adding the git repo files to an existing directory</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init --bare /path/to/directory</span><br><span class="line"><span class="comment"># initializes a bare git repository, for larger projects, contains no working area.</span></span><br></pre></td></tr></table></figure>
-<p>We use this type of repositories when we manage project that have branches for the project coming in for different people.<br>A bare repo has no working area and is typically used on servers where other contributors to the project are going to do pushes and pulls.<br>We also do not need to use the .git file extension for the directory name but is good practice to help distinguish this directory type from a git repository that has a working area.</p>
-<p>3) Basic Configuration of Git</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">"King 42"</span></span><br><span class="line">git config --global user.email <span class="string">"king@42.com"</span></span><br><span class="line"><span class="comment"># git config user.email "tonton@tahu.com" =&gt; to change only for the current project</span></span><br><span class="line"><span class="comment"># git config user.email</span></span><br><span class="line">git config --global core.editor <span class="string">"/usr/bin/vim"</span></span><br><span class="line">git config --list</span><br><span class="line">cat ~/.gitconfig</span><br></pre></td></tr></table></figure>
-<p>4) Adding Files to a Project</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ ls</span><br><span class="line">README.md</span><br><span class="line">$ git add README.md</span><br><span class="line">$ git status (show staging area)</span><br><span class="line">$ git status <span class="_">-s</span></span><br><span class="line">$ mkdir src</span><br><span class="line">$ git add src/</span><br><span class="line">$ git status (does not show empty directorires)</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"42"</span> &gt; toto.txt</span><br><span class="line">$ mv toto.txt src/</span><br><span class="line">$ git add src/toto.txt</span><br><span class="line">$ git status (now shoes the src dircetory \o/)</span><br><span class="line"></span><br><span class="line"><span class="comment"># an other method for empty folder to be visible in the repo</span></span><br><span class="line">$ touch src/.keep</span><br><span class="line">$ git add src/.keep</span><br><span class="line">$ git rm src/.keep /!\ does not work as there are no commit <span class="keyword">in</span> there.</span><br><span class="line">$ git rm <span class="_">-f</span> src/.keep</span><br><span class="line">$ ls <span class="_">-a</span> src/</span><br></pre></td></tr></table></figure>
-<p>5) The Status of Your Project</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ touch toto</span><br><span class="line">$ git status</span><br><span class="line">$ git status <span class="_">-s</span></span><br><span class="line">$ git add toto</span><br><span class="line">$ git status</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"hello world"</span> &gt; toto</span><br><span class="line">$ git status</span><br><span class="line">$ git status <span class="_">-s</span></span><br><span class="line">$ git add toto</span><br><span class="line">$ git status <span class="_">-s</span></span><br><span class="line">$ git status</span><br><span class="line">$ git status -v</span><br><span class="line">$ git status</span><br></pre></td></tr></table></figure>
-<p>6) Committing to Git</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"blablabla"</span></span><br><span class="line">$ cat .git/COMMIT_EDITMSG</span><br><span class="line">$ git <span class="built_in">log</span></span><br><span class="line">$ ls .git/objects/42/ (id from the <span class="built_in">hash</span>)</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
-<p>7) Ignoring Certain File types</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cat .git/info/exclude</span><br><span class="line">$ mkdir build</span><br><span class="line">$ touch .gitignore</span><br><span class="line">$ git add .gitignore</span><br><span class="line">$ git status</span><br><span class="line">$ git commit -m <span class="string">"adding a .gitignore file"</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"build/*"</span> &gt; .gitignore</span><br><span class="line">$ git status</span><br><span class="line">$ git commit -m <span class="string">"updated our .gitignore file to exclude build directory"</span></span><br><span class="line">$ [build something <span class="keyword">in</span> build directory]</span><br><span class="line">$ git status (directory is clean)</span><br><span class="line">$ vim CHANEGLOG.md (<span class="built_in">set</span> backup + add some lines)</span><br><span class="line">$ git status</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"*~"</span> &gt;&gt; .gitignore (CHANEGLOG.md~)</span><br><span class="line">$ git commit <span class="_">-a</span> -m <span class="string">"updated changelog, and ignoring vim backup files in gitignore"</span></span><br><span class="line">$ git status (directory is clean)</span><br><span class="line">$ git check-ignore *~ (show CHANEGLOG.md~)</span><br></pre></td></tr></table></figure>
-<h2 id="Tags-Branching-Merging-and-Reverting"><a href="#Tags-Branching-Merging-and-Reverting" class="headerlink" title="Tags, Branching, Merging and Reverting"></a>Tags, Branching, Merging and Reverting</h2><p>1) Using Tags</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git tag <span class="_">-a</span> v0.1 -m <span class="string">"First tag for the project"</span> (create an unsigned, annotated tag)</span><br><span class="line">$ git tag</span><br><span class="line">$ git show v0.1</span><br><span class="line">- annotated tag contains full objects and a database of your commits. Including information about who created a tag and it is also checksumed</span><br><span class="line">- lightweight tag more <span class="keyword">for</span> private or Temporarily labour.</span><br><span class="line">- git tag create a lightweight tag by default</span><br><span class="line">- you can delete a tag like this:</span><br><span class="line">$ git tag <span class="_">-d</span> v0.1</span><br><span class="line">$ git tag</span><br></pre></td></tr></table></figure>
-<p>2) Using Branches</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ git branch &lt;branch-name&gt; : creates a new branche of the project tree</span><br><span class="line">$ git checkout &lt;branch name&gt; : switches to another branch</span><br><span class="line">$ HEAD : pointer to the current branch being worked on, can use git <span class="built_in">log</span> and git statust to view <span class="built_in">which</span> branch HEAD is pointing to.</span><br><span class="line"></span><br><span class="line">$ git branch dev</span><br><span class="line">$ git status</span><br><span class="line">$ git checkout dev</span><br><span class="line">$ git status</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"new blablabla"</span> &gt;&gt; CHANEGLOG.md</span><br><span class="line">$ git commit <span class="_">-a</span> -m <span class="string">"adding blablabla to changelog"</span></span><br><span class="line">$ vim CHANEGLOG.md and modify it</span><br><span class="line">$ git commit <span class="_">-a</span> -m <span class="string">"fixed up blablabla"</span></span><br><span class="line">$ git status</span><br><span class="line">$ git checkout master</span><br><span class="line">$ cat CHANGELOG.md (HEAD is pointing back to the last commit on master so lets <span class="keyword">do</span> :)</span><br><span class="line">$ git checkout dev</span><br><span class="line">$ cat CHANGELOG.md (HEAD is pointing to the last commit hence we can see our modifications)</span><br></pre></td></tr></table></figure>
-<p>3) Merging Branches</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git status (check on <span class="built_in">which</span> branch you are ie: master aka main)</span><br><span class="line">$ git merge dev</span><br><span class="line">$ git branch <span class="_">-d</span> (to delete a branch)</span><br><span class="line">$ git merge toll may helps you</span><br></pre></td></tr></table></figure>
-<p>4) Rebasing (Alternative to merging is rebasing)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout dev</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"blablablalb"</span> &gt; README.md</span><br><span class="line">$ git status</span><br><span class="line">$ git commit <span class="_">-a</span> -m <span class="string">"upadated readme file"</span></span><br><span class="line">$ git checkout master</span><br><span class="line">Now instead of merging we gonna rebase.</span><br><span class="line">$ git rebase dev (apply our modification on the master branch)</span><br><span class="line">$ ls</span><br><span class="line">$ cat README.md</span><br><span class="line"></span><br><span class="line">Why doing rebase instead of merge ?</span><br><span class="line">merging show a fully accurate <span class="built_in">history</span> of your project .</span><br><span class="line">rebasing provide something of a falsify record to show a cleaner history.</span><br><span class="line"></span><br><span class="line">Be sure to rebase only what you have worked on. And not whit commits from outside of your repository.</span><br></pre></td></tr></table></figure>
-<p>5) Reverting a Commit</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"lkjshedflkshedrfkjhffdfà"</span> &gt;&gt; README.md</span><br><span class="line">$ git commit <span class="_">-a</span> -m <span class="string">"update readme file"</span></span><br><span class="line">$ git revert HEAD</span><br><span class="line">$ cat README.md</span><br><span class="line">$ git <span class="built_in">log</span></span><br><span class="line">$ git revert HEAD~42 =&gt; modifiy the 42 commits before the HEAD</span><br></pre></td></tr></table></figure>
-<p>6) Using ‘diff’ command</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git diff</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"modify me"</span> &gt;&gt; CHANGELOG.md</span><br><span class="line">$ git diff</span><br><span class="line">$ git diff HEAD^ HEAD</span><br><span class="line">$ git diff --summary hashid hashid</span><br><span class="line">$ man git-diff</span><br></pre></td></tr></table></figure>
-<p>7) How garbage collection works</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git gc --prune (man git)</span><br><span class="line">$ git gc --auto</span><br><span class="line">$ git config gc.pruneexpire <span class="string">"30 days"</span></span><br></pre></td></tr></table></figure>
-<h2 id="Git’s-Logs-and-Auditing"><a href="#Git’s-Logs-and-Auditing" class="headerlink" title="Git’s Logs and Auditing"></a>Git’s Logs and Auditing</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --graph</span><br><span class="line">$ git <span class="built_in">log</span> --grap --since=<span class="string">"42 days ago"</span></span><br><span class="line">$ git <span class="built_in">log</span> -S toto =&gt; shows commits with the word toto</span><br><span class="line">$ git <span class="built_in">log</span> --pretty=format:<span class="string">"%h - %an - %ar - %s"</span> (<span class="built_in">hash</span> / author / relative time / subject )</span><br><span class="line">$ =&gt; Install oh-my-zsh <span class="keyword">in</span> order to use all super cool aliases (glog glgga glg etc...)</span><br></pre></td></tr></table></figure>
-<h2 id="Cloning-Repositories"><a href="#Cloning-Repositories" class="headerlink" title="Cloning Repositories"></a>Cloning Repositories</h2><p>1) cloning local repositories</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># testing features without creating a branch and if it works just create a branch and add features to it.</span></span><br><span class="line">$ git <span class="built_in">clone</span> MySuperRepo MySuperRepo-test</span><br><span class="line">$ <span class="built_in">cd</span> MySuperRepo-test</span><br><span class="line">$ git status</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
-<p>2) Cloning Remote Repositories over HTTPS</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># By using lin on github for exemple</span></span><br><span class="line">$ git <span class="built_in">clone</span> https://github/com/blablabla/superrepo.git</span><br></pre></td></tr></table></figure>
-<p>3) Forking</p>
-<p>A fork is a copy of a repository.<br>Using fork to update a project or to start one based on another project.<br><a href="https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo" target="_blank" rel="noopener">Github docs</a></p>
-<h2 id="Push-Pull-and-Tracking-Remote-Repositories"><a href="#Push-Pull-and-Tracking-Remote-Repositories" class="headerlink" title="Push, Pull, and Tracking Remote Repositories"></a>Push, Pull, and Tracking Remote Repositories</h2><p>1) Tracking Remotes Repositories</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsq -b 4096</span><br><span class="line">$ cat ~/.ssj/id_rsa.pub (and paste it on your github profile/settings/ssh key)</span><br><span class="line">$ git <span class="built_in">clone</span> git@github.com:linuxacademy/content-source-control-git.git (using git protocol to <span class="built_in">clone</span> over an ssh tunnel)</span><br><span class="line">$ <span class="built_in">cd</span> content-source-control-git</span><br><span class="line">$ git remote (origin)</span><br><span class="line">$ git remote -v</span><br><span class="line">$ git remote show origin (show more information)</span><br><span class="line">$ git fetch origin (keeps track changing on the remote server)</span><br><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
-<p><em>what you pull down to the fetch command is no part of your local repository until you merge it</em><br><em>Git pull will let you know if your are up to date</em></p>
-<p>2) Pushing to Remote Repositories</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> content-source-control-git</span><br><span class="line">$ git branch readme-updates</span><br><span class="line">$ git checkout readme-updates</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"blabla"</span> &gt;&gt; readme.md</span><br><span class="line">$ git commit <span class="_">-a</span> -m <span class="string">"update readme"</span></span><br><span class="line">$ git push -u origin readme-updates</span><br></pre></td></tr></table></figure>
-<p>3) Pull Requests</p>
-<p>PR are easy.<br>Check pull request from github web interface.<br>click new pull request and take a look.<br>check readme-upadtes commits and click on green button “pull request” and write a comment and create PR.<br>If no conflicts click on “merge pull request” confirm the merge and the PR is merge an close.<br>Going back to the code you can see that the readme file is correctly update from the remote repository.<br>Github make quite easy to create a PR and merging to your existing repository.<br>As long as your are a contributor to a project you will be able to create a PR.<br>The only way that you will be able to merge a pull request is if your are the maintainer or the owner of the project itself.</p>
-<h2 id="Setting-Up-and-Using-a-GitLab-Server"><a href="#Setting-Up-and-Using-a-GitLab-Server" class="headerlink" title="Setting Up and Using a GitLab Server"></a>Setting Up and Using a GitLab Server</h2><p>WIP…</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://about.gitlab.com/install/#debian</span></span><br><span class="line"></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y curl openssh-server ca-certificates</span><br><span class="line">sudo apt-get install -y postfix</span><br><span class="line"></span><br><span class="line"><span class="comment"># https://packages.gitlab.com/gitlab/gitlab-ce</span></span><br><span class="line">curl <span class="_">-s</span> https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
-<h1 id="Next-Steps"><a href="#Next-Steps" class="headerlink" title="Next Steps"></a>Next Steps</h1>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/11/24/Source-Control-with-Git/" data-id="ckhx8j58s0030cbiycpaqoj65" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-TryHackMe-Madness-CTF-Write-Up" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" class="article-date">
@@ -240,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhx8j56p0009cbiy8tgp22wd" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhx8tulh0009nfiyp3yk2vbn" class="article-share-link">Partager</a>
       
       
       
@@ -295,7 +189,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhx8j56s000acbiylea8432y" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhx8tulk000anfiyszp7nvou" class="article-share-link">Partager</a>
       
       
       
@@ -1408,7 +1302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhx8j5a3003hcbiyuc6obqus" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhx8tuou003hnfiycauf78rn" class="article-share-link">Partager</a>
       
       
       
@@ -1474,7 +1368,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhx8j56w000ecbiyzzx4gy1m" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhx8tuln000enfiyl8nptz79" class="article-share-link">Partager</a>
       
       
       
@@ -1530,7 +1424,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhx8j56k0005cbiy592kgue1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhx8tulc0005nfiyx4f1uamm" class="article-share-link">Partager</a>
       
       
       
@@ -1600,7 +1494,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhx8j57c000pcbiyun8dndjl" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhx8tum6000pnfiyoss1ch4z" class="article-share-link">Partager</a>
       
       
       
@@ -1646,7 +1540,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhx8j5640001cbiyex3o5d2c" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhx8tuky0001nfiy3f4lg904" class="article-share-link">Partager</a>
       
       
       
@@ -1733,7 +1627,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhx8j56h0004cbiylwgja8ke" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhx8tul90004nfiyocsiqj3r" class="article-share-link">Partager</a>
       
       
       
@@ -1844,11 +1738,63 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhx8j59f0037cbiycor3pduf" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhx8tuoc0037nfiyacfbxc1p" class="article-share-link">Partager</a>
       
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iotop/">iotop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iowait/">iowait</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vmstat/">vmstat</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-swap" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/11/swap/" class="article-date">
+  <time datetime="2020-04-11T00:14:00.000Z" itemprop="datePublished">2020-04-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a>►<a class="article-category-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/11/swap/">Swap &amp; CO</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Afficher-les-processus-consommateurs-de-SWAP"><a href="#Afficher-les-processus-consommateurs-de-SWAP" class="headerlink" title="Afficher les processus consommateurs de SWAP"></a>Afficher les processus consommateurs de SWAP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 2 -n -r | head -10</span><br></pre></td></tr></table></figure>
+<h3 id="Clean-swap-area-after-using-a-memory-hogging-application"><a href="#Clean-swap-area-after-using-a-memory-hogging-application" class="headerlink" title="Clean swap area after using a memory hogging application"></a>Clean swap area after using a memory hogging application</h3><p><em>When you run a memory intensive application (large java application, etc) swap area is used as soon as memory becomes insufficient. After you close the program, the data in swap is not put back on memory and that decreases the responsiveness. Swapoff disables the swap area and forces system to put swap data be placed in memory. Since running without a swap area might be detrimental, swapon should be used to activate swap again. Both swapoff and swapon require root privileges.</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapoff <span class="_">-a</span> &amp;&amp; swapon <span class="_">-a</span></span><br></pre></td></tr></table></figure>
+<h3 id="Change-your-swappiness-Ratio-under-linux"><a href="#Change-your-swappiness-Ratio-under-linux" class="headerlink" title="Change your swappiness Ratio under linux"></a>Change your swappiness Ratio under linux</h3><p><em>This command allow you to set the swappiness var at XX (default is 60). The value interval must be set between 0 and 100. If swappiness is high=Sw+ap usage is high, if swappiness is low=Ram usage is high.</em></p>
+<p>check via un sysctl -a si le vm.swappiness = 0 cela signifie que l’instance ne doit pas swap tant qu’il reste de le RAM de libre !</p>
+<p>Sinon y a toujours la bonne vielle methode du swapfile ^^</p>
+<p><a href="https://www.commandlinefu.com/commands/matching/swap/c3dhcA==/sort-by-votes" target="_blank" rel="noopener">Sources</a></p>
+<p><img src="https://sourceforge.net/images/icon_linux.gif" alt="I&#39;m watching you!" title="I&#39;m watching you!"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="ckhx8tumd000vnfiyz6sbat20" class="article-share-link">Partager</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swap/">swap</a></li></ul>
 
     </footer>
   </div>
@@ -1902,7 +1848,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">novembre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">octobre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">septembre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">juillet 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mai 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">avril 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">octobre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">décembre 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">avril 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">mars 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">octobre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">septembre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">juillet 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mai 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">avril 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">novembre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">octobre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">décembre 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">avril 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">mars 2017</a></li></ul>
     </div>
   </div>
 
@@ -1913,10 +1859,6 @@
     <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
-        
-          <li>
-            <a href="/2020/11/24/Source-Control-with-Git/">Source Control with Git</a>
-          </li>
         
           <li>
             <a href="/2020/10/27/TryHackMe-Madness-CTF-Write-Up/">TryHackMe Madness CTF Writeup</a>
@@ -1932,6 +1874,10 @@
         
           <li>
             <a href="/2020/09/01/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/22/Nginx-ModSecurity/">Nginx-ModSecurity</a>
           </li>
         
       </ul>
