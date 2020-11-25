@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Source: LinuxAcademy  simple tutorial in order to understand Git. Need some prerequisites (confident with command lines and Linux OS)  Getting Started We will cover :  Git Architecture. Working with l">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2020-11-25T10:06:27.612Z">
+<meta property="og:updated_time" content="2020-11-25T13:16:59.591Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Source Control with Git">
 <meta name="twitter:description" content="Source: LinuxAcademy  simple tutorial in order to understand Git. Need some prerequisites (confident with command lines and Linux OS)  Getting Started We will cover :  Git Architecture. Working with l">
@@ -155,13 +155,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> content-source-control-git</span><br><span class="line">$ git branch readme-updates</span><br><span class="line">$ git checkout readme-updates</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"blabla"</span> &gt;&gt; readme.md</span><br><span class="line">$ git commit <span class="_">-a</span> -m <span class="string">"update readme"</span></span><br><span class="line">$ git push -u origin readme-updates</span><br></pre></td></tr></table></figure>
 <p>3) Pull Requests</p>
 <p>PR are easy.<br>Check pull request from github web interface.<br>click new pull request and take a look.<br>check readme-upadtes commits and click on green button “pull request” and write a comment and create PR.<br>If no conflicts click on “merge pull request” confirm the merge and the PR is merge an close.<br>Going back to the code you can see that the readme file is correctly update from the remote repository.<br>Github make quite easy to create a PR and merging to your existing repository.<br>As long as your are a contributor to a project you will be able to create a PR.<br>The only way that you will be able to merge a pull request is if your are the maintainer or the owner of the project itself.</p>
-<h2 id="Setting-Up-and-Using-a-GitLab-Server"><a href="#Setting-Up-and-Using-a-GitLab-Server" class="headerlink" title="Setting Up and Using a GitLab Server"></a>Setting Up and Using a GitLab Server</h2><p>WIP…</p>
+<h2 id="Setting-Up-and-Using-a-GitLab-Server"><a href="#Setting-Up-and-Using-a-GitLab-Server" class="headerlink" title="Setting Up and Using a GitLab Server"></a>Setting Up and Using a GitLab Server</h2><p>Work in progress.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://about.gitlab.com/install/#debian</span></span><br><span class="line"></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y curl openssh-server ca-certificates</span><br><span class="line">sudo apt-get install -y postfix</span><br><span class="line"></span><br><span class="line"><span class="comment"># https://packages.gitlab.com/gitlab/gitlab-ce</span></span><br><span class="line">curl <span class="_">-s</span> https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
 <h1 id="Next-Steps"><a href="#Next-Steps" class="headerlink" title="Next Steps"></a>Next Steps</h1>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/11/24/Source-Control-with-Git/" data-id="ckhx8tuno0030nfiyo7sqpx0s" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/11/24/Source-Control-with-Git/" data-id="ckhxfmwri0030oqiyi2j5qenb" class="article-share-link">Partager</a>
       
       
       
