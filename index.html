@@ -145,14 +145,20 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># By using lin on github for exemple</span></span><br><span class="line">$ git <span class="built_in">clone</span> https://github/com/blablabla/superrepo.git</span><br></pre></td></tr></table></figure>
 <p>3) Forking</p>
 <p>A fork is a copy of a repository.<br>Using fork to update a project or to start one based on another project.<br><a href="https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo" target="_blank" rel="noopener">Github docs</a></p>
-<h2 id="Push-Pull-and-Tracking-Remote-Repositories"><a href="#Push-Pull-and-Tracking-Remote-Repositories" class="headerlink" title="Push, Pull, and Tracking Remote Repositories"></a>Push, Pull, and Tracking Remote Repositories</h2><p>WIP…</p>
+<h2 id="Push-Pull-and-Tracking-Remote-Repositories"><a href="#Push-Pull-and-Tracking-Remote-Repositories" class="headerlink" title="Push, Pull, and Tracking Remote Repositories"></a>Push, Pull, and Tracking Remote Repositories</h2><p>1) Tracking Remotes Repositories</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsq -b 4096</span><br><span class="line">$ cat ~/.ssj/id_rsa.pub (and paste it on your github profile/settings/ssh key)</span><br><span class="line">$ git <span class="built_in">clone</span> git@github.com:linuxacademy/content-source-control-git.git (using git protocol to <span class="built_in">clone</span> over an ssh tunnel)</span><br><span class="line">$ <span class="built_in">cd</span> content-source-control-git</span><br><span class="line">$ git remote (origin)</span><br><span class="line">$ git remote -v</span><br><span class="line">$ git remote show origin (show more information)</span><br><span class="line">$ git fetch origin (keeps track changing on the remote server)</span><br><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
+<p><em>what you pull down to the fetch command is no part of your local repository until you merge it</em><br><em>Git pull will let you know if your are up to date</em></p>
+<p>2) Pushing to Remote Repositories</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> content-source-control-git</span><br><span class="line">$ git branch readme-updates</span><br><span class="line">$ git checkout readme-updates</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"blabla"</span> &gt;&gt; readme.md</span><br><span class="line">$ git commit <span class="_">-a</span> -m <span class="string">"update readme"</span></span><br><span class="line">$ git push -u origin readme-updates</span><br></pre></td></tr></table></figure>
+<p>3) Pull Requests</p>
+<p>PR are easy.<br>Check pull request from github web interface.<br>click new pull request and take a look.<br>check readme-upadtes commits and click on green button “pull request” and write a comment and create PR.<br>If no conflicts click on “merge pull request” confirm the merge and the PR is merge an close.<br>Going back to the code you can see that the readme file is correctly update from the remote repository.<br>Github make quite easy to create a PR and merging to your existing repository.<br>As long as your are a contributor to a project you will be able to create a PR.<br>The only way that you will be able to merge a pull request is if your are the maintainer or the owner of the project itself.</p>
 <h2 id="Setting-Up-and-Using-a-GitLab-Server"><a href="#Setting-Up-and-Using-a-GitLab-Server" class="headerlink" title="Setting Up and Using a GitLab Server"></a>Setting Up and Using a GitLab Server</h2><p>WIP…</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://about.gitlab.com/install/#debian</span></span><br><span class="line"></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y curl openssh-server ca-certificates</span><br><span class="line">sudo apt-get install -y postfix</span><br><span class="line"></span><br><span class="line"><span class="comment"># https://packages.gitlab.com/gitlab/gitlab-ce</span></span><br><span class="line">curl <span class="_">-s</span> https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
 <h1 id="Next-Steps"><a href="#Next-Steps" class="headerlink" title="Next Steps"></a>Next Steps</h1>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/11/24/Source-Control-with-Git/" data-id="ckhx7dksc0030j1iypjdh1to6" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/11/24/Source-Control-with-Git/" data-id="ckhx8j58s0030cbiycpaqoj65" class="article-share-link">Partager</a>
       
       
       
@@ -234,7 +240,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhx7dkq6000ej1iyi9fx3u5r" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="ckhx8j56p0009cbiy8tgp22wd" class="article-share-link">Partager</a>
       
       
       
@@ -289,7 +295,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhx7dkpz0009j1iyx75mafd6" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="ckhx8j56s000acbiylea8432y" class="article-share-link">Partager</a>
       
       
       
@@ -1402,7 +1408,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhx7dkty003hj1iyvcry02tf" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="ckhx8j5a3003hcbiyuc6obqus" class="article-share-link">Partager</a>
       
       
       
@@ -1468,7 +1474,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhx7dkq2000aj1iy08wmd876" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="ckhx8j56w000ecbiyzzx4gy1m" class="article-share-link">Partager</a>
       
       
       
@@ -1524,7 +1530,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhx7dkpt0005j1iy1gr0idzl" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="ckhx8j56k0005cbiy592kgue1" class="article-share-link">Partager</a>
       
       
       
@@ -1594,7 +1600,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhx7dkqr000pj1iyrud81quu" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="ckhx8j57c000pcbiyun8dndjl" class="article-share-link">Partager</a>
       
       
       
@@ -1640,7 +1646,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhx7dkpf0001j1iybja4luqz" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="ckhx8j5640001cbiyex3o5d2c" class="article-share-link">Partager</a>
       
       
       
@@ -1727,7 +1733,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhx7dkpq0004j1iybdtl46q1" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="ckhx8j56h0004cbiylwgja8ke" class="article-share-link">Partager</a>
       
       
       
@@ -1838,7 +1844,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhx7dkth0037j1iyquaqh0tt" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="ckhx8j59f0037cbiycor3pduf" class="article-share-link">Partager</a>
       
       
       
