@@ -66,6 +66,93 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Elastic-Stack-Essentials" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/26/Elastic-Stack-Essentials/" class="article-date">
+  <time datetime="2020-04-26T10:21:42.000Z" itemprop="datePublished">2020-04-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ElasticSearch/">ElasticSearch</a>►<a class="article-category-link" href="/categories/ElasticSearch/Playing-with-Elastic-Stack-Modules/">Playing with Elastic Stack Modules</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/26/Elastic-Stack-Essentials/">Elastic-Stack-Essentials</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Lab effectué sur <a href="https://linuxacademy.com/" target="_blank" rel="noopener">Linuxacademy</a>.</p>
+<p>Le cours <em>Elastic Stack Essentials (Legacy)</em> est une introduction sympa à la stack Elastic qui vous propose après une présentation succinte de<br>Kibana, Logstash, Beats, X-pack etc…de monter un petit cluster de 3 noeuds afin de mettre en pratique et tester ces différents outils. Cool!</p>
+<p>Voici la mise en pratique de ce Lab qui va se découper de la manière suivante: </p>
+<ul>
+<li>Installer ES sur chaque noeuds (Debian 10)</li>
+<li>Configurer le cluster (Master / data-node)</li>
+<li>Génerer et deployer un certificat sur chaque noeuds</li>
+<li>Génerer un mot de passe avec elasticsearch-setup-passwords</li>
+<li>Installer Kibana sur le Master node et le connecter à ES</li>
+<li>Deployer et configurer metricbeat sur chaque noeuds</li>
+<li>Deployer et configurer filebeat sur chaque noeuds</li>
+<li>Utiliser Kibana pour visualiser nos dashboards</li>
+</ul>
+<h3 id="Installer-ES-sur-chaque-noeuds"><a href="#Installer-ES-sur-chaque-noeuds" class="headerlink" title="Installer ES sur chaque noeuds"></a>Installer ES sur chaque noeuds</h3><p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html" target="_blank" rel="noopener">source</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># install as root</span></span><br><span class="line">sudo su -</span><br><span class="line"><span class="comment"># import GPG key</span></span><br><span class="line">wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</span><br><span class="line"><span class="comment"># Verify that apt-transport-https is already install</span></span><br><span class="line">root@n3ird4:~<span class="comment"># apt-cache policy apt-transport-https</span></span><br><span class="line">apt-transport-https:</span><br><span class="line">  Installed: 1.4.9</span><br><span class="line">  Candidate: 1.4.9</span><br><span class="line">  Version table:</span><br><span class="line"> *** 1.4.9 500</span><br><span class="line">        500 http://deb.debian.org/debian stretch/main amd64 Packages</span><br><span class="line">        500 http://security.debian.org stretch/updates/main amd64 Packages</span><br><span class="line">        100 /var/lib/dpkg/status</span><br><span class="line"><span class="comment"># Create repo definition</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb https://artifacts.elastic.co/packages/7.x/apt stable main"</span> | sudo tee <span class="_">-a</span> /etc/apt/sources.list.d/elastic-7.x.list</span><br><span class="line"><span class="comment"># Install ES \o/</span></span><br><span class="line">apt-get update &amp;&amp; apt-get install elasticsearch</span><br><span class="line"><span class="comment"># ES start on boot</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> elasticsearch.service</span><br></pre></td></tr></table></figure>
+<h3 id="Configurer-le-cluster-Master-data-node"><a href="#Configurer-le-cluster-Master-data-node" class="headerlink" title="Configurer le cluster (Master / data-node)"></a>Configurer le cluster (Master / data-node)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sur les 3 noeuds il faut éditer le /etc/elasticsearch/elasticsearch.yml tel que :</span></span><br><span class="line">cluster.name: whatever42</span><br><span class="line">network.host: [_local_, _site_]</span><br><span class="line">discovery.seed_hosts: [<span class="string">"XX.XX.XX.XX"</span>] (My master-node private ip Address from Linuxacademy)</span><br><span class="line">cluster.initial_master_nodes: [<span class="string">"master-1"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># puis on passe à la configuration des noeuds un par un :</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sur le master</span></span><br><span class="line">node.name: master-1</span><br><span class="line">node.master: <span class="literal">true</span></span><br><span class="line">node.data: <span class="literal">false</span></span><br><span class="line">node.ingest: <span class="literal">true</span></span><br><span class="line">node.ml: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sur le data-1</span></span><br><span class="line">node.name: data-1</span><br><span class="line">node.master: <span class="literal">false</span></span><br><span class="line">node.data: <span class="literal">true</span></span><br><span class="line">node.ingest: <span class="literal">false</span></span><br><span class="line">node.ml: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sur le data-2</span></span><br><span class="line">node.name: data-2</span><br><span class="line">node.master: <span class="literal">false</span></span><br><span class="line">node.data: <span class="literal">true</span></span><br><span class="line">node.ingest: <span class="literal">false</span></span><br><span class="line">node.ml: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># On start ES</span></span><br><span class="line"></span><br><span class="line">systemctl start elasticsearch</span><br><span class="line"></span><br><span class="line"><span class="comment"># et on check via l'API cat que tout va bien :</span></span><br><span class="line"></span><br><span class="line">root@n3ird4:~<span class="comment"># curl localhost:9200/_cat/nodes?v</span></span><br><span class="line">ip            heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name</span><br><span class="line">172.31.35.158            9          96  60    0.66    0.21     0.08 im        *      master-1</span><br><span class="line">172.31.37.11             8          96  43    0.38    0.14     0.05 d         -      data-1</span><br><span class="line">172.31.39.155            8          97  45    0.50    0.18     0.07 d         -      data-2</span><br><span class="line"></span><br><span class="line"><span class="comment"># au passage petit tip pratique pour lister les commandes dispo de l'API _cat : </span></span><br><span class="line"></span><br><span class="line">root@n3ird4:~<span class="comment"># curl http://localhost:9200/_cat/</span></span><br><span class="line">=^.^=</span><br><span class="line">/_cat/allocation</span><br><span class="line">/_cat/shards</span><br><span class="line">/_cat/shards/&#123;index&#125;</span><br><span class="line">/_cat/master</span><br><span class="line">/_cat/nodes</span><br><span class="line">/_cat/indices</span><br><span class="line">/_cat/indices/&#123;index&#125;</span><br><span class="line">/_cat/segments</span><br><span class="line">/_cat/segments/&#123;index&#125;</span><br><span class="line">/_cat/count</span><br><span class="line">/_cat/count/&#123;index&#125;</span><br><span class="line">/_cat/recovery</span><br><span class="line">/_cat/recovery/&#123;index&#125;</span><br><span class="line">/_cat/health</span><br><span class="line">/_cat/pending_tasks</span><br><span class="line">/_cat/aliases</span><br><span class="line">/_cat/aliases/&#123;<span class="built_in">alias</span>&#125;</span><br><span class="line">/_cat/thread_pool</span><br><span class="line">/_cat/plugins</span><br><span class="line">/_cat/fielddata</span><br><span class="line">/_cat/fielddata/&#123;fields&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Generer-et-deployer-un-certificat-sur-chaque-noeuds-Xpack"><a href="#Generer-et-deployer-un-certificat-sur-chaque-noeuds-Xpack" class="headerlink" title="Génerer et deployer un certificat sur chaque noeuds + Xpack"></a>Génerer et deployer un certificat sur chaque noeuds + Xpack</h3><p>Dans cette partie on apprend comment sécuriser de manière minimale un cluster ES à savoir:</p>
+<ul>
+<li>Générer un certificat auto-signé</li>
+<li>Configurer le plugin ES Security</li>
+<li>Activer le chiffrement </li>
+<li>Activer l’auth des différents users</li>
+<li>Définir les passwords </li>
+<li>Interagir avec le cluster de manière “sécurisée” :) </li>
+</ul>
+<p>/!\ spoiler alert: Ici on cherche à se simplifier la vie donc on va creer un seul certif sur le master pour ensuite le copier sur les data-nodes /!\</p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-tls.html#node-certificates" target="_blank" rel="noopener">Doc ES sur la génération de certrif </a><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html#transport-tls-ssl-settings" target="_blank" rel="noopener">Doc ES sur la conf TLS/SSL</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># A faire sur chaque noeuds :</span></span><br><span class="line">mkdir /etc/elasticsearch/certs</span><br><span class="line"></span><br><span class="line"><span class="comment"># A faire uniquement depuis le master</span></span><br><span class="line">/usr/share/elasticsearch/bin/elasticsearch-certutil cert --name n3ird4 --out /etc/elasticsearch/certs/n3ird4 (on donne le nom de notre cluster.name)</span><br><span class="line"></span><br><span class="line"><span class="comment"># puis on chmod + copie la clé sur les 2 autres noeuds et basta</span></span><br><span class="line"></span><br><span class="line">chmod 640 /etc/elasticsearch/certs/n3ird4</span><br><span class="line"></span><br><span class="line">scp /etc/elasticsearch/certs/development IPdedata-1:/etc/elasticsearch/certs/</span><br><span class="line"></span><br><span class="line">scp /etc/elasticsearch/certs/development IPdedata-2:/etc/elasticsearch/certs/</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On edite à nouveau le elasticsearch.yml sur les 3 noeuds pour activer X-Pack et ajouter:</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ---------------------------------- Security ----------------------------------</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">xpack.security.enabled: <span class="literal">true</span></span><br><span class="line">xpack.security.transport.ssl.enabled: <span class="literal">true</span></span><br><span class="line">xpack.security.transport.ssl.verification_mode: certificate</span><br><span class="line">xpack.security.transport.ssl.keystore.path: certs/n3ird4</span><br><span class="line">xpack.security.transport.ssl.truststore.path: certs/n3ird4</span><br><span class="line"></span><br><span class="line"><span class="comment">#puis on restart ES sur les 3 noeuds dans la foulée pour prendre en compte les modifications:</span></span><br><span class="line"></span><br><span class="line">systemctl restart elasticsearch</span><br></pre></td></tr></table></figure>
+<h3 id="Generer-un-mot-de-passe-avec-elasticsearch-setup-passwords"><a href="#Generer-un-mot-de-passe-avec-elasticsearch-setup-passwords" class="headerlink" title="Génerer un mot de passe avec elasticsearch-setup-passwords"></a>Génerer un mot de passe avec elasticsearch-setup-passwords</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cette partie est pas super interessante je passe donc vite :</span></span><br><span class="line"><span class="comment"># A faire depuis le master</span></span><br><span class="line">/usr/share/elasticsearch/bin/elasticsearch-setup-passwords interactive</span><br></pre></td></tr></table></figure>
+<h3 id="Installer-Kibana-sur-le-Master-node-et-le-connecter-a-ES-via-le-8080"><a href="#Installer-Kibana-sur-le-Master-node-et-le-connecter-a-ES-via-le-8080" class="headerlink" title="Installer Kibana sur le Master node et le connecter à ES via le 8080:"></a>Installer Kibana sur le Master node et le connecter à ES via le 8080:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apt-get install kibana</span><br><span class="line">systemctl <span class="built_in">enable</span> kibana</span><br><span class="line"></span><br><span class="line">vim /etc/kibana/kibana.yml</span><br><span class="line"></span><br><span class="line">server.port: 8080</span><br><span class="line">server.host: <span class="string">"10.0.1.101"</span></span><br><span class="line">elasticsearch.username: <span class="string">"kibana"</span></span><br><span class="line">elasticsearch.password: <span class="string">"changeme"</span></span><br><span class="line"></span><br><span class="line">systemctl start kibana</span><br></pre></td></tr></table></figure>
+<p>Si tout se passe correctement on se connecte au kibana via http://&lt;IP_ADDRESS_OF_MASTER-1&gt;:8080<br>En utilisant le couple user/password généré au préalable (cf: ci-dessus)</p>
+<h3 id="Deployer-et-configurer-metricbeat-sur-chaque-noeuds"><a href="#Deployer-et-configurer-metricbeat-sur-chaque-noeuds" class="headerlink" title="Deployer et configurer metricbeat sur chaque noeuds"></a>Deployer et configurer metricbeat sur chaque noeuds</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">apt-get install metricbeat</span><br><span class="line">systemctl <span class="built_in">enable</span> metricbeat</span><br><span class="line"></span><br><span class="line">vim /etc/metricbeat/metricbeat.yml</span><br><span class="line"></span><br><span class="line">setup.kibana:</span><br><span class="line">  host: <span class="string">"10.0.1.101:8080"</span></span><br><span class="line">output.elasticsearch:</span><br><span class="line">  hosts: [<span class="string">"10.0.1.101:9200"</span>]</span><br><span class="line">  username: <span class="string">"elastic"</span></span><br><span class="line">  password: <span class="string">"changeme"</span></span><br><span class="line"></span><br><span class="line">metricbeat setup</span><br><span class="line">systemctl start metricbeat</span><br></pre></td></tr></table></figure>
+<h3 id="Deployer-et-configurer-filebeat-sur-chaque-noeuds"><a href="#Deployer-et-configurer-filebeat-sur-chaque-noeuds" class="headerlink" title="Deployer et configurer filebeat sur chaque noeuds"></a>Deployer et configurer filebeat sur chaque noeuds</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apt-get install filebeat</span><br><span class="line">systemctl <span class="built_in">enable</span> filebeat</span><br><span class="line"></span><br><span class="line">vim /etc/filebeat/filebeat.yml</span><br><span class="line"></span><br><span class="line">setup.kibana:</span><br><span class="line">  host: <span class="string">"10.0.1.101:8080"</span></span><br><span class="line">output.elasticsearch:</span><br><span class="line">  hosts: [<span class="string">"10.0.1.101:9200"</span>]</span><br><span class="line">  username: <span class="string">"elastic"</span></span><br><span class="line">  password: <span class="string">"changeme"</span></span><br><span class="line"></span><br><span class="line">filebeat modules <span class="built_in">enable</span> system</span><br><span class="line">filebeat setup</span><br><span class="line">systemctl start filebeat</span><br></pre></td></tr></table></figure>
+<h3 id="Utiliser-Kibana-pour-visualiser-nos-dashboards"><a href="#Utiliser-Kibana-pour-visualiser-nos-dashboards" class="headerlink" title="Utiliser Kibana pour visualiser nos dashboards"></a>Utiliser Kibana pour visualiser nos dashboards</h3><p>Go sur http://&lt;PUBLIC_IP_ADDRESS_OF_MASTER-1&gt;:8080<br>Puis dans la partie Dasboard =&gt; on cherche “Filebeat System” ou “Metricbeat System”.</p>
+<p>Voici quelques exemples on voit qu’on a différents choix possible :</p>
+<p><img src="/images/ES_metricbeatsystem.PNG" alt="metricbeat system"></p>
+<p>Ici on voit via filebeat des infos intéressantes sur les requêtes malveillantes que reçoit cluster !</p>
+<p><img src="/images/ES_sshlogin.PNG" alt="ssh login dash"></p>
+<p>Enfin via Metricbeat on a accés à une multitude de…métriques :D </p>
+<p><img src="/images/ES_metricbeatECS.PNG" alt="metricbeat ECS"></p>
+<p>Enjoy !</p>
+<p><img src="https://sourceforge.net/images/icon_linux.gif" alt="Wesh!" title="I&#39;m watching you t&#39;as vu!"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="clqobt6950001w9iyed3pc7s9" class="article-share-link">Partager</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-IoWait-Ma-Tuer" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/04/12/IoWait-Ma-Tuer/" class="article-date">
@@ -163,7 +250,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="cl9b90ofp002xp7iyd361ehuh" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="clqobt6dq0035w9iyc5rp9ohv" class="article-share-link">Partager</a>
       
       
       
@@ -215,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="cl9b90odl000sp7iy80iujyax" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="clqobt6cg001tw9iy0gcvoi5g" class="article-share-link">Partager</a>
       
       
       
@@ -321,7 +408,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/11/24/Source-Control-with-Git/" data-id="cl9b90ohb003ip7iyppyky9vi" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/11/24/Source-Control-with-Git/" data-id="clqobt6e9003fw9iya9sgri1o" class="article-share-link">Partager</a>
       
       
       
@@ -369,7 +456,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="cl9b90ocl0005p7iyio3ex3uf" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="clqobt69h0005w9iytzaak1s1" class="article-share-link">Partager</a>
       
       
       
@@ -414,7 +501,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="cl9b90oc80001p7iygq6wekru" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="clqobt69j0006w9iy9gji5yyw" class="article-share-link">Partager</a>
       
       
       
@@ -462,7 +549,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="cl9b90ofu0030p7iyzlqtma8q" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="clqobt6cd001pw9iywe46ofp6" class="article-share-link">Partager</a>
       
       
       
@@ -510,7 +597,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="cl9b90od1000jp7iynnp314ml" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="clqobt6ca001lw9iyrj7rcob2" class="article-share-link">Partager</a>
       
       
       
@@ -576,7 +663,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="cl9b90ocy000fp7iyrsvg63st" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="clqobt6c7001jw9iyw9nakaed" class="article-share-link">Partager</a>
       
       
       
@@ -621,55 +708,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="cl9b90odf000pp7iy9l2h746r" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Test/">Test</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-first-post" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/05/first-post/" class="article-date">
-  <time datetime="2017-03-05T22:17:21.000Z" itemprop="datePublished">2017-03-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/05/first-post/">first-post in order to test Hexo</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Voila le tout premier post d’une longue série</strong>…<strong>ou pas !</strong></p>
-<p><strong>Hey hey here is the first post of a long serie</strong>…<strong>or may be not !</strong></p>
-<p>:-) </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">To be continued !</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/03/05/first-post/" data-id="cl9b90ocv000ep7iy7gccclg9" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2017/03/27/second-post/" data-id="clqobt6co0023w9iyeluq8wij" class="article-share-link">Partager</a>
       
       
       
@@ -687,7 +726,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -698,7 +737,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/AWS-Certified-Solutions-Architect-Associate-SAA-C02/">AWS Certified Solutions Architect Associate SAA-C02</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/Quick-Starts/">Quick Starts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-Anonymous/">TryHackMe Anonymous</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-CMesS/">TryHackMe CMesS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-Madness/">TryHackMe Madness</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-Wgel/">TryHackMe Wgel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/">ElasticSearch</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/Playing-with-Elastic-Stack-Modules/">Playing with Elastic Stack Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/Source-Control-with-Git/">Source Control with Git</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/How-to/">How to</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/Reparation-de-replication-master-master-sans-lock/">Réparation de réplication master/master (sans lock)</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/Playing-with-Nginx-and-Dynamic-Modules/">Playing with Nginx and Dynamic Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/iowait/">iowait</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Varnish/">Varnish</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Varnish/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/AWS-Certified-Solutions-Architect-Associate-SAA-C02/">AWS Certified Solutions Architect Associate SAA-C02</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/">Ansible</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Ansible/Quick-Starts/">Quick Starts</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-Anonymous/">TryHackMe Anonymous</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-CMesS/">TryHackMe CMesS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-Madness/">TryHackMe Madness</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/TryHackMe-Wgel/">TryHackMe Wgel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/">ElasticSearch</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/Playing-with-Elastic-Stack-Modules/">Playing with Elastic Stack Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/Source-Control-with-Git/">Source Control with Git</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/How-to/">How to</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/bye-bye-2023/">bye bye 2023</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/Reparation-de-replication-master-master-sans-lock/">Réparation de réplication master/master (sans lock)</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/Playing-with-Nginx-and-Dynamic-Modules/">Playing with Nginx and Dynamic Modules</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/">Sysadmin Tips & Tricks</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/iowait/">iowait</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Sysadmin-Tips-Tricks/swap/">swap</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Varnish/">Varnish</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Varnish/blocklist-IP-address-with-Varnish/">blocklist IP address with Varnish</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/">others</a></li></ul>
     </div>
   </div>
 
@@ -708,7 +747,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/42/">42</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ModSecurity/">ModSecurity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Univers/">Univers</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/githooks/">githooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iotop/">iotop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iowait/">iowait</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swap/">swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tryhackme/">tryhackme</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/varnish/">varnish</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmstat/">vmstat</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/42/">42</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ansible/">Ansible</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FortyTwo/">FortyTwo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ModSecurity/">ModSecurity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Univers/">Univers</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/githooks/">githooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iotop/">iotop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iowait/">iowait</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swap/">swap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tryhackme/">tryhackme</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/varnish/">varnish</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmstat/">vmstat</a></li></ul>
     </div>
   </div>
 
@@ -718,7 +757,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/AWS/" style="font-size: 10px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 10px;">Ansible</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/ModSecurity/" style="font-size: 10px;">ModSecurity</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/githooks/" style="font-size: 10px;">githooks</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iotop/" style="font-size: 10px;">iotop</a> <a href="/tags/iowait/" style="font-size: 10px;">iowait</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a> <a href="/tags/tryhackme/" style="font-size: 20px;">tryhackme</a> <a href="/tags/varnish/" style="font-size: 10px;">varnish</a> <a href="/tags/vmstat/" style="font-size: 10px;">vmstat</a>
+      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/AWS/" style="font-size: 10px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 10px;">Ansible</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/FortyTwo/" style="font-size: 10px;">FortyTwo</a> <a href="/tags/ModSecurity/" style="font-size: 10px;">ModSecurity</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/githooks/" style="font-size: 10px;">githooks</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iotop/" style="font-size: 10px;">iotop</a> <a href="/tags/iowait/" style="font-size: 10px;">iowait</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a> <a href="/tags/tryhackme/" style="font-size: 20px;">tryhackme</a> <a href="/tags/varnish/" style="font-size: 10px;">varnish</a> <a href="/tags/vmstat/" style="font-size: 10px;">vmstat</a>
     </div>
   </div>
 
@@ -727,7 +766,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">mars 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">novembre 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">octobre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">septembre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">juillet 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mai 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">avril 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">novembre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">octobre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">décembre 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">avril 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">mars 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">décembre 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">mars 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">novembre 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">octobre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">septembre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">juillet 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mai 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">avril 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">novembre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">octobre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">décembre 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">avril 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">mars 2017</a></li></ul>
     </div>
   </div>
 
@@ -738,6 +777,10 @@
     <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2023/12/27/seeyoulater/">seeyoulater</a>
+          </li>
         
           <li>
             <a href="/2022/03/06/TryHackMe-Anonymous-Write-Up/">TryHackMe Anonymous Writeup</a>
@@ -755,10 +798,6 @@
             <a href="/2020/09/27/TryHackMe-Wgel-CTF-Write-Up/">TryHackMe Wgel CTF Writeup</a>
           </li>
         
-          <li>
-            <a href="/2020/09/08/AWS-SAAC-02/">AWS-SAAC-02</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -771,7 +810,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2022 n3ird4<br>
+      &copy; 2023 n3ird4<br>
       Propulsé par <a href="https://hexo.io/" target="_blank">Hexo</a> & <a href="https://github.com/" target="_blank">Github</a>
     </div>
   </div>
