@@ -66,6 +66,76 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-replication-master-master" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/05/27/replication-master-master/" class="article-date">
+  <time datetime="2020-05-26T22:01:29.000Z" itemprop="datePublished">2020-05-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MySQL/">MySQL</a>►<a class="article-category-link" href="/categories/MySQL/Reparation-de-replication-master-master-sans-lock/">Réparation de réplication master/master (sans lock)</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/27/replication-master-master/">replication-master-master</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Reparation-de-replication-master-master-sans-lock"><a href="#Reparation-de-replication-master-master-sans-lock" class="headerlink" title="Réparation de réplication master/master sans lock"></a>Réparation de réplication master/master sans lock</h3><p><strong>Objectif</strong></p>
+<p>On part du principe que notre serveur BDD-01A est OK mais que BDD-01B est <em>KO</em>.</p>
+<h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01B-le-KO"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01B-le-KO" class="headerlink" title="Actions à effectuer sur le serveur BDD-01B (le KO)"></a>Actions à effectuer sur le serveur BDD-01B (le KO)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># installation des outils nécessaires</span></span><br><span class="line"></span><br><span class="line">apt-get update</span><br><span class="line">apt-get install percona-xtrabackup-24 pigz</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On coupe la répli et on supprime les données car elles ne sont plus consistantes.  </span></span><br><span class="line"></span><br><span class="line">mysql &gt; stop slave;</span><br><span class="line">mysql &gt; reset slave;</span><br><span class="line">service mysql stop</span><br><span class="line">rm -rf /var/lib/mysql/*</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Puis on se prépare à la réception des données à jour.</span></span><br><span class="line">mkdir /var/lib/mysql</span><br><span class="line"><span class="built_in">cd</span> /var/lib/mysql</span><br><span class="line"><span class="built_in">ulimit</span> -n 65535</span><br><span class="line">nc <span class="_">-l</span> -p 4242 | gunzip | tar ixvf -</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Ulimit pour augmenter le nombre de fichiers max dans le dossier</li>
+<li>nc pour avoir un pipe réseau a travers duquel transitera les données</li>
+<li>gunzip et tar pour extraire ce que nous allons compresser de l’autre coté du pipe</li>
+</ul>
+<h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01A-le-OK"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01A-le-OK" class="headerlink" title="Actions à effectuer sur le serveur BDD-01A (le OK)"></a>Actions à effectuer sur le serveur BDD-01A (le OK)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Installation des outils nécessaires</span></span><br><span class="line">apt-get update</span><br><span class="line">apt-get install percona-xtrabackup-24 pigz</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On coupe la réplication</span></span><br><span class="line">mysql &gt; reset master;</span><br><span class="line">mysql &gt; stop slave;</span><br><span class="line">mysql &gt; reset slave;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On effectue le backup</span></span><br><span class="line">innobackupex --defaults-file=/etc/mysql/conf.d/super_custom.cnf --user=root --password=<span class="string">'ChangeMe'</span> --stream=tar ./ |  pigz | nc -q 0 bdd-replica 4242</span><br><span class="line"><span class="comment"># Adaptez le super_custom.cnf a votre conf</span></span><br><span class="line"><span class="comment"># bdd-replica doit exister dans vos /etc/hosts </span></span><br><span class="line"><span class="comment"># sur BDD-01A bdd-replica sera un alias de BDD-01B et vice versa</span></span><br><span class="line"><span class="comment"># Pensez à créer ces alias ;-)</span></span><br></pre></td></tr></table></figure>
+<h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01B-le-KO-1"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01B-le-KO-1" class="headerlink" title="Actions à effectuer sur le serveur BDD-01B (le KO)"></a>Actions à effectuer sur le serveur BDD-01B (le KO)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Application des logs</span></span><br><span class="line">innobackupex --use-memory=1G --apply-log /var/lib/mysql/</span><br><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Restart mysql</span></span><br><span class="line">chown -R mysql: /var/lib/mysql</span><br><span class="line">service mysql start</span><br></pre></td></tr></table></figure>
+<p>/!\ Si et seulement si on a une erreur de connection du user debian-sys-maint lors du mysql start /!\</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Fix debian-sys-maint</span></span><br><span class="line">cat /etc/mysql/debian.cnf</span><br><span class="line">SET PASSWORD FOR <span class="string">'debian-sys-maint'</span>@<span class="string">'localhost'</span> = PASSWORD(<span class="string">'ChangeMe'</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># On affiche les informations de la réplication pour la relancer</span></span><br><span class="line">cat /var/lib/mysql/xtrabackup_binlog_info</span><br><span class="line">master-log-bin.000001   36470842</span><br></pre></td></tr></table></figure>
+<p>On prends les infos de ce cat et on les reporte dans la commande qui suit :</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Remise en place de la réplication</span></span><br><span class="line">mysql &gt; change master to master_host=<span class="string">'bdd-replica'</span>, master_port=3306, master_user=<span class="string">'repl_user'</span>, master_password=<span class="string">'ChangeMe'</span>, master_log_file=<span class="string">'master-log-bin.000001'</span>, master_log_pos=36470842;</span><br><span class="line">mysql &gt; start slave;</span><br><span class="line">watch <span class="string">'mysql -e "show slave status\G" | grep Seconds_Behind_Master'</span></span><br></pre></td></tr></table></figure>
+<p>On attends que la répli rattrape son retard, quand c’est ok on peut faire la suite</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Remise en place de la répli master</span></span><br><span class="line">mysql &gt; reset master;</span><br><span class="line">mysql &gt; show master status;</span><br><span class="line">    master-log-bin.000001   42</span><br></pre></td></tr></table></figure>
+<h3 id="Actions-a-effectuer-sur-le-serveur-BDD-01A-le-OK-1"><a href="#Actions-a-effectuer-sur-le-serveur-BDD-01A-le-OK-1" class="headerlink" title="Actions à effectuer sur le serveur BDD-01A (le OK)"></a>Actions à effectuer sur le serveur BDD-01A (le OK)</h3><p>On prends les infos du show master status du serveur 01b comme fait précédemment et on les reporte dans la commande qui suit :</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Remise en place de la répli</span></span><br><span class="line">mysql &gt; change master to master_host=<span class="string">'bdd-replica'</span>, master_port=3306, master_user=<span class="string">'repl_user'</span>, master_password=<span class="string">'ChangeMe'</span>, master_log_file=<span class="string">'master-log-bin.000001'</span>, master_log_pos=42;</span><br><span class="line">mysql &gt; start slave;</span><br><span class="line">mysql &gt; show slave status\G</span><br></pre></td></tr></table></figure>
+<p>Enjoy \o/ </p>
+<p><a href="https://www.percona.com/doc/percona-xtrabackup/2.3/innobackupex/streaming_backups_innobackupex.html" target="_blank" rel="noopener">Source</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://91.208.181.214/2020/05/27/replication-master-master/" data-id="cm6wj2oqq000qn3iynazhb65u" class="article-share-link">Partager</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Ansible-quick-start" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/05/21/Ansible-quick-start/" class="article-date">
@@ -98,7 +168,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="cm6c340ya00004giyctr451m3" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/05/21/Ansible-quick-start/" data-id="cm6wj2op50001n3iymebor6lc" class="article-share-link">Partager</a>
       
       
       
@@ -185,7 +255,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="cm6c3412l00044giywhoeas6i" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/26/Elastic-Stack-Essentials/" data-id="cm6wj2opk0005n3iyh2m0dc2y" class="article-share-link">Partager</a>
       
       
       
@@ -296,7 +366,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="cm6c34168003w4giy0u2xx9wg" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/12/IoWait-Ma-Tuer/" data-id="cm6wj2oto0040n3iydudkpv2r" class="article-share-link">Partager</a>
       
       
       
@@ -348,7 +418,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="cm6c3413t00134giyp0hxmwfs" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2020/04/11/swap/" data-id="cm6wj2or50014n3iynzx1zmy2" class="article-share-link">Partager</a>
       
       
       
@@ -454,7 +524,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/11/24/Source-Control-with-Git/" data-id="cm6c34159003k4giyn4wfz4c2" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/11/24/Source-Control-with-Git/" data-id="cm6wj2ot1003pn3iy2lhaa1p1" class="article-share-link">Partager</a>
       
       
       
@@ -502,7 +572,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="cm6c3412q00064giysdey0ok9" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/20/October-2019-inspiration/" data-id="cm6wj2opm0006n3iyrf2tqxau" class="article-share-link">Partager</a>
       
       
       
@@ -547,7 +617,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="cm6c3412a00014giy021kymux" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2019/10/19/2019-post/" data-id="cm6wj2ooa0000n3iysebcxiwt" class="article-share-link">Partager</a>
       
       
       
@@ -595,7 +665,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="cm6c3413r00104giy9i2cwa0s" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/sort-ip-address/" data-id="cm6wj2or30011n3iy69ti8y2r" class="article-share-link">Partager</a>
       
       
       
@@ -643,77 +713,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="cm6c3413g000p4giy6s0p229q" class="article-share-link">Partager</a>
+      <a data-url="http://91.208.181.214/2018/12/16/post/" data-id="cm6wj2oql000pn3iyennreglt" class="article-share-link">Partager</a>
       
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Test/">Test</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hexo-how-to" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/04/10/hexo-how-to/" class="article-date">
-  <time datetime="2017-04-10T20:42:00.000Z" itemprop="datePublished">2017-04-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>►<a class="article-category-link" href="/categories/Hexo/How-to/">How to</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/hexo-how-to/">hexo how to</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Comment fonctionne ce site avec hexo:</strong></p>
-<ul>
-<li><p>hexo init ~/hexo (dans ma home pour pas m’embeter)</p>
-</li>
-<li><p>dans ~/hexo =&gt; npm install + tunning du config.yml qui va bien pour deployer via git par la suite.</p>
-</li>
-</ul>
-<p><strong>Comment je créer un article:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new my-super-article</span><br><span class="line">hexo publish my-super-article</span><br></pre></td></tr></table></figure></p>
-<p><strong>Comment Nginx fait le boulot:</strong></p>
-<ul>
-<li>Je crée un docroot vide =&gt; /var/www/hexo :)</li>
-</ul>
-<p><strong>Comment la magie opère:</strong></p>
-<ul>
-<li>git init –bare ~/hexo_bare (toujours à la racine pour pas m’embêter)</li>
-<li>création d’un hook post-receive =&gt; git –work-tree=/var/www/hexo –git-dir=/home/$USER/hexo_bare checkout -f</li>
-<li>Puis git clone <a href="https://github.com/n3ird4/n3ird4.github.io.git" target="_blank" rel="noopener">https://github.com/n3ird4/n3ird4.github.io.git</a> &amp;&amp; cd ~/n3ird4.github.io</li>
-<li>git remote add live ~/hexo_bare </li>
-</ul>
-<p><strong>Comment je deploie:</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">( <span class="built_in">cd</span> ~/n3ird4.github.io ; git pull ; git push live master )</span><br></pre></td></tr></table></figure>
-<p>Et voila via un appel au script de deploiement le taf se fait dans le repertoire ~/hexo et la synchro du /var/www/hexo est donc automatiquent effectuée via le push qui va venir remplir le contenu du docroot via le hook !</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://91.208.181.214/2017/04/10/hexo-how-to/" data-id="cm6c3413d000l4giyjvkiryms" class="article-share-link">Partager</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/githooks/">githooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
 
     </footer>
   </div>
@@ -758,7 +762,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/AWS/" style="font-size: 10px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 10px;">Ansible</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/FortyTwo/" style="font-size: 15px;">FortyTwo</a> <a href="/tags/ModSecurity/" style="font-size: 10px;">ModSecurity</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 10px;">Univers</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/githooks/" style="font-size: 10px;">githooks</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iotop/" style="font-size: 10px;">iotop</a> <a href="/tags/iowait/" style="font-size: 10px;">iowait</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a> <a href="/tags/tryhackme/" style="font-size: 20px;">tryhackme</a> <a href="/tags/varnish/" style="font-size: 10px;">varnish</a> <a href="/tags/vmstat/" style="font-size: 10px;">vmstat</a>
+      <a href="/tags/42/" style="font-size: 10px;">42</a> <a href="/tags/AWS/" style="font-size: 10px;">AWS</a> <a href="/tags/Ansible/" style="font-size: 10px;">Ansible</a> <a href="/tags/Blog/" style="font-size: 20px;">Blog</a> <a href="/tags/FortyTwo/" style="font-size: 16.67px;">FortyTwo</a> <a href="/tags/ModSecurity/" style="font-size: 10px;">ModSecurity</a> <a href="/tags/Test/" style="font-size: 20px;">Test</a> <a href="/tags/Univers/" style="font-size: 13.33px;">Univers</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/githooks/" style="font-size: 10px;">githooks</a> <a href="/tags/grep/" style="font-size: 10px;">grep</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iotop/" style="font-size: 10px;">iotop</a> <a href="/tags/iowait/" style="font-size: 10px;">iowait</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/swap/" style="font-size: 10px;">swap</a> <a href="/tags/tryhackme/" style="font-size: 20px;">tryhackme</a> <a href="/tags/varnish/" style="font-size: 10px;">varnish</a> <a href="/tags/vmstat/" style="font-size: 10px;">vmstat</a>
     </div>
   </div>
 
@@ -767,7 +771,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">décembre 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">décembre 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">mars 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">novembre 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">octobre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">septembre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">juillet 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mai 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">avril 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">novembre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">octobre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">décembre 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">avril 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">mars 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">février 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">décembre 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">décembre 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">mars 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">novembre 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">octobre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">septembre 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">juillet 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mai 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">avril 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">novembre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">octobre 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">décembre 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">avril 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">mars 2017</a></li></ul>
     </div>
   </div>
 
@@ -778,6 +782,10 @@
     <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/02/08/wassup2025/">Wassup2025</a>
+          </li>
         
           <li>
             <a href="/2024/12/31/seeyoulater24/">seeyoulater24</a>
@@ -793,10 +801,6 @@
         
           <li>
             <a href="/2021/11/05/TryHackMe-CMesS-CTF-Write-Up/">TryHackMe CMesS CTF Write Up</a>
-          </li>
-        
-          <li>
-            <a href="/2020/10/27/TryHackMe-Madness-CTF-Write-Up/">TryHackMe Madness CTF Writeup</a>
           </li>
         
       </ul>
